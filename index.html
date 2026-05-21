@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>unLEMA | Reporte Profesional Animado</title>
+    <title>unLEMA | Reporte Profesional Interactivo</title>
     
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
@@ -54,101 +54,56 @@
         .edition-btn.active { background: white; color: var(--text); box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
 
         /* --- CONTENEDOR PRINCIPAL --- */
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 120px 20px 60px 20px;
-        }
-
-        /* --- CABECERA (HERO) --- */
+        .container { max-width: 1400px; margin: 0 auto; padding: 120px 20px 60px 20px; }
         .hero { text-align: center; margin-bottom: 50px; }
         .hero h1 { font-size: 3.5rem; letter-spacing: -0.04em; line-height: 1.1; margin-bottom: 15px; }
         .hero p { font-size: 1.3rem; color: var(--text-sub); max-width: 700px; margin: 0 auto; }
 
         /* --- DISEÑO BENTO GRID --- */
-        .bento-grid {
-            display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 25px;
-            margin-bottom: 40px;
-        }
-
+        .bento-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 25px; margin-bottom: 40px; }
         .card {
-            background: var(--card-bg);
-            border-radius: 24px;
-            padding: 40px;
-            border: 1px solid var(--border);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.02);
-            position: relative;
-            overflow: hidden;
-            display: flex; flex-direction: column;
-            opacity: 0; transform: translateY(30px);
+            background: var(--card-bg); border-radius: 24px; padding: 40px; border: 1px solid var(--border);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.02); position: relative; overflow: hidden;
+            display: flex; flex-direction: column; opacity: 0; transform: translateY(30px);
         }
-
-        /* Tramos de la cuadrícula */
-        .span-12 { grid-column: span 12; }
-        .span-8 { grid-column: span 8; }
-        .span-7 { grid-column: span 7; }
-        .span-6 { grid-column: span 6; }
-        .span-5 { grid-column: span 5; }
-        .span-4 { grid-column: span 4; }
+        .span-12 { grid-column: span 12; } .span-8 { grid-column: span 8; } .span-7 { grid-column: span 7; } .span-6 { grid-column: span 6; } .span-5 { grid-column: span 5; } .span-4 { grid-column: span 4; }
 
         /* --- ESTILOS INTERNOS DE LAS TARJETAS --- */
         .card-header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
-        .icon-box {
-            width: 50px; height: 50px; border-radius: 14px;
-            display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
-        }
+        .icon-box { width: 50px; height: 50px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
         .card-title { font-size: 1.6rem; font-weight: 700; letter-spacing: -0.02em; }
-        .card-desc { font-size: 1.05rem; color: var(--text-sub); margin-bottom: 25px; }
         
-        /* Contenedor de gráficos */
         .chart-wrapper { position: relative; width: 100%; flex-grow: 1; min-height: 280px; }
-        
-        /* Grandes Números */
-        .big-stat { font-size: 3.5rem; font-weight: 800; line-height: 1; margin-bottom: 5px; letter-spacing: -1px; }
+        canvas { cursor: pointer; } /* Indica que se puede hacer clic */
+
+        /* Caja de Información Dinámica */
+        .info-box { transition: opacity 0.3s ease; flex: 1; min-width: 200px; display: flex; flex-direction: column; justify-content: center; }
+        .card-desc { font-size: 1.05rem; color: var(--text-sub); margin-bottom: 15px; line-height: 1.5; }
+        .big-stat { font-size: 3.5rem; font-weight: 800; line-height: 1; margin-bottom: 5px; letter-spacing: -1px; transition: color 0.3s ease; }
         .stat-label { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-sub); font-weight: 600; }
+        
+        .click-hint {
+            display: inline-flex; align-items: center; gap: 8px; margin-top: auto; padding: 8px 15px;
+            background: rgba(0,0,0,0.04); border-radius: 50px; font-size: 0.8rem; font-weight: 600; color: var(--text-sub); width: fit-content;
+        }
 
         /* Colores Específicos */
-        .bg-laboral { background: rgba(0, 161, 155, 0.1); color: var(--laboral); }
-        .text-laboral { color: var(--laboral); }
-        .bg-emprendimiento { background: rgba(236, 121, 32, 0.1); color: var(--emprendimiento); }
-        .text-emprendimiento { color: var(--emprendimiento); }
-        .bg-academic { background: rgba(223, 8, 50, 0.1); color: var(--academic); }
-        .text-academic { color: var(--academic); }
+        .bg-laboral { background: rgba(0, 161, 155, 0.1); color: var(--laboral); } .text-laboral { color: var(--laboral); }
+        .bg-emprendimiento { background: rgba(236, 121, 32, 0.1); color: var(--emprendimiento); } .text-emprendimiento { color: var(--emprendimiento); }
+        .bg-academic { background: rgba(223, 8, 50, 0.1); color: var(--academic); } .text-academic { color: var(--academic); }
 
-        /* Tarjeta de Reflexión (Ancha) */
-        .reflection {
-            background: #1d1d1f; color: white; text-align: center;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            padding: 50px;
-        }
+        /* Reflexión y Descarga */
+        .reflection { background: #1d1d1f; color: white; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 50px; }
         .reflection p { font-size: 1.6rem; font-style: italic; max-width: 800px; font-weight: 500; }
-
-        /* Tarjeta de Descarga */
-        .download-box {
-            display: flex; align-items: center; justify-content: space-between;
-            background: var(--card-bg); padding: 30px 40px; border-radius: 20px;
-            border: 1px solid var(--border); margin-top: 40px; flex-direction: row;
-        }
-        .btn-download {
-            background: var(--text); color: white; padding: 15px 30px; border-radius: 50px;
-            text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 10px;
-            transition: all 0.3s ease;
-        }
+        .download-box { display: flex; align-items: center; justify-content: space-between; background: var(--card-bg); padding: 30px 40px; border-radius: 20px; border: 1px solid var(--border); margin-top: 40px; flex-direction: row; }
+        .btn-download { background: var(--text); color: white; padding: 15px 30px; border-radius: 50px; text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 10px; transition: all 0.3s ease; }
         .btn-download:hover { background: var(--laboral); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,161,155,0.2); }
 
-        /* --- PIE DE PÁGINA --- */
-        footer {
-            width: 100%; padding: 50px 20px; background: white;
-            border-top: 1px solid var(--border); color: var(--text); text-align: center; margin-top: 60px;
-        }
+        /* Footer */
+        footer { width: 100%; padding: 50px 20px; background: white; border-top: 1px solid var(--border); color: var(--text); text-align: center; margin-top: 60px; }
         .footer-content { max-width: 1000px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
         .footer-title { font-size: 1.2rem; font-weight: 700; }
-        .footer-credits {
-            display: flex; justify-content: space-between; text-align: left;
-            border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 20px 0;
-        }
+        .footer-credits { display: flex; justify-content: space-between; text-align: left; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 20px 0; }
         .credit-block h5 { font-size: 0.85rem; text-transform: uppercase; color: var(--text-sub); margin-bottom: 10px; }
         .team-list { line-height: 1.7; font-size: 0.95rem; }
         .career-tag { color: var(--text-sub); font-size: 0.85em; }
@@ -187,10 +142,11 @@
                     <h2 class="card-title">La prioridad laboral</h2>
                 </div>
                 <div style="display: flex; gap: 30px; align-items: center; flex-wrap: wrap;">
-                    <div style="flex: 1; min-width: 250px;">
-                        <p class="card-desc">La intención de buscar empleo de manera inmediata domina el panorama. Esta tendencia coincide con una altísima tasa de vinculación formal en áreas como Ingeniería y Salud (superando el 93%).</p>
+                    <div class="info-box" id="infoCtxLaboral">
+                        <p class="card-desc">La intención de buscar empleo de manera inmediata domina el panorama. Esta tendencia coincide con una altísima tasa de vinculación formal real.</p>
                         <div class="big-stat text-laboral" data-count="58.4">0%</div>
                         <div class="stat-label">Busca empleo inmediato</div>
+                        <div class="click-hint"><i class="fa-solid fa-hand-pointer"></i> Toca las barras para ver detalles</div>
                     </div>
                     <div style="flex: 2; min-width: 300px; height: 200px;">
                         <canvas id="chartLaboralCtx"></canvas>
@@ -203,10 +159,13 @@
                     <div class="icon-box bg-academic"><i class="fa-solid fa-graduation-cap"></i></div>
                     <h2 class="card-title">Investigación</h2>
                 </div>
-                <div class="big-stat text-academic" data-count="31.4">0%</div>
-                <div class="stat-label" style="margin-bottom: 15px;">Desea posgrado directo</div>
-                <p class="card-desc" style="font-size: 0.95rem;">Un interés 3.4 veces mayor que el tránsito nacional promedio de Colombia (9.2%).</p>
-                <div class="chart-wrapper" style="min-height: 150px;"><canvas id="chartAcademicCtx"></canvas></div>
+                <div class="info-box" id="infoCtxAcademic" style="justify-content: flex-start;">
+                    <div class="big-stat text-academic" data-count="31.4">0%</div>
+                    <div class="stat-label" style="margin-bottom: 10px;">Desea posgrado directo</div>
+                    <p class="card-desc" style="font-size: 0.95rem;">Un interés 3.4 veces mayor que el tránsito nacional promedio de Colombia.</p>
+                    <div class="click-hint" style="margin-bottom:10px;"><i class="fa-solid fa-hand-pointer"></i> Haz clic en los puntos</div>
+                </div>
+                <div class="chart-wrapper" style="min-height: 120px;"><canvas id="chartAcademicCtx"></canvas></div>
             </div>
 
             <div class="card span-5">
@@ -214,13 +173,16 @@
                     <div class="icon-box bg-emprendimiento"><i class="fa-solid fa-rocket"></i></div>
                     <h2 class="card-title">Rezago al emprender</h2>
                 </div>
-                <p class="card-desc">Cifra alarmantemente baja frente a estándares nacionales e internacionales. Solo una minoría considera crear empresa al salir.</p>
+                <div class="info-box" id="infoCtxEmprendimiento" style="justify-content: flex-start; margin-bottom: 15px;">
+                    <p class="card-desc">Cifra baja frente a estándares nacionales. Solo una minoría considera crear empresa al salir.</p>
+                    <div class="click-hint"><i class="fa-solid fa-hand-pointer"></i> Haz clic en el gráfico</div>
+                </div>
                 <div class="chart-wrapper"><canvas id="chartEmprendimientoCtx"></canvas></div>
             </div>
 
             <div class="card span-7 reflection">
                 <i class="fa-solid fa-quote-left" style="font-size: 2rem; opacity: 0.5; margin-bottom: 15px; color: var(--laboral);"></i>
-                <p>"La intención de buscar empleo coincide perfectamente con un mercado que, en la práctica, contrata a la gran mayoría de nuestros egresados, desplazando el emprendimiento."</p>
+                <p>"La intención de buscar empleo coincide perfectamente con un mercado que, en la práctica, contrata a la gran mayoría de nuestros egresados."</p>
             </div>
         </div>
 
@@ -230,7 +192,7 @@
                 <p style="color: var(--text-sub);">Obtén el PDF formal con el análisis completo de contextualización.</p>
             </div>
             <a href="reporte_unLEMA_boletin01.pdf" download class="btn-download">
-                <i class="fa-solid fa-cloud-arrow-down"></i> Descargar Boletín 1 (PDF)
+                <i class="fa-solid fa-cloud-arrow-down"></i> Descargar Boletín 1
             </a>
         </div>
     </div>
@@ -239,7 +201,7 @@
         
         <div class="hero">
             <h1>Profundizando las razones</h1>
-            <p>Descubriendo los motivadores psicológicos y estratégicos detrás de las decisiones profesionales de los estudiantes.</p>
+            <p>Descubriendo qué significan los motivadores psicológicos detrás de las decisiones de los estudiantes. (Haz clic en los gráficos para conocer cada categoría).</p>
         </div>
 
         <div class="bento-grid" id="grid-2">
@@ -249,7 +211,10 @@
                     <div class="icon-box bg-emprendimiento"><i class="fa-solid fa-rocket"></i></div>
                     <h2 class="card-title">Dueños del tiempo</h2>
                 </div>
-                <p class="card-desc">El espíritu disruptivo crece en busca de libertad e impacto directo.</p>
+                <div class="info-box" id="infoMotEmprendimiento" style="justify-content: flex-start; margin-bottom: 15px;">
+                    <p class="card-desc">El espíritu disruptivo crece en busca de libertad e impacto directo.</p>
+                    <div class="click-hint"><i class="fa-solid fa-hand-pointer"></i> Haz clic en los vértices del radar</div>
+                </div>
                 <div class="chart-wrapper"><canvas id="chartEmprendimientoMot"></canvas></div>
             </div>
 
@@ -259,10 +224,11 @@
                     <h2 class="card-title">Buscando estabilidad</h2>
                 </div>
                 <div style="display: flex; gap: 20px; align-items: center; flex-wrap: wrap;">
-                    <div style="flex: 1; min-width: 200px;">
-                        <p class="card-desc">El mercado exige seguridad, convirtiendo a la economía en prioridad absoluta frente a otras variables.</p>
+                    <div class="info-box" id="infoMotLaboral">
+                        <p class="card-desc">El mercado actual exige seguridad, convirtiendo a la economía en prioridad absoluta frente a otras variables.</p>
                         <div class="big-stat text-laboral" data-count="59.0">0%</div>
-                        <div class="stat-label">Ingresos fijos y seguridad</div>
+                        <div class="stat-label">Seguridad Económica principal</div>
+                        <div class="click-hint" style="margin-top:20px;"><i class="fa-solid fa-hand-pointer"></i> Toca las partes de la dona</div>
                     </div>
                     <div style="flex: 1; min-width: 250px; height: 220px;">
                         <canvas id="chartLaboralMot"></canvas>
@@ -279,10 +245,11 @@
                     <div style="flex: 1.5; min-width: 250px; height: 220px;">
                         <canvas id="chartAcademicMot"></canvas>
                     </div>
-                    <div style="flex: 1; min-width: 200px;">
+                    <div class="info-box" id="infoMotAcademic">
                         <div class="big-stat text-academic" data-count="36.1">0%</div>
                         <div class="stat-label" style="margin-bottom: 10px;">Vocación y Pasión</div>
                         <p class="card-desc" style="font-size: 0.95rem;">Las motivaciones personales impulsan a buscar especialización profunda por encima del requerimiento laboral.</p>
+                        <div class="click-hint"><i class="fa-solid fa-hand-pointer"></i> Toca las barras para ver definiciones</div>
                     </div>
                 </div>
             </div>
@@ -294,7 +261,7 @@
                 <p style="color: var(--text-sub);">Obtén el PDF formal enfocado en los motivadores estratégicos.</p>
             </div>
             <a href="reporte_unLEMA_boletin02.pdf" download class="btn-download">
-                <i class="fa-solid fa-cloud-arrow-down"></i> Descargar Boletín 2 (PDF)
+                <i class="fa-solid fa-cloud-arrow-down"></i> Descargar Boletín 2
             </a>
         </div>
     </div>
@@ -318,7 +285,7 @@
                 </div>
             </div>
             <div style="font-size: 0.9rem; color: var(--text-sub);">
-                Agradecimientos especiales a <strong>Zulma Camargo</strong> (Jefe del área de acompañamiento integral de sede) y a <strong>Fabian Meneses</strong> (Profesional del área de acompañamiento integral de sede) por su invaluable apoyo en la materialización de este proyecto.
+                Agradecimientos especiales a <strong>Zulma Camargo</strong> (Jefe del área de acompañamiento integral de sede) y a <strong>Fabian Meneses</strong> (Profesional del área de acompañamiento integral de sede) por su invaluable apoyo.
             </div>
         </div>
     </footer>
@@ -330,29 +297,71 @@
 
         let charts = {};
 
-        // --- SISTEMA DE NÚMEROS ANIMADOS (GSAP) ---
+        // --- BASES DE DATOS DE EXPLICACIONES ---
+        const exCtx = {
+            laboral: [
+                { title: "Nuestra Muestra", val: 58.4, text: "Porcentaje de estudiantes de unLEMA encuestados que planean buscar un empleo tradicional apenas se gradúen.", color: "#00a19b" },
+                { title: "Universidad Andes", val: 42.0, text: "En contraste, según el CTP de los Andes, solo el 42% de sus egresados busca empleo (el 38% prefiere seguir estudiando o emprender).", color: "#4dcad4" }
+            ],
+            academic: [
+                { title: "Nal. (SNIES)", val: 9.2, text: "Solo 9 de cada 100 egresados en todo el país transita de inmediato a un posgrado.", color: "#eb4160" },
+                { title: "Muestra unLEMA", val: 31.4, text: "El interés investigativo aquí supera ampliamente la media nacional, buscando más especialización.", color: "#df0832" },
+                { title: "Top 100 Global", val: 47.5, text: "En las universidades de mayor élite mundial (MIT, Stanford), el tránsito directo a posgrado roza el 50%.", color: "#f57a8e" }
+            ],
+            emprendimiento: [
+                { title: "unLEMA", val: 4.9, text: "Una minoría absoluta planea fundar su propia empresa de inmediato, reflejando aversión al riesgo.", color: "#ec7920" },
+                { title: "Global", val: 14.9, text: "Estándar mundial reportado en intención de emprendimiento universitario.", color: "#f29a50" },
+                { title: "Colombia (GUESSS)", val: 28.8, text: "El promedio de los estudiantes de otras universidades en Colombia es altamente pro-emprendimiento.", color: "#f7bd84" }
+            ]
+        };
+
+        const exMot = {
+            laboral: [
+                { title: "Seguridad Económica", val: 59.0, text: "<b>Definición:</b> Búsqueda de un salario fijo y garantizado que proteja contra las fluctuaciones del mercado. La estabilidad es su mayor anhelo.", color: "#00a19b" },
+                { title: "Exp. Práctica", val: 31.3, text: "<b>Definición:</b> Necesidad de aplicar conocimientos teóricos en escenarios reales para ganar competencias y enriquecer el currículum.", color: "#4dcad4" }
+            ],
+            emprendimiento: [
+                { title: "Independencia Laboral", val: 23.1, text: "<b>Definición:</b> Deseo de autogestión, autonomía total y rechazo a cumplir horarios corporativos rígidos o tener un jefe directo.", color: "#ec7920" },
+                { title: "Independencia Financiera", val: 19.2, text: "<b>Definición:</b> Aspiración a obtener ingresos que no estén limitados por un salario fijo; ganar según el éxito de su propio esfuerzo.", color: "#f29a50" },
+                { title: "Generar Empleo", val: 15.4, text: "<b>Definición:</b> Visión de impacto social colectivo orientada a crear empresa como medio para aportar al desarrollo económico del país.", color: "#f7bd84" }
+            ],
+            academic: [
+                { title: "Vocación y Pasión", val: 36.1, text: "<b>Definición:</b> Inclinación intrínseca por la investigación, el estudio y el amor al conocimiento sin buscar necesariamente un fin económico.", color: "#df0832" },
+                { title: "Exp. de Pregrado", val: 21.6, text: "<b>Definición:</b> Haber experimentado un excelente recorrido universitario, lo cual los motiva e inspira a seguir vinculados a la academia.", color: "#eb4160" },
+                { title: "Requisito Laboral", val: 15.0, text: "<b>Definición:</b> Sensación de que el mercado es muy competitivo y que solo con un pregrado no basta para conseguir el trabajo que desean.", color: "#f57a8e" }
+            ]
+        };
+
+        // --- MANEJADOR DE CLICS (INTERACTIVIDAD) ---
+        function handleChartClick(dataSource, textKey, boxId, itemIndex) {
+            const data = dataSource[textKey][itemIndex];
+            const box = document.getElementById(boxId);
+            
+            box.style.opacity = 0;
+            setTimeout(() => {
+                box.innerHTML = `
+                    <div class="big-stat" style="color:${data.color}">${data.val}%</div>
+                    <div class="stat-label" style="margin-bottom: 10px; font-size:1.1rem; color:${data.color};">${data.title}</div>
+                    <p class="card-desc" style="font-size: 0.95rem; line-height: 1.5;">${data.text}</p>
+                    <div class="click-hint" style="margin-top:auto;"><i class="fa-solid fa-check"></i> Clic en otro dato para comparar</div>
+                `;
+                box.style.opacity = 1;
+            }, 200);
+        }
+
+        // --- SISTEMA GSAP ---
         function animateNumbers(containerId) {
             document.querySelectorAll(`${containerId} .big-stat`).forEach(stat => {
                 const targetValue = parseFloat(stat.getAttribute('data-count'));
                 let countObj = { value: 0 };
-                
-                gsap.to(countObj, {
-                    value: targetValue,
-                    duration: 1.5,
-                    ease: "power2.out",
-                    onUpdate: function () {
-                        stat.innerText = countObj.value.toFixed(1) + '%';
-                    }
-                });
+                gsap.to(countObj, { value: targetValue, duration: 1.5, ease: "power2.out", onUpdate: function () { stat.innerText = countObj.value.toFixed(1) + '%'; } });
             });
         }
 
-        // --- SISTEMA DE PESTAÑAS ---
         function switchEdition(num) {
             const currentId = num === 1 ? 2 : 1;
             const currentDiv = document.getElementById(`edition-${currentId}`);
             const nextDiv = document.getElementById(`edition-${num}`);
-            
             if (nextDiv.style.display === "block") return;
 
             document.querySelectorAll(".edition-btn").forEach(b => b.classList.remove("active"));
@@ -361,11 +370,9 @@
             gsap.to(currentDiv, { opacity: 0, y: 20, duration: 0.3, onComplete: () => {
                 currentDiv.style.display = "none";
                 nextDiv.style.display = "block";
-                
                 gsap.to(nextDiv, { opacity: 1, y: 0, duration: 0.4 });
                 window.scrollTo({ top: 0, behavior: 'smooth' });
                 
-                // Animar entrada de las tarjetas del Grid y Descarga
                 gsap.fromTo(`#edition-${num} .card`, 
                     { opacity: 0, y: 40 }, 
                     { opacity: 1, y: 0, duration: 0.6, stagger: 0.12, ease: "power2.out", onComplete: () => {
@@ -376,130 +383,96 @@
             }});
         }
 
-        // --- RENDERIZADO E INTERACTIVIDAD DE GRÁFICOS ---
         function createChart(id, config) {
             if (charts[id]) charts[id].destroy(); 
             charts[id] = new Chart(document.getElementById(id), config);
         }
 
         function initCharts(edition) {
-            // Configuración común para animaciones fluidas
-            const animationConfig = {
-                duration: 1200,
-                easing: 'easeOutQuart'
-            };
+            const animCfg = { duration: 1200, easing: 'easeOutQuart' };
 
             if (edition === 1) {
-                // 1. BARRAS HORIZONTALES (Laboral Context)
+                // Laboral Context
                 createChart('chartLaboralCtx', {
                     type: 'bar',
-                    data: {
-                        labels: ['Muestra unLEMA', 'Uniandes'],
-                        datasets: [{ data: [58.4, 42.0], backgroundColor: ['#00a19b', '#d1d1d6'], borderRadius: 6 }]
-                    },
+                    data: { labels: ['Muestra unLEMA', 'Uniandes'], datasets: [{ data: [58.4, 42.0], backgroundColor: ['#00a19b', '#d1d1d6'], borderRadius: 6 }] },
                     options: {
-                        indexAxis: 'y', responsive: true, maintainAspectRatio: false,
-                        animation: animationConfig,
+                        indexAxis: 'y', responsive: true, maintainAspectRatio: false, animation: animCfg,
                         plugins: { legend: { display: false }, datalabels: { color: '#fff', font: {weight: 'bold'}, formatter: v=>v+'%' } },
-                        scales: { x: { display: false, max: 100 }, y: { grid: {display: false}, border: {display:false}, ticks: {font:{weight:'bold', color: '#1d1d1f'}} } }
+                        scales: { x: { display: false, max: 100 }, y: { grid: {display: false}, border: {display:false}, ticks: {font:{weight:'bold', color: '#1d1d1f'}} } },
+                        onHover: (e, el) => e.native.target.style.cursor = el[0] ? 'pointer' : 'default',
+                        onClick: (e, el) => { if(el.length) handleChartClick(exCtx, 'laboral', 'infoCtxLaboral', el[0].index); }
                     }
                 });
 
-                // 2. LÍNEA DE TENDENCIA (Academic Context)
+                // Academic Context
                 createChart('chartAcademicCtx', {
                     type: 'line',
-                    data: {
-                        labels: ['Nal. (SNIES)', 'unLEMA', 'Top 100 Global'],
-                        datasets: [{ data: [9.2, 31.4, 47.5], borderColor: '#df0832', backgroundColor: 'rgba(223, 8, 50, 0.1)', fill: true, tension: 0.4, pointRadius: 6, pointBackgroundColor: '#df0832' }]
-                    },
+                    data: { labels: ['Nal. (SNIES)', 'unLEMA', 'Top 100'], datasets: [{ data: [9.2, 31.4, 47.5], borderColor: '#df0832', backgroundColor: 'rgba(223, 8, 50, 0.1)', fill: true, tension: 0.4, pointRadius: 8, pointBackgroundColor: '#df0832', pointHoverRadius: 12 }] },
                     options: {
-                        responsive: true, maintainAspectRatio: false,
-                        animation: animationConfig,
-                        plugins: { legend: { display: false }, datalabels: { align: 'top', color: '#df0832', font: {weight: 'bold'}, formatter: v=>v+'%' } },
-                        scales: { y: { display: false, min: 0, max: 60 }, x: { grid: {display: false} } }
+                        responsive: true, maintainAspectRatio: false, animation: animCfg,
+                        plugins: { legend: { display: false }, datalabels: { align: 'bottom', color: '#df0832', font: {weight: 'bold'}, formatter: v=>v+'%' } },
+                        scales: { y: { display: false, min: 0, max: 60 }, x: { grid: {display: false} } },
+                        onHover: (e, el) => e.native.target.style.cursor = el[0] ? 'pointer' : 'default',
+                        onClick: (e, el) => { if(el.length) handleChartClick(exCtx, 'academic', 'infoCtxAcademic', el[0].index); }
                     }
                 });
 
-                // 3. ÁREA POLAR ENHANCED (Emprendimiento Context)
+                // Emprendimiento Context
                 createChart('chartEmprendimientoCtx', {
                     type: 'polarArea',
-                    data: {
-                        labels: ['Nuestra Muestra', 'Global', 'Nacional (GUESSS)'],
-                        datasets: [{ 
-                            data: [4.9, 14.9, 28.8], 
-                            backgroundColor: ['rgba(236, 121, 32, 0.85)', 'rgba(236, 121, 32, 0.5)', 'rgba(236, 121, 32, 0.25)'], 
-                            borderWidth: 2, 
-                            borderColor: '#fff',
-                            hoverOffset: 15 // Expansión interactiva al pasar el mouse
-                        }]
-                    },
+                    data: { labels: ['Nuestra Muestra', 'Global', 'Colombia'], datasets: [{ data: [4.9, 14.9, 28.8], backgroundColor: ['rgba(236, 121, 32, 0.85)', 'rgba(236, 121, 32, 0.5)', 'rgba(236, 121, 32, 0.25)'], borderWidth: 2, borderColor: '#fff', hoverOffset: 15 }] },
                     options: {
-                        responsive: true, maintainAspectRatio: false,
-                        animation: { duration: 1500, easing: 'easeOutElastic' },
-                        plugins: { legend: { position: 'right' }, datalabels: { display: false } },
-                        scales: { r: { ticks: {display: false} } }
+                        responsive: true, maintainAspectRatio: false, animation: { duration: 1500, easing: 'easeOutElastic' },
+                        plugins: { legend: { position: 'right' }, datalabels: { display: false } }, scales: { r: { ticks: {display: false} } },
+                        onHover: (e, el) => e.native.target.style.cursor = el[0] ? 'pointer' : 'default',
+                        onClick: (e, el) => { if(el.length) handleChartClick(exCtx, 'emprendimiento', 'infoCtxEmprendimiento', el[0].index); }
                     }
                 });
             } else {
-                // 4. DOUGHNUT ENHANCED (Laboral Mot)
+                // Laboral Mot
                 createChart('chartLaboralMot', {
                     type: 'doughnut',
-                    data: {
-                        labels: ['Seguridad Económica', 'Exp. Práctica'],
-                        datasets: [{ 
-                            data: [59.0, 31.3], 
-                            backgroundColor: ['#00a19b', '#4dcad4'], 
-                            borderWidth: 3, 
-                            borderColor: '#fff',
-                            hoverOffset: 12 // Expansión interactiva
-                        }]
-                    },
+                    data: { labels: ['Seguridad Económica', 'Exp. Práctica'], datasets: [{ data: [59.0, 31.3], backgroundColor: ['#00a19b', '#4dcad4'], borderWidth: 3, borderColor: '#fff', hoverOffset: 12 }] },
                     options: {
-                        responsive: true, maintainAspectRatio: false, cutout: '60%',
-                        animation: { duration: 1400, easing: 'easeOutQuart' },
-                        plugins: { legend: { position: 'right' }, datalabels: { color: '#fff', font:{weight:'bold'}, formatter: v=>v+'%' } }
+                        responsive: true, maintainAspectRatio: false, cutout: '60%', animation: { duration: 1400, easing: 'easeOutQuart' },
+                        plugins: { legend: { position: 'right' }, datalabels: { color: '#fff', font:{weight:'bold'}, formatter: v=>v+'%' } },
+                        onHover: (e, el) => e.native.target.style.cursor = el[0] ? 'pointer' : 'default',
+                        onClick: (e, el) => { if(el.length) handleChartClick(exMot, 'laboral', 'infoMotLaboral', el[0].index); }
                     }
                 });
 
-                // 5. RADAR (Emprendimiento Mot)
+                // Emprendimiento Mot
                 createChart('chartEmprendimientoMot', {
                     type: 'radar',
-                    data: {
-                        labels: ['Indep. Laboral', 'Indep. Financiera', 'Generar Empleo'],
-                        datasets: [{ data: [23.1, 19.2, 15.4], backgroundColor: 'rgba(236, 121, 32, 0.15)', borderColor: '#ec7920', pointBackgroundColor: '#ec7920', pointRadius: 5 }]
-                    },
+                    data: { labels: ['Indep. Laboral', 'Indep. Financiera', 'Generar Empleo'], datasets: [{ data: [23.1, 19.2, 15.4], backgroundColor: 'rgba(236, 121, 32, 0.2)', borderColor: '#ec7920', pointBackgroundColor: '#ec7920', pointRadius: 7, pointHoverRadius: 10 }] },
                     options: {
-                        responsive: true, maintainAspectRatio: false,
-                        animation: animationConfig,
+                        responsive: true, maintainAspectRatio: false, animation: animCfg,
                         plugins: { legend: { display: false }, datalabels: { display: false } },
-                        scales: { r: { angleLines: {color: 'rgba(0,0,0,0.1)'}, grid: {color: 'rgba(0,0,0,0.1)'}, pointLabels: {font:{size: 11, weight:'bold'}, color:'#1d1d1f'}, ticks:{display:false, max: 25} } }
+                        scales: { r: { angleLines: {color: 'rgba(0,0,0,0.1)'}, grid: {color: 'rgba(0,0,0,0.1)'}, pointLabels: {font:{size: 11, weight:'bold'}, color:'#1d1d1f'}, ticks:{display:false, max: 25} } },
+                        onHover: (e, el) => e.native.target.style.cursor = el[0] ? 'pointer' : 'default',
+                        onClick: (e, el) => { if(el.length) handleChartClick(exMot, 'emprendimiento', 'infoMotEmprendimiento', el[0].index); }
                     }
                 });
 
-                // 6. BARRAS VERTICALES (Academic Mot)
+                // Academic Mot
                 createChart('chartAcademicMot', {
                     type: 'bar',
-                    data: {
-                        labels: ['Vocación', 'Experiencia', 'Requisito'],
-                        datasets: [{ data: [36.1, 21.6, 15.0], backgroundColor: ['#df0832', '#eb4160', '#f57a8e'], borderRadius: 6 }]
-                    },
+                    data: { labels: ['Vocación', 'Experiencia', 'Requisito'], datasets: [{ data: [36.1, 21.6, 15.0], backgroundColor: ['#df0832', '#eb4160', '#f57a8e'], borderRadius: 6 }] },
                     options: {
-                        responsive: true, maintainAspectRatio: false,
-                        animation: animationConfig,
+                        responsive: true, maintainAspectRatio: false, animation: animCfg,
                         plugins: { legend: { display: false }, datalabels: { anchor: 'end', align: 'start', color: '#fff', font:{weight:'bold'}, formatter: v=>v+'%' } },
-                        scales: { y: { display: false, max: 40 }, x: { grid: {display:false}, border: {display:false} } }
+                        scales: { y: { display: false, max: 40 }, x: { grid: {display:false}, border: {display:false} } },
+                        onHover: (e, el) => e.native.target.style.cursor = el[0] ? 'pointer' : 'default',
+                        onClick: (e, el) => { if(el.length) handleChartClick(exMot, 'academic', 'infoMotAcademic', el[0].index); }
                     }
                 });
             }
         }
 
-        // Carga inicial de animaciones
         window.onload = () => {
             gsap.fromTo("#edition-1 .card", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.8, stagger: 0.12, ease: "power2.out" });
-            setTimeout(() => {
-                initCharts(1);
-                animateNumbers("#edition-1");
-            }, 400);
+            setTimeout(() => { initCharts(1); animateNumbers("#edition-1"); }, 400);
         };
     </script>
 </body>
