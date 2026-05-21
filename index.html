@@ -3,151 +3,161 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>unLEMA | Futuro Profesional</title>
+    <title>unLEMA | Reporte Profesional</title>
     
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
 
     <style>
         /* --- VARIABLES DE MARCA unLEMA --- */
         :root {
+            --bg: #f5f5f7;             /* Fondo gris muy claro tipo Apple */
             --text: #1d1d1f;
-            --text-sub: #5a5a5e;
-            --laboral: #00a19b;        /* L */
-            --emprendimiento: #ec7920; /* E */
-            --letra-m: #cfd938;        /* M */
-            --academic: #df0832;       /* A */
-            --inicio: #fbf1e9;
-            --glass: rgba(255, 255, 255, 0.85);
-            --glass-border: rgba(255, 255, 255, 1);
+            --text-sub: #86868b;
+            --card-bg: #ffffff;
+            --laboral: #00a19b;        
+            --emprendimiento: #ec7920; 
+            --letra-m: #cfd938;        
+            --academic: #df0832;       
+            --border: rgba(0,0,0,0.08);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
         
         body {
-            overflow-x: hidden;
             font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif;
-            background-color: var(--inicio);
+            background-color: var(--bg);
             color: var(--text);
-            transition: background-color 1s cubic-bezier(0.4, 0, 0.2, 1);
+            line-height: 1.6;
         }
 
-        body.theme-inicio { background-color: var(--inicio); }
-        body.theme-laboral { background-color: var(--laboral); }
-        body.theme-emprendimiento { background-color: var(--emprendimiento); }
-        body.theme-academic { background-color: var(--academic); }
-
-        /* --- NAVEGACIÓN --- */
+        /* --- NAVEGACIÓN COMPACTA --- */
         nav {
-            position: fixed; top: 0; width: 100%; padding: 15px 50px;
+            position: fixed; top: 0; width: 100%; padding: 15px 40px;
             display: flex; justify-content: space-between; align-items: center;
-            z-index: 1000; background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(25px); border-bottom: 1px solid rgba(0,0,0,0.05);
+            z-index: 1000; background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px); border-bottom: 1px solid var(--border);
         }
-        .logo { font-size: 24px; letter-spacing: -0.5px; cursor: pointer; }
+        .logo { font-size: 22px; cursor: pointer; }
         .un-text { font-weight: 300; color: var(--text); }
         .lema-text { font-weight: 800; }
         .lema-L { color: var(--laboral); } .lema-E { color: var(--emprendimiento); } 
         .lema-M { color: var(--letra-m); } .lema-A { color: var(--academic); }
 
-        .edition-selector { display: flex; background: rgba(0,0,0,0.05); padding: 5px; border-radius: 50px; gap: 5px; }
+        .edition-selector { display: flex; background: var(--bg); padding: 5px; border-radius: 50px; gap: 5px; border: 1px solid var(--border);}
         .edition-btn {
-            padding: 8px 18px; border-radius: 50px; border: none; cursor: pointer;
-            font-size: 14px; font-weight: 600; transition: 0.3s ease; color: var(--text-sub); background: transparent;
+            padding: 8px 20px; border-radius: 50px; border: none; cursor: pointer;
+            font-size: 13px; font-weight: 600; transition: 0.3s ease; color: var(--text-sub); background: transparent;
         }
-        .edition-btn.active { background: white; color: var(--text); box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .edition-btn.active { background: white; color: var(--text); box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
 
-        /* --- SECCIONES Y LAYOUT --- */
-        section { 
-            min-height: 100vh; 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center; 
-            align-items: center; 
-            position: relative; 
-            padding: 120px 20px 60px 20px; 
-            width: 100%; 
-            gap: 40px; 
+        /* --- CONTENEDOR PRINCIPAL --- */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 120px 20px 60px 20px;
         }
 
-        .main-row {
-            display: flex; width: 100%; max-width: 1600px;
-            justify-content: space-evenly; align-items: center; gap: 5vw;
+        /* --- CABECERA (HERO) --- */
+        .hero { text-align: center; margin-bottom: 50px; }
+        .hero h1 { font-size: 3.5rem; letter-spacing: -0.04em; line-height: 1.1; margin-bottom: 15px; }
+        .hero p { font-size: 1.3rem; color: var(--text-sub); max-width: 700px; margin: 0 auto; }
+
+        /* --- DISEÑO BENTO GRID (CUADRÍCULA LLENA) --- */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 25px;
+            margin-bottom: 40px;
         }
 
-        .illustration-container { position: relative; width: 350px; height: 350px; opacity: 0.8; pointer-events: none; z-index: 2; }
-
-        /* --- CARDS --- */
-        .story-card {
-            background: var(--glass); backdrop-filter: blur(40px);
-            border-radius: 40px; padding: 60px;
-            width: 100%; max-width: 900px;
-            display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;
-            border: 1px solid var(--glass-border); box-shadow: 0 30px 80px rgba(0,0,0,0.15);
-            opacity: 0; transform: translateY(100px); transform-style: preserve-3d; z-index: 1;
+        .card {
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 40px;
+            border: 1px solid var(--border);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+            position: relative;
+            overflow: hidden;
+            display: flex; flex-direction: column;
+            opacity: 0; transform: translateY(30px); /* Para animar con GSAP */
         }
 
-        .text-side { transform: translateZ(30px); }
-        h1 { font-size: clamp(3rem, 7vw, 5.5rem); line-height: 1.05; letter-spacing: -0.03em; margin-bottom: 20px; text-align: center; width: 100%;}
-        h2 { font-size: 2.8rem; line-height: 1.1; margin-bottom: 10px; letter-spacing: -0.02em; }
-        .description { font-size: 1.1rem; line-height: 1.5; margin-bottom: 15px; color: var(--text-sub); }
+        /* Tramos de la cuadrícula */
+        .span-12 { grid-column: span 12; }
+        .span-8 { grid-column: span 8; }
+        .span-7 { grid-column: span 7; }
+        .span-6 { grid-column: span 6; }
+        .span-5 { grid-column: span 5; }
+        .span-4 { grid-column: span 4; }
+
+        /* --- ESTILOS INTERNOS DE LAS TARJETAS --- */
+        .card-header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
+        .icon-box {
+            width: 50px; height: 50px; border-radius: 14px;
+            display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
+        }
+        .card-title { font-size: 1.6rem; font-weight: 700; letter-spacing: -0.02em; }
+        .card-desc { font-size: 1.05rem; color: var(--text-sub); margin-bottom: 25px; }
         
-        .citation { font-size: 0.75em; opacity: 0.6; vertical-align: super; font-weight: bold; }
+        /* Contenedor de gráficos */
+        .chart-wrapper { position: relative; width: 100%; flex-grow: 1; min-height: 280px; }
+        
+        /* Grandes Números */
+        .big-stat { font-size: 3.5rem; font-weight: 800; line-height: 1; margin-bottom: 5px; letter-spacing: -1px; }
+        .stat-label { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-sub); font-weight: 600; }
 
-        .dynamic-info-box {
-            margin-top: 25px; background: rgba(255, 255, 255, 0.95); padding: 25px;
-            border-radius: 20px; border: 1px solid var(--glass-border); min-height: 140px;
-            display: flex; flex-direction: column; justify-content: center;
+        /* Colores Específicos */
+        .bg-laboral { background: rgba(0, 161, 155, 0.1); color: var(--laboral); }
+        .text-laboral { color: var(--laboral); }
+        .bg-emprendimiento { background: rgba(236, 121, 32, 0.1); color: var(--emprendimiento); }
+        .text-emprendimiento { color: var(--emprendimiento); }
+        .bg-academic { background: rgba(223, 8, 50, 0.1); color: var(--academic); }
+        .text-academic { color: var(--academic); }
+
+        /* Tarjeta de Reflexión (Ancha) */
+        .reflection {
+            background: #1d1d1f; color: white; text-align: center;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            padding: 50px;
         }
+        .reflection p { font-size: 1.6rem; font-style: italic; max-width: 800px; font-weight: 500; }
 
-        .chart-side { width: 100%; height: 400px; position: relative; transform: translateZ(50px); cursor: pointer; }
-
-        .reflection-card {
-            background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(25px);
-            padding: 35px 50px; border-radius: 30px; max-width: 1000px;
-            width: 90%; text-align: center; border: 1px solid var(--glass-border);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.1); opacity: 0; transform: translateY(50px); margin-top: 20px;
+        /* Tarjeta de Descarga */
+        .download-box {
+            display: flex; align-items: center; justify-content: space-between;
+            background: var(--card-bg); padding: 30px 40px; border-radius: 20px;
+            border: 1px solid var(--border); margin-top: 40px;
         }
-
-        .reflection-card h4 { font-size: 1.1rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; opacity: 0.8; }
-        .reflection-card p { font-size: 1.5rem; line-height: 1.4; font-style: italic; font-weight: 500; color: var(--text); }
-
-        /* Botones de inicio */
-        .choice-container { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-top: 40px; width: 100%; }
-        .choice-card {
-            background: white; padding: 30px; border-radius: 25px; text-decoration: none;
-            color: var(--text); border: 1px solid var(--glass-border); text-align: center; width: 200px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        .btn-download {
+            background: var(--laboral); color: white; padding: 15px 30px; border-radius: 50px;
+            text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 10px;
+            transition: 0.2s;
         }
-        .choice-card i { font-size: 2.5rem; display: block; margin-bottom: 15px; }
+        .btn-download:hover { opacity: 0.9; transform: translateY(-2px); }
 
         /* --- PIE DE PÁGINA --- */
         footer {
-            width: 100%; padding: 60px 40px; background: rgba(255, 255, 255, 0.5);
-            backdrop-filter: blur(20px); border-top: 1px solid var(--glass-border);
-            color: var(--text); text-align: center;
+            width: 100%; padding: 50px 20px; background: white;
+            border-top: 1px solid var(--border); color: var(--text); text-align: center; margin-top: 60px;
         }
-        .footer-content { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 25px; }
-        .footer-title { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.3px; }
-        .footer-credits { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; border-top: 1px solid rgba(0,0,0,0.06); border-bottom: 1px solid rgba(0,0,0,0.06); padding: 25px 0; text-align: left; }
-        .credit-block h5 { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-sub); margin-bottom: 12px; }
-        .credit-block p { font-size: 1.05rem; line-height: 1.5; font-weight: 500; }
-        .team-list { line-height: 1.8 !important; }
-        .career-tag { color: var(--text-sub); font-size: 0.85em; font-weight: 400; margin-left: 5px; }
-        .footer-thanks { font-size: 0.95rem; line-height: 1.6; color: var(--text-sub); }
-        .footer-thanks strong { color: var(--text); }
+        .footer-content { max-width: 1000px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+        .footer-title { font-size: 1.2rem; font-weight: 700; }
+        .footer-credits {
+            display: flex; justify-content: space-between; text-align: left;
+            border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 20px 0;
+        }
+        .credit-block h5 { font-size: 0.85rem; text-transform: uppercase; color: var(--text-sub); margin-bottom: 10px; }
+        .team-list { line-height: 1.7; font-size: 0.95rem; }
+        .career-tag { color: var(--text-sub); font-size: 0.85em; }
 
         @media (max-width: 1024px) {
-            .main-row { flex-direction: column !important; gap: 50px; }
-            .story-card { grid-template-columns: 1fr; padding: 40px; max-width: 100%; }
-            .illustration-container { display: none; }
-            nav { padding: 15px 20px; flex-direction: column; gap: 15px; }
-            .reflection-card p { font-size: 1.2rem; }
-            .footer-credits { grid-template-columns: 1fr; gap: 20px; text-align: left; }
+            .span-8, .span-7, .span-6, .span-5, .span-4 { grid-column: span 12; } /* Todo a 1 columna en móvil */
+            .download-box { flex-direction: column; text-align: center; gap: 20px; }
+            .footer-credits { flex-direction: column; gap: 20px; text-align: center; }
         }
     </style>
 </head>
@@ -158,209 +168,137 @@
             <span class="un-text">un</span><span class="lema-text"><span class="lema-L">L</span><span class="lema-E">E</span><span class="lema-M">M</span><span class="lema-A">A</span></span>
         </div>
         <div class="edition-selector">
-            <button class="edition-btn active" id="btn-edicion-1" onclick="switchEdition(1)">Boletín 01: Contexto</button>
-            <button class="edition-btn" id="btn-edicion-2" onclick="switchEdition(2)">Boletín 02: Motivaciones</button>
+            <button class="edition-btn active" id="btn-edicion-1" onclick="switchEdition(1)">1. Contexto</button>
+            <button class="edition-btn" id="btn-edicion-2" onclick="switchEdition(2)">2. Motivaciones</button>
         </div>
     </nav>
 
-    <div id="edition-1" style="display: block; opacity: 1;">
+    <div id="edition-1" class="container" style="display: block;">
         
-        <section id="inicio-1">
-            <div class="hero-content">
-                <h1>¿Qué planes tienes a futuro?</h1>
-                <p style="text-align: center; color: var(--text-sub); font-size: 1.5rem;">Contexto y realidad de la intención profesional de los graduados.</p>
-                <div class="choice-container">
-                    <a href="#laboral-1" class="choice-card js-tilt"><i class="fa-solid fa-briefcase" style="color: var(--laboral);"></i><h3>Laboral</h3></a>
-                    <a href="#emprendimiento-1" class="choice-card js-tilt"><i class="fa-solid fa-rocket" style="color: var(--emprendimiento);"></i><h3>Emprendimiento</h3></a>
-                    <a href="#academic-1" class="choice-card js-tilt"><i class="fa-solid fa-graduation-cap" style="color: var(--academic);"></i><h3>Académico</h3></a>
-                </div>
-            </div>
-        </section>
+        <div class="hero">
+            <h1>¿Qué planes tienes a futuro?</h1>
+            <p>Análisis del contexto, tendencias y la realidad de la intención profesional de los graduados en comparación con el panorama nacional.</p>
+        </div>
 
-        <section id="laboral-1">
-            <div class="main-row" style="flex-direction: row;">
-                <div class="illustration-container illu-laboral js-parallax" data-speed="0.1">
-                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="15" y="30" width="70" height="50" rx="5" ry="5" fill="white" opacity="0.8"/>
-                        <path d="M35 30 Q50 15, 65 30" stroke="white" stroke-width="4" fill="none" opacity="0.9"/>
-                        <rect x="45" y="55" width="10" height="10" rx="2" fill="rgba(255,255,255,0.5)"/>
-                        <path d="M15 45 L85 45" stroke="rgba(0,0,0,0.1)" stroke-width="1" opacity="0.5"/>
-                    </svg>
+        <div class="bento-grid" id="grid-1">
+            
+            <div class="card span-8">
+                <div class="card-header">
+                    <div class="icon-box bg-laboral"><i class="fa-solid fa-briefcase"></i></div>
+                    <h2 class="card-title">La prioridad laboral</h2>
                 </div>
-
-                <div class="story-card js-tilt-card">
-                    <div class="text-side">
-                        <span class="tag" style="color: var(--laboral); font-weight: bold;">Eje Laboral</span>
-                        <h2>La prioridad laboral.</h2>
-                        <p class="description">El 58,4% de los participantes señala que su meta principal es conseguir un trabajo para asegurar su economía<span class="citation"></span>. Una inclinación mucho mayor al 42% reportado en otras instituciones como Uniandes<span class="citation">[cite: 27]</span>.</p>
-                        <div class="dynamic-info-box" id="infoBoxLaboralCtx">
-                            <h4 style="color: var(--laboral);">Tasas de vinculación</h4>
-                            <p>Esta alta intención concuerda con la realidad: carreras como Ingeniería y Salud superan el 93% de vinculación formal<span class="citation">[cite: 23]</span>.</p>
-                        </div>
+                <div style="display: flex; gap: 30px; align-items: center; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 250px;">
+                        <p class="card-desc">La intención de buscar empleo de manera inmediata domina el panorama. Esta tendencia coincide con una altísima tasa de vinculación formal en áreas como Ingeniería y Salud (superando el 93%).</p>
+                        <div class="big-stat text-laboral">58.4%</div>
+                        <div class="stat-label">Busca empleo inmediato</div>
                     </div>
-                    <div class="chart-side"><canvas id="chartLaboralCtx"></canvas></div>
-                </div>
-            </div>
-            <div class="reflection-card">
-                <h4 style="color: var(--laboral);">La Realidad del Mercado</h4>
-                <p>"La intención de buscar empleo coincide perfectamente con un mercado que, en la práctica, contrata a la gran mayoría de nuestros egresados."<span class="citation">[cite: 24]</span></p>
-            </div>
-        </section>
-
-        <section id="emprendimiento-1">
-            <div class="main-row" style="flex-direction: row-reverse;">
-                <div class="illustration-container illu-emprendimiento js-parallax" data-speed="-0.1">
-                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M50 15 Q65 40, 60 70 L40 70 Q35 40, 50 15 Z" fill="white" opacity="0.9"/>
-                        <path d="M40 70 L30 85 L45 80 Z" fill="white" opacity="0.7"/>
-                        <path d="M60 70 L70 85 L55 80 Z" fill="white" opacity="0.7"/>
-                        <circle cx="50" cy="45" r="5" fill="rgba(0,0,0,0.1)" opacity="0.5"/>
-                    </svg>
-                </div>
-
-                <div class="story-card js-tilt-card">
-                    <div class="text-side">
-                        <span class="tag" style="color: var(--emprendimiento); font-weight: bold;">Eje Emprendimiento</span>
-                        <h2>El rezago al emprender.</h2>
-                        <p class="description">Solo un 4,9% manifiesta la intención de crear empresa al graduarse<span class="citation"></span>. Una cifra que contrasta fuertemente con el promedio universitario nacional del 28,8%<span class="citation">[cite: 5]</span>.</p>
-                        <div class="dynamic-info-box" id="infoBoxEmprendimientoCtx">
-                            <h4 style="color: var(--emprendimiento);">Brecha Nacional</h4>
-                            <p>La intención emprendedora en la muestra es casi seis veces menor al promedio colombiano<span class="citation">[cite: 6]</span>.</p>
-                        </div>
+                    <div style="flex: 2; min-width: 300px; height: 200px;">
+                        <canvas id="chartLaboralCtx"></canvas>
                     </div>
-                    <div class="chart-side"><canvas id="chartEmprendimientoCtx"></canvas></div>
                 </div>
             </div>
-            <div class="reflection-card">
-                <h4 style="color: var(--emprendimiento);">Contraste Global</h4>
-                <p>"Mientras en Colombia la intención duplica el promedio global, nuestra población se posiciona 10 puntos por debajo del estándar internacional."<span class="citation"></span></p>
-            </div>
-        </section>
 
-        <section id="academic-1">
-            <div class="main-row" style="flex-direction: row;">
-                <div class="illustration-container illu-academic js-parallax" data-speed="0.15">
-                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M50 20 L90 40 L50 60 L10 40 Z" fill="white" opacity="0.9"/>
-                        <path d="M30 50 L70 50 L60 80 L40 80 Z" fill="white" opacity="0.6"/>
-                        <circle cx="50" cy="40" r="2" fill="rgba(255,255,255,0.8)"/>
-                        <path d="M50 40 Q60 50, 55 80" stroke="white" stroke-width="1.5" fill="none" opacity="0.9"/>
-                    </svg>
+            <div class="card span-4">
+                <div class="card-header">
+                    <div class="icon-box bg-academic"><i class="fa-solid fa-graduation-cap"></i></div>
+                    <h2 class="card-title">Investigación</h2>
                 </div>
-                
-                <div class="story-card js-tilt-card">
-                    <div class="text-side">
-                        <span class="tag" style="color: var(--academic); font-weight: bold;">Eje Académico</span>
-                        <h2>Continuidad académica.</h2>
-                        <p class="description">El 31,4% de los participantes manifiesta su intención de continuar estudiando de forma inmediata<span class="citation"></span>, superando el tránsito real en Colombia del 9,2%<span class="citation"></span>.</p>
-                        <div class="dynamic-info-box" id="infoBoxAcademicCtx">
-                            <h4 style="color: var(--academic);">El Punto Medio</h4>
-                            <p>Superan la media nacional, pero se mantienen por debajo del 45-50% de las universidades top mundiales<span class="citation"></span>.</p>
-                        </div>
-                    </div>
-                    <div class="chart-side"><canvas id="chartAcademicCtx"></canvas></div>
+                <div class="big-stat text-academic">31.4%</div>
+                <div class="stat-label" style="margin-bottom: 15px;">Desea posgrado directo</div>
+                <p class="card-desc" style="font-size: 0.95rem;">Un interés 3.4 veces mayor que el tránsito nacional promedio de Colombia (9.2%).</p>
+                <div class="chart-wrapper" style="min-height: 150px;"><canvas id="chartAcademicCtx"></canvas></div>
+            </div>
+
+            <div class="card span-5">
+                <div class="card-header">
+                    <div class="icon-box bg-emprendimiento"><i class="fa-solid fa-rocket"></i></div>
+                    <h2 class="card-title">Rezago al emprender</h2>
                 </div>
+                <p class="card-desc">Cifra alarmantemente baja frente a estándares nacionales e internacionales. Solo una minoría considera crear empresa al salir.</p>
+                <div class="chart-wrapper"><canvas id="chartEmprendimientoCtx"></canvas></div>
             </div>
-            <div class="reflection-card">
-                <h4 style="color: var(--academic);">Vocación de Investigación</h4>
-                <p>"El interés por la formación avanzada en este grupo es 3,4 veces superior al comportamiento promedio registrado a nivel nacional."<span class="citation">[cite: 39]</span></p>
+
+            <div class="card span-7 reflection">
+                <i class="fa-solid fa-quote-left" style="font-size: 2rem; opacity: 0.5; margin-bottom: 15px; color: var(--laboral);"></i>
+                <p>"La intención de buscar empleo coincide perfectamente con un mercado que, en la práctica, contrata a la gran mayoría de nuestros egresados, desplazando el emprendimiento."</p>
             </div>
-        </section>
+
+        </div>
     </div>
 
-    <div id="edition-2" style="display: none; opacity: 0;">
+    <div id="edition-2" class="container" style="display: none; opacity: 0;">
         
-        <section id="inicio-2">
-            <div class="hero-content">
-                <h1>Profundizando las razones.</h1>
-                <p style="text-align: center; color: var(--text-sub); font-size: 1.5rem;">Boletín 02: ¿Qué motiva sus decisiones?</p>
-                <div class="choice-container">
-                    <a href="#laboral-2" class="choice-card js-tilt"><i class="fa-solid fa-briefcase" style="color: var(--laboral);"></i><h3>Laboral</h3></a>
-                    <a href="#emprendimiento-2" class="choice-card js-tilt"><i class="fa-solid fa-rocket" style="color: var(--emprendimiento);"></i><h3>Emprendimiento</h3></a>
-                    <a href="#academic-2" class="choice-card js-tilt"><i class="fa-solid fa-graduation-cap" style="color: var(--academic);"></i><h3>Académico</h3></a>
-                </div>
-            </div>
-        </section>
+        <div class="hero">
+            <h1>Profundizando las razones</h1>
+            <p>Descubriendo los motivadores psicológicos y estratégicos detrás de las decisiones profesionales de los estudiantes.</p>
+        </div>
 
-        <section id="laboral-2">
-            <div class="main-row" style="flex-direction: row;">
-                <div class="illustration-container illu-laboral js-parallax" data-speed="0.1">
-                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="15" y="30" width="70" height="50" rx="5" ry="5" fill="white" opacity="0.8"/>
-                        <path d="M35 30 Q50 15, 65 30" stroke="white" stroke-width="4" fill="none" opacity="0.9"/>
-                    </svg>
-                </div>
-                <div class="story-card js-tilt-card">
-                    <div class="text-side">
-                        <span class="tag" style="color: var(--laboral); font-weight: bold;">Motivación Laboral</span>
-                        <h2>Buscando estabilidad.</h2>
-                        <p class="description">El mercado exige seguridad, convirtiendo a la economía en prioridad absoluta frente a otras variables.</p>
-                        <div class="dynamic-info-box" id="infoBoxLaboralMot">
-                            <h4>Explora los datos</h4>
-                            <p>Haz clic en las barras para revelar el detalle.</p>
-                        </div>
-                    </div>
-                    <div class="chart-side"><canvas id="chartLaboralMot"></canvas></div>
-                </div>
-            </div>
-        </section>
+        <div class="bento-grid" id="grid-2">
 
-        <section id="emprendimiento-2">
-            <div class="main-row" style="flex-direction: row-reverse;">
-                <div class="illustration-container illu-emprendimiento js-parallax" data-speed="-0.1">
-                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M50 15 Q65 40, 60 70 L40 70 Q35 40, 50 15 Z" fill="white" opacity="0.9"/>
-                        <path d="M40 70 L30 85 L45 80 Z" fill="white" opacity="0.7"/>
-                        <path d="M60 70 L70 85 L55 80 Z" fill="white" opacity="0.7"/>
-                    </svg>
+            <div class="card span-4">
+                <div class="card-header">
+                    <div class="icon-box bg-emprendimiento"><i class="fa-solid fa-rocket"></i></div>
+                    <h2 class="card-title">Dueños del tiempo</h2>
                 </div>
-                <div class="story-card js-tilt-card">
-                    <div class="text-side">
-                        <span class="tag" style="color: var(--emprendimiento); font-weight: bold;">Motivación Emprendimiento</span>
-                        <h2>Dueños de su tiempo.</h2>
-                        <p class="description">El espíritu disruptivo crece en busca de libertad e impacto directo.</p>
-                        <div class="dynamic-info-box" id="infoBoxEmprendimientoMot">
-                            <h4>Explora los datos</h4>
-                            <p>Haz clic en el gráfico para revelar el detalle.</p>
-                        </div>
-                    </div>
-                    <div class="chart-side"><canvas id="chartEmprendimientoMot"></canvas></div>
-                </div>
+                <p class="card-desc">El espíritu disruptivo crece en busca de libertad e impacto directo.</p>
+                <div class="chart-wrapper"><canvas id="chartEmprendimientoMot"></canvas></div>
             </div>
-        </section>
 
-        <section id="academic-2">
-            <div class="main-row" style="flex-direction: row;">
-                <div class="illustration-container illu-academic js-parallax" data-speed="0.15">
-                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M50 20 L90 40 L50 60 L10 40 Z" fill="white" opacity="0.9"/>
-                        <path d="M30 50 L70 50 L60 80 L40 80 Z" fill="white" opacity="0.6"/>
-                    </svg>
+            <div class="card span-8">
+                <div class="card-header">
+                    <div class="icon-box bg-laboral"><i class="fa-solid fa-briefcase"></i></div>
+                    <h2 class="card-title">Buscando estabilidad</h2>
                 </div>
-                <div class="story-card js-tilt-card">
-                    <div class="text-side">
-                        <span class="tag" style="color: var(--academic); font-weight: bold;">Motivación Académica</span>
-                        <h2>Pasión por el saber.</h2>
-                        <p class="description">Las motivaciones personales impulsan a buscar especialización profunda por encima del dinero.</p>
-                        <div class="dynamic-info-box" id="infoBoxAcademicMot">
-                            <h4>Explora los datos</h4>
-                            <p>Haz clic en el gráfico para revelar el detalle.</p>
-                        </div>
+                <div style="display: flex; gap: 20px; align-items: center; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 200px;">
+                        <p class="card-desc">El mercado exige seguridad, convirtiendo a la economía en prioridad absoluta frente a otras variables.</p>
+                        <div class="big-stat text-laboral">59.0%</div>
+                        <div class="stat-label">Ingresos fijos y seguridad</div>
                     </div>
-                    <div class="chart-side"><canvas id="chartAcademicMot"></canvas></div>
+                    <div style="flex: 1; min-width: 250px; height: 220px;">
+                        <canvas id="chartLaboralMot"></canvas>
+                    </div>
                 </div>
             </div>
-        </section>
+
+            <div class="card span-8">
+                <div class="card-header">
+                    <div class="icon-box bg-academic"><i class="fa-solid fa-graduation-cap"></i></div>
+                    <h2 class="card-title">Pasión por el saber</h2>
+                </div>
+                <div style="display: flex; gap: 20px; align-items: center; flex-wrap: wrap;">
+                    <div style="flex: 1.5; min-width: 250px; height: 220px;">
+                        <canvas id="chartAcademicMot"></canvas>
+                    </div>
+                    <div style="flex: 1; min-width: 200px;">
+                        <div class="big-stat text-academic">36.1%</div>
+                        <div class="stat-label" style="margin-bottom: 10px;">Vocación y Pasión</div>
+                        <p class="card-desc" style="font-size: 0.95rem;">Las motivaciones personales impulsan a buscar especialización profunda por encima del requerimiento del mercado laboral.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="download-box card">
+            <div>
+                <h3 style="font-size: 1.5rem; margin-bottom: 5px;">Descarga el informe completo</h3>
+                <p style="color: var(--text-sub);">Obtén el PDF con la metodología, tabulación de datos y conclusiones ejecutivas.</p>
+            </div>
+            <a href="reporte_unLEMA_boletin01.pdf" download class="btn-download">
+                <i class="fa-solid fa-cloud-arrow-down"></i> Boletín Oficial (PDF)
+            </a>
+        </div>
 
     </div>
 
     <footer>
         <div class="footer-content">
             <div class="footer-title">unLEMA Boletines 2026</div>
-            
             <div class="footer-credits">
                 <div class="credit-block">
-                    <h5>Desarrollo Web</h5>
+                    <h5>Desarrollo Web & UI</h5>
                     <p>Nicolas Rodríguez</p>
                 </div>
                 <div class="credit-block">
@@ -373,138 +311,146 @@
                     </p>
                 </div>
             </div>
-            
-            <div class="footer-thanks">
+            <div style="font-size: 0.9rem; color: var(--text-sub);">
                 Agradecimientos especiales a <strong>Zulma Camargo</strong> (Jefe del área de acompañamiento integral de sede) y a <strong>Fabian Meneses</strong> (Profesional del área de acompañamiento integral de sede) por su invaluable apoyo en la materialización de este proyecto.
             </div>
         </div>
     </footer>
 
     <script>
+        // Registrar ChartJS
+        Chart.register(ChartDataLabels);
+        Chart.defaults.font.family = '-apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif';
+        Chart.defaults.color = '#5a5a5e';
+
         let charts = {};
 
-        // --- SISTEMA DE PESTAÑAS Y SCROLL ---
+        // --- SISTEMA DE PESTAÑAS Y ANIMACIONES ---
         function switchEdition(num) {
-            const current = document.querySelector('[id^="edition-"]:not([style*="display: none"])');
-            if (current && current.id === `edition-${num}`) return;
-            gsap.to(current, { opacity: 0, duration: 0.3, onComplete: () => {
-                if(current) current.style.display = "none";
-                const next = document.getElementById(`edition-${num}`);
-                next.style.display = "block";
-                document.querySelectorAll(".edition-btn").forEach(b => b.classList.remove("active"));
-                document.getElementById(`btn-edicion-${num}`).classList.add("active");
+            const currentId = num === 1 ? 2 : 1;
+            const currentDiv = document.getElementById(`edition-${currentId}`);
+            const nextDiv = document.getElementById(`edition-${num}`);
+            
+            if (nextDiv.style.display === "block") return;
+
+            document.querySelectorAll(".edition-btn").forEach(b => b.classList.remove("active"));
+            document.getElementById(`btn-edicion-${num}`).classList.add("active");
+
+            gsap.to(currentDiv, { opacity: 0, y: 20, duration: 0.3, onComplete: () => {
+                currentDiv.style.display = "none";
+                nextDiv.style.display = "block";
+                window.scrollTo({ top: 0, behavior: 'smooth' });
                 
-                // Reiniciar el fondo al inicio
-                document.body.className = "theme-inicio";
-                window.scrollTo(0, 0);
-                
-                gsap.to(next, { opacity: 1, duration: 0.5 });
-                ScrollTrigger.refresh();
+                // Animar entrada de las tarjetas en grid
+                gsap.fromTo(`#grid-${num} .card`, 
+                    { opacity: 0, y: 40 }, 
+                    { opacity: 1, y: 0, duration: 0.6, stagger: 0.15, ease: "power2.out", onComplete: () => {
+                        initCharts(num);
+                    }}
+                );
+                // Animar la barra de descarga
+                if(num===2) gsap.fromTo(".download-box", {opacity: 0, y: 20}, {opacity: 1, y: 0, delay: 0.5});
             }});
         }
 
-        VanillaTilt.init(document.querySelectorAll(".js-tilt"), { max: 15, speed: 400, glare: true, "max-glare": 0.2 });
-        VanillaTilt.init(document.querySelectorAll(".js-tilt-card"), { max: 2, speed: 1000 });
-
-        Chart.register(ChartDataLabels);
-
-        // --- DATOS PARA GRÁFICOS INTERACTIVOS ---
-        // Boletin 1: Contexto
-        const dataContext = {
-            laboral: [
-                { title: "Nuestra Muestra", text: "58.4% busca empleo de inmediato.", color: "#00a19b" },
-                { title: "Uniandes", text: "42% busca trabajo de forma inmediata (el 38% sigue estudiando o emprende).", color: "#4dcad4" }
-            ],
-            emprendimiento: [
-                { title: "Nuestra Muestra", text: "4.9% manifiesta intención de emprender.", color: "#ec7920" },
-                { title: "Global", text: "14.9% es el estándar internacional.", color: "#f29a50" },
-                { title: "Colombia (GUESSS)", text: "28.8% de universitarios a nivel nacional.", color: "#f7bd84" }
-            ],
-            academic: [
-                { title: "Nuestra Muestra", text: "31.4% desea continuar estudiando.", color: "#df0832" },
-                { title: "Colombia (SNIES)", text: "Solo el 9.2% hace el tránsito directo a posgrado.", color: "#eb4160" },
-                { title: "Top 100 Global (QS)", text: "47.5% en promedio transitan a posgrado en universidades élite.", color: "#f57a8e" }
-            ]
-        };
-
-        // Boletin 2: Motivaciones (Extraídas de las figuras 1, 2, 3)
-        const dataMot = {
-            laboral: [
-                { title: "Seguridad Económica", text: "59.0% lo elige por ingresos fijos y mitigar riesgos.", color: "#00a19b" },
-                { title: "Experiencia Práctica", text: "31.3% busca adquirir experiencia en campo.", color: "#4dcad4" }
-            ],
-            emprendimiento: [
-                { title: "Independencia Laboral", text: "23.1% quiere ser su propio jefe.", color: "#ec7920" },
-                { title: "Independencia Financiera", text: "19.2% busca libertad económica.", color: "#f29a50" },
-                { title: "Generación de Empleo", text: "15.4% tiene visión de impacto social.", color: "#f7bd84" }
-            ],
-            academic: [
-                { title: "Motivaciones Personales", text: "36.1% se mueve por vocación y pasión.", color: "#df0832" },
-                { title: "Experiencia de Pregrado", text: "21.6% continúa motivado por su trayectoria anterior.", color: "#eb4160" },
-                { title: "Necesario para Trabajar", text: "15.0% lo ve como requisito del mercado.", color: "#f57a8e" }
-            ]
-        };
-
-        // Función renderizadora universal
-        function renderChart(id, type, labels, data, colors, dataSource, textKey, boxId) {
-            if (charts[id]) return;
-            let chartOptions = {
-                responsive: true, maintainAspectRatio: false,
-                layout: { padding: { top: 30, bottom: 10 } },
-                plugins: { 
-                    legend: { display: type !== 'bar', position: 'bottom', labels: { color: '#1d1d1f' } }, 
-                    datalabels: { color: '#fff', font: { weight: 'bold', size: 14 }, formatter: v => v + '%' } 
-                },
-                onClick: (e, el) => { 
-                    if (el.length > 0) { 
-                        const d = dataSource[textKey][el[0].index]; 
-                        const box = document.getElementById(boxId); 
-                        box.style.opacity = 0; 
-                        setTimeout(() => { box.innerHTML = `<h4 style="color:${d.color}">${d.title}</h4><p>${d.text}</p>`; box.style.opacity = 1; }, 200); 
-                    } 
-                }
-            };
-            if (type === 'bar') { 
-                chartOptions.scales = { 
-                    y: { beginAtZero: true, max: 100, grid: { color: 'rgba(0,0,0,0.05)' }, ticks: { color: '#5a5a5e' } }, 
-                    x: { grid: { display: false }, ticks: { color: '#1d1d1f', font: { weight: 'bold' } } } 
-                }; 
-            }
-            charts[id] = new Chart(document.getElementById(id), { type: type, data: { labels: labels, datasets: [{ data: data, backgroundColor: colors, borderWidth: 2, borderColor: '#fff' }] }, options: chartOptions });
+        // --- RENDERIZADO DE GRÁFICOS VARIOS ---
+        function createChart(id, config) {
+            if (charts[id]) charts[id].destroy(); // Prevenir duplicados
+            charts[id] = new Chart(document.getElementById(id), config);
         }
 
-        gsap.registerPlugin(ScrollTrigger);
-        document.querySelectorAll(".js-parallax").forEach(el => { gsap.to(el, { y: el.dataset.speed * 500, scrollTrigger: { trigger: el, start: "top bottom", end: "bottom top", scrub: true } }); });
+        function initCharts(edition) {
+            if (edition === 1) {
+                // 1. HORIZONTAL BAR (Laboral Context)
+                createChart('chartLaboralCtx', {
+                    type: 'bar',
+                    data: {
+                        labels: ['Muestra unLEMA', 'Uniandes'],
+                        datasets: [{ data: [58.4, 42.0], backgroundColor: ['#00a19b', '#d1d1d6'], borderRadius: 6 }]
+                    },
+                    options: {
+                        indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+                        plugins: { legend: { display: false }, datalabels: { color: '#fff', font: {weight: 'bold'}, formatter: v=>v+'%' } },
+                        scales: { x: { display: false, max: 100 }, y: { grid: {display: false}, border: {display:false}, ticks: {font:{weight:'bold', color: '#1d1d1f'}} } }
+                    }
+                });
 
-        // --- MAPA DE SECCIONES PARA ANIMAR Y CAMBIAR COLOR ---
-        const sections = [
-            // Boletín 1
-            { id: "inicio-1", col: "inicio" },
-            { id: "laboral-1", col: "laboral", init: () => renderChart('chartLaboralCtx', 'bar', ['Muestra', 'Uniandes'], [58.4, 42.0], ['#00a19b', '#4dcad4'], dataContext, 'laboral', 'infoBoxLaboralCtx') },
-            { id: "emprendimiento-1", col: "emprendimiento", init: () => renderChart('chartEmprendimientoCtx', 'bar', ['Muestra', 'Global', 'Colombia'], [4.9, 14.9, 28.8], ['#ec7920', '#f29a50', '#f7bd84'], dataContext, 'emprendimiento', 'infoBoxEmprendimientoCtx') },
-            { id: "academic-1", col: "academic", init: () => renderChart('chartAcademicCtx', 'bar', ['Muestra', 'Colombia', 'Top 100'], [31.4, 9.2, 47.5], ['#df0832', '#eb4160', '#f57a8e'], dataContext, 'academic', 'infoBoxAcademicCtx') },
-            
-            // Boletín 2
-            { id: "inicio-2", col: "inicio" },
-            { id: "laboral-2", col: "laboral", init: () => renderChart('chartLaboralMot', 'bar', ['Seguridad Econ.', 'Exp. Práctica'], [59.0, 31.3], ['#00a19b', '#4dcad4'], dataMot, 'laboral', 'infoBoxLaboralMot') },
-            { id: "emprendimiento-2", col: "emprendimiento", init: () => renderChart('chartEmprendimientoMot', 'doughnut', ['Indep. Lab', 'Indep. Fin', 'Empleo'], [23.1, 19.2, 15.4], ['#ec7920', '#f29a50', '#f7bd84'], dataMot, 'emprendimiento', 'infoBoxEmprendimientoMot') },
-            { id: "academic-2", col: "academic", init: () => renderChart('chartAcademicMot', 'doughnut', ['Personales', 'Exp.', 'Trab.'], [36.1, 21.6, 15.0], ['#df0832', '#eb4160', '#f57a8e'], dataMot, 'academic', 'infoBoxAcademicMot') }
-        ];
+                // 2. LINE CHART (Academic Context)
+                createChart('chartAcademicCtx', {
+                    type: 'line',
+                    data: {
+                        labels: ['Nal. (SNIES)', 'unLEMA', 'Top 100 Global'],
+                        datasets: [{ data: [9.2, 31.4, 47.5], borderColor: '#df0832', backgroundColor: 'rgba(223, 8, 50, 0.1)', fill: true, tension: 0.4, pointRadius: 6, pointBackgroundColor: '#df0832' }]
+                    },
+                    options: {
+                        responsive: true, maintainAspectRatio: false,
+                        plugins: { legend: { display: false }, datalabels: { align: 'top', color: '#df0832', font: {weight: 'bold'}, formatter: v=>v+'%' } },
+                        scales: { y: { display: false, min: 0, max: 60 }, x: { grid: {display: false} } }
+                    }
+                });
 
-        sections.forEach(s => {
-            ScrollTrigger.create({ 
-                trigger: `#${s.id}`, 
-                start: "top 50%", end: "bottom 50%", 
-                onEnter: () => document.body.className = `theme-${s.col}`, 
-                onEnterBack: () => document.body.className = `theme-${s.col}` 
-            });
-            if (!s.id.includes("inicio")) {
-                gsap.to(`#${s.id} .story-card, #${s.id} .reflection-card`, { 
-                    opacity: 1, y: 0, duration: 1.2, stagger: 0.3, 
-                    scrollTrigger: { trigger: `#${s.id}`, start: "top 70%", onEnter: () => s.init() } 
+                // 3. POLAR AREA (Emprendimiento Context)
+                createChart('chartEmprendimientoCtx', {
+                    type: 'polarArea',
+                    data: {
+                        labels: ['Nuestra Muestra', 'Global', 'Nacional (GUESSS)'],
+                        datasets: [{ data: [4.9, 14.9, 28.8], backgroundColor: ['rgba(236, 121, 32, 0.8)', 'rgba(236, 121, 32, 0.4)', 'rgba(236, 121, 32, 0.2)'], borderWidth: 2, borderColor: '#fff' }]
+                    },
+                    options: {
+                        responsive: true, maintainAspectRatio: false,
+                        plugins: { legend: { position: 'right' }, datalabels: { display: false } },
+                        scales: { r: { ticks: {display: false} } }
+                    }
+                });
+            } else {
+                // 4. DOUGHNUT (Laboral Mot)
+                createChart('chartLaboralMot', {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Seguridad Económica', 'Exp. Práctica'],
+                        datasets: [{ data: [59.0, 31.3], backgroundColor: ['#00a19b', '#4dcad4'], borderWidth: 3, borderColor: '#fff' }]
+                    },
+                    options: {
+                        responsive: true, maintainAspectRatio: false, cutout: '60%',
+                        plugins: { legend: { position: 'right' }, datalabels: { color: '#fff', font:{weight:'bold'} } }
+                    }
+                });
+
+                // 5. RADAR (Emprendimiento Mot)
+                createChart('chartEmprendimientoMot', {
+                    type: 'radar',
+                    data: {
+                        labels: ['Indep. Laboral', 'Indep. Financiera', 'Generar Empleo'],
+                        datasets: [{ data: [23.1, 19.2, 15.4], backgroundColor: 'rgba(236, 121, 32, 0.2)', borderColor: '#ec7920', pointBackgroundColor: '#ec7920', pointRadius: 5 }]
+                    },
+                    options: {
+                        responsive: true, maintainAspectRatio: false,
+                        plugins: { legend: { display: false }, datalabels: { display: false } },
+                        scales: { r: { angleLines: {color: 'rgba(0,0,0,0.1)'}, grid: {color: 'rgba(0,0,0,0.1)'}, pointLabels: {font:{size: 11, weight:'bold'}, color:'#1d1d1f'}, ticks:{display:false, max: 25} } }
+                    }
+                });
+
+                // 6. VERTICAL BAR (Academic Mot)
+                createChart('chartAcademicMot', {
+                    type: 'bar',
+                    data: {
+                        labels: ['Vocación', 'Experiencia', 'Requisito'],
+                        datasets: [{ data: [36.1, 21.6, 15.0], backgroundColor: ['#df0832', '#eb4160', '#f57a8e'], borderRadius: 6 }]
+                    },
+                    options: {
+                        responsive: true, maintainAspectRatio: false,
+                        plugins: { legend: { display: false }, datalabels: { anchor: 'end', align: 'start', color: '#fff', font:{weight:'bold'} } },
+                        scales: { y: { display: false, max: 40 }, x: { grid: {display:false}, border: {display:false} } }
+                    }
                 });
             }
-        });
+        }
+
+        // Inicializar animaciones de entrada en la carga original
+        window.onload = () => {
+            gsap.fromTo("#grid-1 .card", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.8, stagger: 0.15, ease: "power2.out" });
+            setTimeout(() => initCharts(1), 500);
+        };
     </script>
 </body>
 </html>
