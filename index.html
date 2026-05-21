@@ -83,7 +83,6 @@
             gap: 5vw;
         }
 
-        /* Alineación y Ritmo Visual */
         #academic-1 .main-row, #emprendimiento-1 .main-row { flex-direction: row; } 
         #laboral-1 .main-row { flex-direction: row-reverse; } 
 
@@ -117,7 +116,7 @@
 
         .chart-side { width: 100%; height: 400px; position: relative; transform: translateZ(50px); cursor: pointer; }
 
-        /* --- TARJETAS DE REFLEXIÓN / DATO CURIOSO --- */
+        /* --- TARJETAS DE REFLEXIÓN --- */
         .reflection-card {
             background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(25px);
@@ -146,6 +145,61 @@
             font-style: italic;
             font-weight: 500;
             color: var(--text);
+        }
+
+        /* --- TARJETA DE DESCARGA (NUEVO) --- */
+        .download-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(30px);
+            border-radius: 30px;
+            padding: 40px 50px;
+            max-width: 1000px;
+            width: 90%;
+            margin-top: 60px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+            opacity: 0; transform: translateY(50px);
+        }
+
+        .download-icon {
+            font-size: 3.5rem;
+            color: var(--emprendimiento);
+            background: rgba(236, 121, 32, 0.1);
+            width: 90px;
+            height: 90px;
+            border-radius: 25px;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .download-info { flex: 1; text-align: left; }
+        .download-info h3 { font-size: 1.8rem; margin-bottom: 10px; color: var(--text); }
+        .download-info p { color: var(--text-sub); font-size: 1.1rem; line-height: 1.5; margin: 0; }
+
+        .download-btn {
+            background: var(--text);
+            color: white;
+            padding: 18px 36px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            white-space: nowrap;
+        }
+
+        .download-btn:hover {
+            background: #000;
+            transform: translateY(-4px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.25);
         }
 
         /* Botones de inicio */
@@ -178,6 +232,9 @@
             .illustration-container { display: none; }
             nav { padding: 15px 20px; flex-direction: column; gap: 15px; }
             .reflection-card p { font-size: 1.2rem; }
+            .download-card { flex-direction: column; text-align: center; padding: 40px 30px; }
+            .download-info { text-align: center; }
+            .download-btn { width: 100%; justify-content: center; }
         }
     </style>
 </head>
@@ -299,6 +356,19 @@
             <div class="reflection-card">
                 <h4 style="color: var(--emprendimiento);">El Futuro</h4>
                 <p>"La visión de negocio está cambiando: los nuevos emprendedores no solo buscan ser sus propios jefes, sino escalar para convertirse en generadores de empleo."</p>
+            </div>
+
+            <div class="download-card">
+                <div class="download-icon">
+                    <i class="fa-solid fa-file-pdf"></i>
+                </div>
+                <div class="download-info">
+                    <h3>¿Quieres el informe completo?</h3>
+                    <p>Descarga el reporte ejecutivo del <b>Boletín 01</b> con todos los datos metodológicos y análisis estratégico.</p>
+                </div>
+                <a href="reporte_unLEMA_boletin01.pdf" download class="download-btn">
+                    <i class="fa-solid fa-cloud-arrow-down"></i> Descargar PDF
+                </a>
             </div>
         </section>
 
@@ -442,12 +512,12 @@
             });
 
             if (s.id !== "inicio-1") {
-                // Anima tanto la tarjeta principal como la de reflexión
-                gsap.to(`#${s.id} .story-card, #${s.id} .reflection-card`, {
+                // Ahora animamos 3 elementos en cascada: story-card -> reflection-card -> download-card
+                gsap.to(`#${s.id} .story-card, #${s.id} .reflection-card, #${s.id} .download-card`, {
                     opacity: 1, 
                     y: 0, 
                     duration: 1.2, 
-                    stagger: 0.3, // Añade un ligero retraso para que aparezca primero la tarjeta y luego la reflexión
+                    stagger: 0.3, 
                     scrollTrigger: { trigger: `#${s.id}`, start: "top 70%", onEnter: () => s.init() }
                 });
             }
