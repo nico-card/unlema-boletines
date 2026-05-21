@@ -178,13 +178,25 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             color: var(--text-sub);
-            margin-bottom: 8px;
+            margin-bottom: 12px;
         }
         .credit-block p {
             font-size: 1.05rem;
             line-height: 1.5;
             font-weight: 500;
         }
+        
+        /* Estilos específicos para la lista del equipo */
+        .team-list {
+            line-height: 1.8 !important; /* Más espacio entre líneas */
+        }
+        .career-tag {
+            color: var(--text-sub);
+            font-size: 0.85em;
+            font-weight: 400;
+            margin-left: 5px;
+        }
+
         .footer-thanks {
             font-size: 0.95rem;
             line-height: 1.6;
@@ -203,7 +215,7 @@
             .download-card { flex-direction: column; text-align: center; padding: 40px 30px; }
             .download-info { text-align: center; }
             .download-btn { width: 100%; justify-content: center; }
-            .footer-credits { grid-template-columns: 1fr; gap: 20px; text-align: center; }
+            .footer-credits { grid-template-columns: 1fr; gap: 20px; text-align: left; }
         }
     </style>
 </head>
@@ -364,11 +376,16 @@
             <div class="footer-credits">
                 <div class="credit-block">
                     <h5>Desarrollo Web</h5>
-                    <p>Nicolas Rodriguez</p>
+                    <p>Nicolas Rodríguez</p>
                 </div>
                 <div class="credit-block">
                     <h5>Análisis de la Información</h5>
-                    <p>Daniel Contreras, Maria Fernanda Cardenas, Nicolas Rodriguez y Jean Ruiz</p>
+                    <p class="team-list">
+                        Daniel Contreras <span class="career-tag">(Ingeniería Química)</span><br>
+                        Nicolas Rodríguez <span class="career-tag">(Ingeniería Electrónica)</span><br>
+                        Maria Fernanda Cardenas <span class="career-tag">(Ingeniería Química)</span><br>
+                        Jeam Ruiz <span class="career-tag">(Cine y Televisión)</span>
+                    </p>
                 </div>
             </div>
             
