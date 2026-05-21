@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>unLEMA | Futuro Profesional</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+
+    <style>
+        /* --- VARIABLES DE MARCA unLEMA --- */
+        :root {
+            --text: #1d1d1f;
+            --text-sub: #5a5a5e;
+            --laboral: #00a19b;        /* L */
+            --emprendimiento: #ec7920; /* E */
+            --letra-m: #cfd938;        /* M */
+            --academic: #df0832;       /* A */
+            --inicio: #fbf1e9;
+            --glass: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(255, 255, 255, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+        
+        body {
+            overflow-x: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif;
+            background-color: var(--inicio);
+            color: var(--text);
+            transition: background-color 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body.theme-inicio { background-color: var(--inicio); }
+        body.theme-academic { background-color: var(--academic); }
+        body.theme-laboral { background-color: var(--laboral); }
+        body.theme-emprendimiento { background-color: var(--emprendimiento); }
+
+        /* --- NAVEGACIÓN --- */
+        nav {
+            position: fixed; top: 0; width: 100%; padding: 15px 50px;
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 1000; background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(25px); border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .logo { font-size: 24px; letter-spacing: -0.5px; cursor: pointer; }
+        .un-text { font-weight: 300; color: var(--text); }
+        .lema-text { font-weight: 800; }
+        .lema-L { color: var(--laboral); } .lema-E { color: var(--emprendimiento); } 
+        .lema-M { color: var(--letra-m); } .lema-A { color: var(--academic); }
+
+        .edition-selector { display: flex; background: rgba(0,0,0,0.05); padding: 5px; border-radius: 50px; gap: 5px; }
+        .edition-btn {
+            padding: 8px 18px; border-radius: 50px; border: none; cursor: pointer;
+            font-size: 14px; font-weight: 600; transition: 0.3s ease; color: var(--text-sub); background: transparent;
+        }
+        .edition-btn.active { background: white; color: var(--text); box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+
+        /* --- SECCIONES Y LAYOUT ESTILO PÁGINA --- */
+        section { 
+            min-height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            position: relative; 
+            padding: 120px 20px 60px 20px; 
+            width: 100%; 
+            gap: 40px; 
+        }
+
+        .main-row {
+            display: flex;
+            width: 100%;
+            max-width: 1600px;
+            justify-content: space-evenly;
+            align-items: center;
+            gap: 5vw;
+        }
+
+        /* Alineación y Ritmo Visual */
+        #academic-1 .main-row, #emprendimiento-1 .main-row { flex-direction: row; } 
+        #laboral-1 .main-row { flex-direction: row-reverse; } 
+
+        /* --- ILUSTRACIONES VECTORIALES --- */
+        .illustration-container {
+            position: relative; 
+            width: 350px; height: 350px;
+            opacity: 0.8; 
+            pointer-events: none; z-index: 2;
+        }
+
+        /* --- STORYTELLING CARDS --- */
+        .story-card {
+            background: var(--glass); backdrop-filter: blur(40px);
+            border-radius: 40px; padding: 60px;
+            width: 100%; max-width: 900px;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;
+            border: 1px solid var(--glass-border); box-shadow: 0 30px 80px rgba(0,0,0,0.15);
+            opacity: 0; transform: translateY(100px); transform-style: preserve-3d; z-index: 1;
+        }
+
+        .text-side { transform: translateZ(30px); }
+        h1 { font-size: clamp(3rem, 7vw, 5.5rem); line-height: 1.05; letter-spacing: -0.03em; margin-bottom: 20px; text-align: center; width: 100%;}
+        h2 { font-size: 3rem; line-height: 1.1; margin-bottom: 10px; }
+        
+        .dynamic-info-box {
+            margin-top: 25px; background: rgba(255, 255, 255, 0.95); padding: 25px;
+            border-radius: 20px; border: 1px solid var(--glass-border); min-height: 140px;
+            display: flex; flex-direction: column; justify-content: center;
+        }
+
+        .chart-side { width: 100%; height: 400px; position: relative; transform: translateZ(50px); cursor: pointer; }
+
+        /* --- TARJETAS DE REFLEXIÓN / DATO CURIOSO --- */
+        .reflection-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(25px);
+            padding: 35px 50px;
+            border-radius: 30px;
+            max-width: 1000px;
+            width: 90%;
+            text-align: center;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            opacity: 0; transform: translateY(50px);
+            margin-top: 20px;
+        }
+
+        .reflection-card h4 {
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            opacity: 0.8;
+        }
+
+        .reflection-card p {
+            font-size: 1.5rem;
+            line-height: 1.4;
+            font-style: italic;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        /* Botones de inicio */
+        .choice-container { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-top: 40px; width: 100%; }
+        .choice-card {
+            background: white; padding: 30px; border-radius: 25px; text-decoration: none;
+            color: var(--text); border: 1px solid var(--glass-border); text-align: center; width: 200px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+        .choice-card i { font-size: 2.5rem; display: block; margin-bottom: 15px; }
+
+        /* --- FOOTER / CRÉDITOS --- */
+        footer {
+            width: 100%;
+            padding: 40px 20px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid var(--glass-border);
+            color: var(--text);
+            font-size: 0.95rem;
+            margin-top: 50px;
+        }
+        footer p { margin-bottom: 5px; opacity: 0.8; }
+        footer strong { font-weight: 700; opacity: 1; }
+
+        @media (max-width: 1024px) {
+            .main-row { flex-direction: column !important; gap: 50px; }
+            .story-card { grid-template-columns: 1fr; padding: 40px; max-width: 100%; }
+            .illustration-container { display: none; }
+            nav { padding: 15px 20px; flex-direction: column; gap: 15px; }
+            .reflection-card p { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body class="theme-inicio">
+
+    <nav>
+        <div class="logo" onclick="switchEdition(1)">
+            <span class="un-text">un</span><span class="lema-text"><span class="lema-L">L</span><span class="lema-E">E</span><span class="lema-M">M</span><span class="lema-A">A</span></span>
+        </div>
+        <div class="edition-selector">
+            <button class="edition-btn active" id="btn-edicion-1" onclick="switchEdition(1)">Boletín 01</button>
+            <button class="edition-btn" id="btn-edicion-2" onclick="switchEdition(2)">Boletín 02</button>
+        </div>
+    </nav>
+
+    <div id="edition-1" style="display: block; opacity: 1;">
+        
+        <section id="inicio-1">
+            <div class="hero-content">
+                <h1>Bienvenidos a <span class="un-text">un</span><span class="lema-text"><span class="lema-L">L</span><span class="lema-E">E</span><span class="lema-M">M</span><span class="lema-A">A</span></span>.</h1>
+                <p style="text-align: center; color: var(--text-sub); font-size: 1.5rem;">El camino tras la toga. ¿Qué motiva a los estudiantes?</p>
+                <div class="choice-container">
+                    <a href="#academic-1" class="choice-card js-tilt"><i class="fa-solid fa-graduation-cap" style="color: var(--academic);"></i><h3>Académico</h3></a>
+                    <a href="#laboral-1" class="choice-card js-tilt"><i class="fa-solid fa-briefcase" style="color: var(--laboral);"></i><h3>Laboral</h3></a>
+                    <a href="#emprendimiento-1" class="choice-card js-tilt"><i class="fa-solid fa-rocket" style="color: var(--emprendimiento);"></i><h3>Emprendimiento</h3></a>
+                </div>
+            </div>
+        </section>
+
+        <section id="academic-1">
+            <div class="main-row">
+                <div class="illustration-container illu-academic js-parallax" data-speed="0.1">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M50 20 L90 40 L50 60 L10 40 Z" fill="white" opacity="0.9"/>
+                        <path d="M30 50 L70 50 L60 80 L40 80 Z" fill="white" opacity="0.6"/>
+                        <circle cx="50" cy="40" r="2" fill="rgba(255,255,255,0.8)"/>
+                        <path d="M50 40 Q60 50, 55 80" stroke="white" stroke-width="1.5" fill="none" opacity="0.9"/>
+                        <rect x="52" y="75" width="6" height="15" fill="white" opacity="0.8"/>
+                    </svg>
+                </div>
+                
+                <div class="story-card js-tilt-card">
+                    <div class="text-side">
+                        <span class="tag" style="color: var(--academic);">Eje Académico</span>
+                        <h2>Pasión por el saber.</h2>
+                        <p class="description">Las motivaciones personales impulsan a buscar especialización profunda.</p>
+                        <div class="dynamic-info-box" id="infoBoxAcademic1">
+                            <h4>Explora los datos</h4>
+                            <p>Haz clic en el gráfico para revelar el análisis detallado.</p>
+                        </div>
+                    </div>
+                    <div class="chart-side"><canvas id="chartAcademic1"></canvas></div>
+                </div>
+            </div>
+
+            <div class="reflection-card">
+                <h4 style="color: var(--academic);">Dato Clave</h4>
+                <p>"La vocación sigue siendo el motor principal en las aulas. Quienes eligen continuar sus estudios lo hacen priorizando el enriquecimiento personal sobre el ascenso corporativo."</p>
+            </div>
+        </section>
+
+        <section id="laboral-1">
+            <div class="main-row">
+                <div class="illustration-container illu-laboral js-parallax" data-speed="-0.1">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="15" y="30" width="70" height="50" rx="5" ry="5" fill="white" opacity="0.8"/>
+                        <path d="M35 30 Q50 15, 65 30" stroke="white" stroke-width="4" fill="none" opacity="0.9"/>
+                        <rect x="45" y="55" width="10" height="10" rx="2" fill="rgba(255,255,255,0.5)"/>
+                        <path d="M15 45 L85 45" stroke="rgba(0,0,0,0.1)" stroke-width="1" opacity="0.5"/>
+                    </svg>
+                </div>
+
+                <div class="story-card js-tilt-card">
+                    <div class="text-side">
+                        <span class="tag" style="color: var(--laboral);">Eje Laboral</span>
+                        <h2>Buscando estabilidad.</h2>
+                        <p class="description">El mercado exige seguridad, convirtiendo a la economía en prioridad absoluta.</p>
+                        <div class="dynamic-info-box" id="infoBoxLaboral1">
+                            <h4>Explora los datos</h4>
+                            <p>Haz clic en el gráfico para revelar el análisis detallado.</p>
+                        </div>
+                    </div>
+                    <div class="chart-side"><canvas id="chartLaboral1"></canvas></div>
+                </div>
+            </div>
+
+            <div class="reflection-card">
+                <h4 style="color: var(--laboral);">Reflexión</h4>
+                <p>"En tiempos de incertidumbre, la búsqueda de ingresos fijos y seguridad económica ha superado ampliamente a otras prioridades al momento de firmar un contrato."</p>
+            </div>
+        </section>
+
+        <section id="emprendimiento-1">
+            <div class="main-row">
+                <div class="illustration-container illu-emprendimiento js-parallax" data-speed="0.15">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M50 15 Q65 40, 60 70 L40 70 Q35 40, 50 15 Z" fill="white" opacity="0.9"/>
+                        <path d="M40 70 L30 85 L45 80 Z" fill="white" opacity="0.7"/>
+                        <path d="M60 70 L70 85 L55 80 Z" fill="white" opacity="0.7"/>
+                        <circle cx="50" cy="45" r="5" fill="rgba(0,0,0,0.1)" opacity="0.5"/>
+                        <path d="M45 85 Q50 98, 55 85" fill="white" opacity="0.5"/>
+                    </svg>
+                </div>
+
+                <div class="story-card js-tilt-card">
+                    <div class="text-side">
+                        <span class="tag" style="color: var(--emprendimiento);">Eje Emprendimiento</span>
+                        <h2>Dueños de su tiempo.</h2>
+                        <p class="description">El espíritu disruptivo crece en busca de libertad e impacto directo.</p>
+                        <div class="dynamic-info-box" id="infoBoxEmprendimiento1">
+                            <h4>Explora los datos</h4>
+                            <p>Haz clic en el gráfico para revelar el análisis detallado.</p>
+                        </div>
+                    </div>
+                    <div class="chart-side"><canvas id="chartEmprendimiento1"></canvas></div>
+                </div>
+            </div>
+
+            <div class="reflection-card">
+                <h4 style="color: var(--emprendimiento);">El Futuro</h4>
+                <p>"La visión de negocio está cambiando: los nuevos emprendedores no solo buscan ser sus propios jefes, sino escalar para convertirse en generadores de empleo."</p>
+            </div>
+        </section>
+
+    </div>
+
+    <div id="edition-2" style="display: none; opacity: 0;">
+        <section style="min-height: 80vh;">
+            <h1>Boletín 02: Próximamente</h1>
+            <p style="color: var(--text-sub);">Nuevos datos y análisis están en camino.</p>
+        </section>
+    </div>
+
+    <footer>
+        <p><strong>unLEMA Reportes</strong> &copy; 2024</p>
+        <p>Análisis de proyecciones profesionales y toma de decisiones.</p>
+        <p style="margin-top: 10px; font-size: 0.85rem; opacity: 0.6;">Diseñado con un enfoque en la legibilidad y la experiencia de datos.</p>
+    </footer>
+
+    <script>
+        let charts = {};
+
+        function switchEdition(num) {
+            const current = document.querySelector('[id^="edition-"]:not([style*="display: none"])');
+            if (current && current.id === `edition-${num}`) return;
+
+            gsap.to(current, { opacity: 0, duration: 0.3, onComplete: () => {
+                if(current) current.style.display = "none";
+                const next = document.getElementById(`edition-${num}`);
+                next.style.display = "block";
+                document.querySelectorAll(".edition-btn").forEach(b => b.classList.remove("active"));
+                const btn = document.getElementById(`btn-edicion-${num}`);
+                if(btn) btn.classList.add("active");
+                
+                document.body.className = "theme-inicio";
+                window.scrollTo(0, 0);
+                gsap.to(next, { opacity: 1, duration: 0.5 });
+                ScrollTrigger.refresh();
+
+                Object.values(charts).forEach(chart => {
+                    if(typeof chart.resize === 'function') chart.resize();
+                });
+            }});
+        }
+
+        VanillaTilt.init(document.querySelectorAll(".js-tilt"), { max: 15, speed: 400, glare: true, "max-glare": 0.2 });
+        VanillaTilt.init(document.querySelectorAll(".js-tilt-card"), { max: 2, speed: 1000 });
+
+        Chart.register(ChartDataLabels);
+        const textData = {
+            academic: [
+                { title: "Motivaciones Personales", text: "El 36.1% se mueve por vocación. Quieren aprender simplemente por la pasión que sienten hacia su carrera.", color: "#df0832" },
+                { title: "Experiencia", text: "Un 21.6% busca adquirir habilidades prácticas que los destaquen intelectualmente.", color: "#eb4160" },
+                { title: "Trabajo", text: "El 15% entiende la academia como una herramienta directa para ascender profesionalmente.", color: "#f57a8e" }
+            ],
+            laboral: [
+                { title: "Seguridad Económica", text: "La abrumadora mayoría (58.7%) busca empleo estable para garantizar ingresos fijos ante la incertidumbre.", color: "#00a19b" },
+                { title: "Trayectoria Profesional", text: "El 31% se enfoca en hacer carrera corporativa, subir escalones y ganar prestigio.", color: "#4dcad4" }
+            ],
+            emprendimiento: [
+                { title: "Independencia Laboral", text: "El 23.1% quiere ser su propio jefe. No quieren horarios fijos ni responder a corporaciones.", color: "#ec7920" },
+                { title: "Independencia Financiera", text: "Un 19.2% ve en sus empresas el camino para ingresos ilimitados y libertad económica.", color: "#f29a50" },
+                { title: "Generación de Empleo", text: "El 15.4% tiene una visión social: quieren crecer para dar oportunidades a otros.", color: "#f7bd84" }
+            ]
+        };
+
+        function renderChart(id, type, labels, data, colors, textKey, boxId) {
+            if (charts[id]) return;
+
+            let chartOptions = {
+                responsive: true, 
+                maintainAspectRatio: false,
+                layout: { padding: { top: 30, bottom: 10 } },
+                plugins: { 
+                    legend: { 
+                        display: type !== 'bar', 
+                        position: 'bottom',
+                        labels: { color: '#1d1d1f' }
+                    },
+                    datalabels: { 
+                        color: '#fff', 
+                        font: { weight: 'bold', size: 14 }, 
+                        formatter: v => v + '%' 
+                    }
+                },
+                onClick: (e, el) => {
+                    if (el.length > 0) {
+                        const d = textData[textKey][el[0].index];
+                        const box = document.getElementById(boxId);
+                        box.style.opacity = 0;
+                        setTimeout(() => {
+                            box.innerHTML = `<h4 style="color:${d.color}">${d.title}</h4><p>${d.text}</p>`;
+                            box.style.opacity = 1;
+                        }, 200);
+                    }
+                }
+            };
+
+            if (type === 'bar') {
+                chartOptions.scales = {
+                    y: { 
+                        beginAtZero: true, 
+                        max: 80, 
+                        grid: { color: 'rgba(0,0,0,0.05)' },
+                        ticks: { color: '#5a5a5e' }
+                    },
+                    x: { 
+                        grid: { display: false },
+                        ticks: { color: '#1d1d1f', font: { weight: 'bold' } }
+                    }
+                };
+            }
+
+            charts[id] = new Chart(document.getElementById(id), {
+                type: type,
+                data: { labels: labels, datasets: [{ data: data, backgroundColor: colors, borderWidth: 2, borderColor: '#fff' }] },
+                options: chartOptions
+            });
+        }
+
+        gsap.registerPlugin(ScrollTrigger);
+
+        document.querySelectorAll(".js-parallax").forEach(el => {
+            gsap.to(el, {
+                y: el.dataset.speed * 500,
+                scrollTrigger: { trigger: el, start: "top bottom", end: "bottom top", scrub: true }
+            });
+        });
+
+        const sections = [
+            { id: "inicio-1", col: "inicio" },
+            { id: "academic-1", col: "academic", init: () => renderChart('chartAcademic1', 'doughnut', ['Personales', 'Exp.', 'Trab.'], [36.1, 21.6, 15], ['#df0832', '#eb4160', '#f57a8e'], 'academic', 'infoBoxAcademic1') },
+            { id: "laboral-1", col: "laboral", init: () => renderChart('chartLaboral1', 'bar', ['Seguridad', 'Trayectoria'], [58.7, 31], ['#00a19b', '#4dcad4'], 'laboral', 'infoBoxLaboral1') },
+            { id: "emprendimiento-1", col: "emprendimiento", init: () => renderChart('chartEmprendimiento1', 'doughnut', ['Indep. Lab', 'Indep. Fin', 'Empleo'], [23.1, 19.2, 15.4], ['#ec7920', '#f29a50', '#f7bd84'], 'emprendimiento', 'infoBoxEmprendimiento1') }
+        ];
+
+        sections.forEach(s => {
+            ScrollTrigger.create({
+                trigger: `#${s.id}`, start: "top 50%", end: "bottom 50%",
+                onEnter: () => document.body.className = `theme-${s.col}`,
+                onEnterBack: () => document.body.className = `theme-${s.col}`
+            });
+
+            if (s.id !== "inicio-1") {
+                // Anima tanto la tarjeta principal como la de reflexión
+                gsap.to(`#${s.id} .story-card, #${s.id} .reflection-card`, {
+                    opacity: 1, 
+                    y: 0, 
+                    duration: 1.2, 
+                    stagger: 0.3, // Añade un ligero retraso para que aparezca primero la tarjeta y luego la reflexión
+                    scrollTrigger: { trigger: `#${s.id}`, start: "top 70%", onEnter: () => s.init() }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
