@@ -37,9 +37,9 @@
         }
 
         body.theme-inicio { background-color: var(--inicio); }
-        body.theme-academic { background-color: var(--academic); }
         body.theme-laboral { background-color: var(--laboral); }
         body.theme-emprendimiento { background-color: var(--emprendimiento); }
+        body.theme-academic { background-color: var(--academic); }
 
         /* --- NAVEGACIÓN --- */
         nav {
@@ -61,7 +61,7 @@
         }
         .edition-btn.active { background: white; color: var(--text); box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
 
-        /* --- SECCIONES Y LAYOUT ESTILO PÁGINA --- */
+        /* --- SECCIONES Y LAYOUT --- */
         section { 
             min-height: 100vh; 
             display: flex; 
@@ -75,26 +75,18 @@
         }
 
         .main-row {
-            display: flex;
-            width: 100%;
-            max-width: 1600px;
-            justify-content: space-evenly;
-            align-items: center;
-            gap: 5vw;
+            display: flex; width: 100%; max-width: 1600px;
+            justify-content: space-evenly; align-items: center; gap: 5vw;
         }
 
-        #academic-1 .main-row, #emprendimiento-1 .main-row { flex-direction: row; } 
-        #laboral-1 .main-row { flex-direction: row-reverse; } 
+        /* Ritmo Visual Editorial (Alternado) */
+        #laboral-1 .main-row { flex-direction: row; } 
+        #emprendimiento-1 .main-row { flex-direction: row-reverse; } 
+        #academic-1 .main-row { flex-direction: row; }
 
-        /* --- ILUSTRACIONES VECTORIALES --- */
-        .illustration-container {
-            position: relative; 
-            width: 350px; height: 350px;
-            opacity: 0.8; 
-            pointer-events: none; z-index: 2;
-        }
+        .illustration-container { position: relative; width: 350px; height: 350px; opacity: 0.8; pointer-events: none; z-index: 2; }
 
-        /* --- STORYTELLING CARDS --- */
+        /* --- CARDS --- */
         .story-card {
             background: var(--glass); backdrop-filter: blur(40px);
             border-radius: 40px; padding: 60px;
@@ -116,93 +108,32 @@
 
         .chart-side { width: 100%; height: 400px; position: relative; transform: translateZ(50px); cursor: pointer; }
 
-        /* --- TARJETAS DE REFLEXIÓN --- */
         .reflection-card {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(25px);
-            padding: 35px 50px;
-            border-radius: 30px;
-            max-width: 1000px;
-            width: 90%;
-            text-align: center;
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
-            opacity: 0; transform: translateY(50px);
-            margin-top: 20px;
+            background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(25px);
+            padding: 35px 50px; border-radius: 30px; max-width: 1000px;
+            width: 90%; text-align: center; border: 1px solid var(--glass-border);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1); opacity: 0; transform: translateY(50px); margin-top: 20px;
         }
 
-        .reflection-card h4 {
-            font-size: 1.1rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 15px;
-            opacity: 0.8;
-        }
+        .reflection-card h4 { font-size: 1.1rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; opacity: 0.8; }
+        .reflection-card p { font-size: 1.5rem; line-height: 1.4; font-style: italic; font-weight: 500; color: var(--text); }
 
-        .reflection-card p {
-            font-size: 1.5rem;
-            line-height: 1.4;
-            font-style: italic;
-            font-weight: 500;
-            color: var(--text);
-        }
-
-        /* --- TARJETA DE DESCARGA (NUEVO) --- */
+        /* --- BOTONES DE DESCARGA --- */
         .download-card {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(30px);
-            border-radius: 30px;
-            padding: 40px 50px;
-            max-width: 1000px;
-            width: 90%;
-            margin-top: 60px;
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 30px;
-            opacity: 0; transform: translateY(50px);
+            background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(30px);
+            border-radius: 30px; padding: 40px 50px; max-width: 1000px;
+            width: 90%; margin-top: 60px; border: 1px solid var(--glass-border);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1); display: flex;
+            align-items: center; justify-content: space-between; gap: 30px; opacity: 0; transform: translateY(50px);
         }
-
-        .download-icon {
-            font-size: 3.5rem;
-            color: var(--emprendimiento);
-            background: rgba(236, 121, 32, 0.1);
-            width: 90px;
-            height: 90px;
-            border-radius: 25px;
-            display: flex; align-items: center; justify-content: center;
-            flex-shrink: 0;
-        }
-
+        .download-icon { font-size: 3.5rem; color: var(--laboral); background: rgba(0, 161, 155, 0.1); width: 90px; height: 90px; border-radius: 25px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
         .download-info { flex: 1; text-align: left; }
         .download-info h3 { font-size: 1.8rem; margin-bottom: 10px; color: var(--text); }
         .download-info p { color: var(--text-sub); font-size: 1.1rem; line-height: 1.5; margin: 0; }
+        .download-btn { background: var(--text); color: white; padding: 18px 36px; border-radius: 50px; text-decoration: none; font-weight: 600; font-size: 1.1rem; display: inline-flex; align-items: center; gap: 12px; transition: 0.3s ease; box-shadow: 0 10px 25px rgba(0,0,0,0.15); white-space: nowrap; }
+        .download-btn:hover { background: #000; transform: translateY(-4px); box-shadow: 0 15px 35px rgba(0,0,0,0.25); }
 
-        .download-btn {
-            background: var(--text);
-            color: white;
-            padding: 18px 36px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-            white-space: nowrap;
-        }
-
-        .download-btn:hover {
-            background: #000;
-            transform: translateY(-4px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.25);
-        }
-
-        /* Botones de inicio */
+        /* Botones de inicio (REORDENADOS) */
         .choice-container { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-top: 40px; width: 100%; }
         .choice-card {
             background: white; padding: 30px; border-radius: 25px; text-decoration: none;
@@ -211,18 +142,7 @@
         }
         .choice-card i { font-size: 2.5rem; display: block; margin-bottom: 15px; }
 
-        /* --- FOOTER / CRÉDITOS --- */
-        footer {
-            width: 100%;
-            padding: 40px 20px;
-            text-align: center;
-            background: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(20px);
-            border-top: 1px solid var(--glass-border);
-            color: var(--text);
-            font-size: 0.95rem;
-            margin-top: 50px;
-        }
+        footer { width: 100%; padding: 40px 20px; text-align: center; background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(20px); border-top: 1px solid var(--glass-border); color: var(--text); font-size: 0.95rem; margin-top: 50px; }
         footer p { margin-bottom: 5px; opacity: 0.8; }
         footer strong { font-weight: 700; opacity: 1; }
 
@@ -257,48 +177,25 @@
                 <h1>Bienvenidos a <span class="un-text">un</span><span class="lema-text"><span class="lema-L">L</span><span class="lema-E">E</span><span class="lema-M">M</span><span class="lema-A">A</span></span>.</h1>
                 <p style="text-align: center; color: var(--text-sub); font-size: 1.5rem;">El camino tras la toga. ¿Qué motiva a los estudiantes?</p>
                 <div class="choice-container">
-                    <a href="#academic-1" class="choice-card js-tilt"><i class="fa-solid fa-graduation-cap" style="color: var(--academic);"></i><h3>Académico</h3></a>
-                    <a href="#laboral-1" class="choice-card js-tilt"><i class="fa-solid fa-briefcase" style="color: var(--laboral);"></i><h3>Laboral</h3></a>
-                    <a href="#emprendimiento-1" class="choice-card js-tilt"><i class="fa-solid fa-rocket" style="color: var(--emprendimiento);"></i><h3>Emprendimiento</h3></a>
+                    <a href="#laboral-1" class="choice-card js-tilt">
+                        <i class="fa-solid fa-briefcase" style="color: var(--laboral);"></i>
+                        <h3>Laboral</h3>
+                    </a>
+                    <a href="#emprendimiento-1" class="choice-card js-tilt">
+                        <i class="fa-solid fa-rocket" style="color: var(--emprendimiento);"></i>
+                        <h3>Emprendimiento</h3>
+                    </a>
+                    <a href="#academic-1" class="choice-card js-tilt">
+                        <i class="fa-solid fa-graduation-cap" style="color: var(--academic);"></i>
+                        <h3>Académico</h3>
+                    </a>
                 </div>
-            </div>
-        </section>
-
-        <section id="academic-1">
-            <div class="main-row">
-                <div class="illustration-container illu-academic js-parallax" data-speed="0.1">
-                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M50 20 L90 40 L50 60 L10 40 Z" fill="white" opacity="0.9"/>
-                        <path d="M30 50 L70 50 L60 80 L40 80 Z" fill="white" opacity="0.6"/>
-                        <circle cx="50" cy="40" r="2" fill="rgba(255,255,255,0.8)"/>
-                        <path d="M50 40 Q60 50, 55 80" stroke="white" stroke-width="1.5" fill="none" opacity="0.9"/>
-                        <rect x="52" y="75" width="6" height="15" fill="white" opacity="0.8"/>
-                    </svg>
-                </div>
-                
-                <div class="story-card js-tilt-card">
-                    <div class="text-side">
-                        <span class="tag" style="color: var(--academic);">Eje Académico</span>
-                        <h2>Pasión por el saber.</h2>
-                        <p class="description">Las motivaciones personales impulsan a buscar especialización profunda.</p>
-                        <div class="dynamic-info-box" id="infoBoxAcademic1">
-                            <h4>Explora los datos</h4>
-                            <p>Haz clic en el gráfico para revelar el análisis detallado.</p>
-                        </div>
-                    </div>
-                    <div class="chart-side"><canvas id="chartAcademic1"></canvas></div>
-                </div>
-            </div>
-
-            <div class="reflection-card">
-                <h4 style="color: var(--academic);">Dato Clave</h4>
-                <p>"La vocación sigue siendo el motor principal en las aulas. Quienes eligen continuar sus estudios lo hacen priorizando el enriquecimiento personal sobre el ascenso corporativo."</p>
             </div>
         </section>
 
         <section id="laboral-1">
             <div class="main-row">
-                <div class="illustration-container illu-laboral js-parallax" data-speed="-0.1">
+                <div class="illustration-container illu-laboral js-parallax" data-speed="0.1">
                     <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                         <rect x="15" y="30" width="70" height="50" rx="5" ry="5" fill="white" opacity="0.8"/>
                         <path d="M35 30 Q50 15, 65 30" stroke="white" stroke-width="4" fill="none" opacity="0.9"/>
@@ -329,7 +226,7 @@
 
         <section id="emprendimiento-1">
             <div class="main-row">
-                <div class="illustration-container illu-emprendimiento js-parallax" data-speed="0.15">
+                <div class="illustration-container illu-emprendimiento js-parallax" data-speed="-0.1">
                     <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                         <path d="M50 15 Q65 40, 60 70 L40 70 Q35 40, 50 15 Z" fill="white" opacity="0.9"/>
                         <path d="M40 70 L30 85 L45 80 Z" fill="white" opacity="0.7"/>
@@ -357,11 +254,41 @@
                 <h4 style="color: var(--emprendimiento);">El Futuro</h4>
                 <p>"La visión de negocio está cambiando: los nuevos emprendedores no solo buscan ser sus propios jefes, sino escalar para convertirse en generadores de empleo."</p>
             </div>
+        </section>
+
+        <section id="academic-1">
+            <div class="main-row">
+                <div class="illustration-container illu-academic js-parallax" data-speed="0.15">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M50 20 L90 40 L50 60 L10 40 Z" fill="white" opacity="0.9"/>
+                        <path d="M30 50 L70 50 L60 80 L40 80 Z" fill="white" opacity="0.6"/>
+                        <circle cx="50" cy="40" r="2" fill="rgba(255,255,255,0.8)"/>
+                        <path d="M50 40 Q60 50, 55 80" stroke="white" stroke-width="1.5" fill="none" opacity="0.9"/>
+                        <rect x="52" y="75" width="6" height="15" fill="white" opacity="0.8"/>
+                    </svg>
+                </div>
+                
+                <div class="story-card js-tilt-card">
+                    <div class="text-side">
+                        <span class="tag" style="color: var(--academic);">Eje Académico</span>
+                        <h2>Pasión por el saber.</h2>
+                        <p class="description">Las motivaciones personales impulsan a buscar especialización profunda.</p>
+                        <div class="dynamic-info-box" id="infoBoxAcademic1">
+                            <h4>Explora los datos</h4>
+                            <p>Haz clic en el gráfico para revelar el análisis detallado.</p>
+                        </div>
+                    </div>
+                    <div class="chart-side"><canvas id="chartAcademic1"></canvas></div>
+                </div>
+            </div>
+
+            <div class="reflection-card">
+                <h4 style="color: var(--academic);">Dato Clave</h4>
+                <p>"La vocación sigue siendo el motor principal en las aulas. Quienes eligen continuar sus estudios lo hacen priorizando el enriquecimiento personal sobre el ascenso corporativo."</p>
+            </div>
 
             <div class="download-card">
-                <div class="download-icon">
-                    <i class="fa-solid fa-file-pdf"></i>
-                </div>
+                <div class="download-icon"><i class="fa-solid fa-file-pdf"></i></div>
                 <div class="download-info">
                     <h3>¿Quieres el informe completo?</h3>
                     <p>Descarga el reporte ejecutivo del <b>Boletín 01</b> con todos los datos metodológicos y análisis estratégico.</p>
@@ -384,7 +311,6 @@
     <footer>
         <p><strong>unLEMA Reportes</strong> &copy; 2024</p>
         <p>Análisis de proyecciones profesionales y toma de decisiones.</p>
-        <p style="margin-top: 10px; font-size: 0.85rem; opacity: 0.6;">Diseñado con un enfoque en la legibilidad y la experiencia de datos.</p>
     </footer>
 
     <script>
@@ -393,7 +319,6 @@
         function switchEdition(num) {
             const current = document.querySelector('[id^="edition-"]:not([style*="display: none"])');
             if (current && current.id === `edition-${num}`) return;
-
             gsap.to(current, { opacity: 0, duration: 0.3, onComplete: () => {
                 if(current) current.style.display = "none";
                 const next = document.getElementById(`edition-${num}`);
@@ -401,15 +326,11 @@
                 document.querySelectorAll(".edition-btn").forEach(b => b.classList.remove("active"));
                 const btn = document.getElementById(`btn-edicion-${num}`);
                 if(btn) btn.classList.add("active");
-                
                 document.body.className = "theme-inicio";
                 window.scrollTo(0, 0);
                 gsap.to(next, { opacity: 1, duration: 0.5 });
                 ScrollTrigger.refresh();
-
-                Object.values(charts).forEach(chart => {
-                    if(typeof chart.resize === 'function') chart.resize();
-                });
+                Object.values(charts).forEach(chart => { if(typeof chart.resize === 'function') chart.resize(); });
             }});
         }
 
@@ -418,108 +339,38 @@
 
         Chart.register(ChartDataLabels);
         const textData = {
-            academic: [
-                { title: "Motivaciones Personales", text: "El 36.1% se mueve por vocación. Quieren aprender simplemente por la pasión que sienten hacia su carrera.", color: "#df0832" },
-                { title: "Experiencia", text: "Un 21.6% busca adquirir habilidades prácticas que los destaquen intelectualmente.", color: "#eb4160" },
-                { title: "Trabajo", text: "El 15% entiende la academia como una herramienta directa para ascender profesionalmente.", color: "#f57a8e" }
-            ],
-            laboral: [
-                { title: "Seguridad Económica", text: "La abrumadora mayoría (58.7%) busca empleo estable para garantizar ingresos fijos ante la incertidumbre.", color: "#00a19b" },
-                { title: "Trayectoria Profesional", text: "El 31% se enfoca en hacer carrera corporativa, subir escalones y ganar prestigio.", color: "#4dcad4" }
-            ],
-            emprendimiento: [
-                { title: "Independencia Laboral", text: "El 23.1% quiere ser su propio jefe. No quieren horarios fijos ni responder a corporaciones.", color: "#ec7920" },
-                { title: "Independencia Financiera", text: "Un 19.2% ve en sus empresas el camino para ingresos ilimitados y libertad económica.", color: "#f29a50" },
-                { title: "Generación de Empleo", text: "El 15.4% tiene una visión social: quieren crecer para dar oportunidades a otros.", color: "#f7bd84" }
-            ]
+            laboral: [{ title: "Seguridad Económica", text: "El 58.7% busca empleo estable para garantizar ingresos fijos ante la incertidumbre.", color: "#00a19b" }, { title: "Trayectoria Profesional", text: "El 31% se enfoca en hacer carrera corporativa, subir escalones y ganar prestigio.", color: "#4dcad4" }],
+            emprendimiento: [{ title: "Independencia Laboral", text: "El 23.1% quiere ser su propio jefe. No quieren horarios fijos ni responder a corporaciones.", color: "#ec7920" }, { title: "Independencia Financiera", text: "Un 19.2% ve en sus empresas el camino para ingresos ilimitados y libertad económica.", color: "#f29a50" }, { title: "Generación de Empleo", text: "El 15.4% tiene una visión social: quieren crecer para dar oportunidades a otros.", color: "#f7bd84" }],
+            academic: [{ title: "Motivaciones Personales", text: "El 36.1% se mueve por vocación. Quieren aprender simplemente por la pasión que sienten hacia su carrera.", color: "#df0832" }, { title: "Experiencia", text: "Un 21.6% busca adquirir habilidades prácticas que los destaquen intelectualmente.", color: "#eb4160" }, { title: "Trabajo", text: "El 15% entiende la academia como una herramienta directa para ascender profesionalmente.", color: "#f57a8e" }]
         };
 
         function renderChart(id, type, labels, data, colors, textKey, boxId) {
             if (charts[id]) return;
-
             let chartOptions = {
-                responsive: true, 
-                maintainAspectRatio: false,
+                responsive: true, maintainAspectRatio: false,
                 layout: { padding: { top: 30, bottom: 10 } },
-                plugins: { 
-                    legend: { 
-                        display: type !== 'bar', 
-                        position: 'bottom',
-                        labels: { color: '#1d1d1f' }
-                    },
-                    datalabels: { 
-                        color: '#fff', 
-                        font: { weight: 'bold', size: 14 }, 
-                        formatter: v => v + '%' 
-                    }
-                },
-                onClick: (e, el) => {
-                    if (el.length > 0) {
-                        const d = textData[textKey][el[0].index];
-                        const box = document.getElementById(boxId);
-                        box.style.opacity = 0;
-                        setTimeout(() => {
-                            box.innerHTML = `<h4 style="color:${d.color}">${d.title}</h4><p>${d.text}</p>`;
-                            box.style.opacity = 1;
-                        }, 200);
-                    }
-                }
+                plugins: { legend: { display: type !== 'bar', position: 'bottom', labels: { color: '#1d1d1f' } }, datalabels: { color: '#fff', font: { weight: 'bold', size: 14 }, formatter: v => v + '%' } },
+                onClick: (e, el) => { if (el.length > 0) { const d = textData[textKey][el[0].index]; const box = document.getElementById(boxId); box.style.opacity = 0; setTimeout(() => { box.innerHTML = `<h4 style="color:${d.color}">${d.title}</h4><p>${d.text}</p>`; box.style.opacity = 1; }, 200); } }
             };
-
-            if (type === 'bar') {
-                chartOptions.scales = {
-                    y: { 
-                        beginAtZero: true, 
-                        max: 80, 
-                        grid: { color: 'rgba(0,0,0,0.05)' },
-                        ticks: { color: '#5a5a5e' }
-                    },
-                    x: { 
-                        grid: { display: false },
-                        ticks: { color: '#1d1d1f', font: { weight: 'bold' } }
-                    }
-                };
-            }
-
-            charts[id] = new Chart(document.getElementById(id), {
-                type: type,
-                data: { labels: labels, datasets: [{ data: data, backgroundColor: colors, borderWidth: 2, borderColor: '#fff' }] },
-                options: chartOptions
-            });
+            if (type === 'bar') { chartOptions.scales = { y: { beginAtZero: true, max: 80, grid: { color: 'rgba(0,0,0,0.05)' }, ticks: { color: '#5a5a5e' } }, x: { grid: { display: false }, ticks: { color: '#1d1d1f', font: { weight: 'bold' } } } }; }
+            charts[id] = new Chart(document.getElementById(id), { type: type, data: { labels: labels, datasets: [{ data: data, backgroundColor: colors, borderWidth: 2, borderColor: '#fff' }] }, options: chartOptions });
         }
 
         gsap.registerPlugin(ScrollTrigger);
+        document.querySelectorAll(".js-parallax").forEach(el => { gsap.to(el, { y: el.dataset.speed * 500, scrollTrigger: { trigger: el, start: "top bottom", end: "bottom top", scrub: true } }); });
 
-        document.querySelectorAll(".js-parallax").forEach(el => {
-            gsap.to(el, {
-                y: el.dataset.speed * 500,
-                scrollTrigger: { trigger: el, start: "top bottom", end: "bottom top", scrub: true }
-            });
-        });
-
+        // ARRAY REORDENADO PARA ANIMACIONES DE COLOR
         const sections = [
             { id: "inicio-1", col: "inicio" },
-            { id: "academic-1", col: "academic", init: () => renderChart('chartAcademic1', 'doughnut', ['Personales', 'Exp.', 'Trab.'], [36.1, 21.6, 15], ['#df0832', '#eb4160', '#f57a8e'], 'academic', 'infoBoxAcademic1') },
             { id: "laboral-1", col: "laboral", init: () => renderChart('chartLaboral1', 'bar', ['Seguridad', 'Trayectoria'], [58.7, 31], ['#00a19b', '#4dcad4'], 'laboral', 'infoBoxLaboral1') },
-            { id: "emprendimiento-1", col: "emprendimiento", init: () => renderChart('chartEmprendimiento1', 'doughnut', ['Indep. Lab', 'Indep. Fin', 'Empleo'], [23.1, 19.2, 15.4], ['#ec7920', '#f29a50', '#f7bd84'], 'emprendimiento', 'infoBoxEmprendimiento1') }
+            { id: "emprendimiento-1", col: "emprendimiento", init: () => renderChart('chartEmprendimiento1', 'doughnut', ['Indep. Lab', 'Indep. Fin', 'Empleo'], [23.1, 19.2, 15.4], ['#ec7920', '#f29a50', '#f7bd84'], 'emprendimiento', 'infoBoxEmprendimiento1') },
+            { id: "academic-1", col: "academic", init: () => renderChart('chartAcademic1', 'doughnut', ['Personales', 'Exp.', 'Trab.'], [36.1, 21.6, 15], ['#df0832', '#eb4160', '#f57a8e'], 'academic', 'infoBoxAcademic1') }
         ];
 
         sections.forEach(s => {
-            ScrollTrigger.create({
-                trigger: `#${s.id}`, start: "top 50%", end: "bottom 50%",
-                onEnter: () => document.body.className = `theme-${s.col}`,
-                onEnterBack: () => document.body.className = `theme-${s.col}`
-            });
-
+            ScrollTrigger.create({ trigger: `#${s.id}`, start: "top 50%", end: "bottom 50%", onEnter: () => document.body.className = `theme-${s.col}`, onEnterBack: () => document.body.className = `theme-${s.col}` });
             if (s.id !== "inicio-1") {
-                // Ahora animamos 3 elementos en cascada: story-card -> reflection-card -> download-card
-                gsap.to(`#${s.id} .story-card, #${s.id} .reflection-card, #${s.id} .download-card`, {
-                    opacity: 1, 
-                    y: 0, 
-                    duration: 1.2, 
-                    stagger: 0.3, 
-                    scrollTrigger: { trigger: `#${s.id}`, start: "top 70%", onEnter: () => s.init() }
-                });
+                gsap.to(`#${s.id} .story-card, #${s.id} .reflection-card, #${s.id} .download-card`, { opacity: 1, y: 0, duration: 1.2, stagger: 0.3, scrollTrigger: { trigger: `#${s.id}`, start: "top 70%", onEnter: () => s.init() } });
             }
         });
     </script>
