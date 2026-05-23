@@ -31,6 +31,7 @@
             background-color: var(--bg);
             color: var(--text);
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
         /* --- NAVEGACIÓN COMPACTA --- */
@@ -55,9 +56,39 @@
 
         /* --- CONTENEDOR PRINCIPAL --- */
         .container { max-width: 1400px; margin: 0 auto; padding: 120px 20px 60px 20px; }
-        .hero { text-align: center; margin-bottom: 50px; }
-        .hero h1 { font-size: 3.5rem; letter-spacing: -0.04em; line-height: 1.1; margin-bottom: 15px; }
-        .hero p { font-size: 1.3rem; color: var(--text-sub); max-width: 700px; margin: 0 auto; }
+        
+        /* --- CABECERA (HERO) EDITORIAL --- */
+        .hero { text-align: center; margin-bottom: 40px; }
+        .kicker { font-size: 0.75rem; font-weight: 800; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-sub); margin-bottom: 15px; display: block;}
+        .hero h1 { font-size: clamp(2.5rem, 5vw, 4rem); letter-spacing: -0.04em; line-height: 1.1; margin-bottom: 20px; color: var(--text); }
+        .hero p { font-size: 1.25rem; color: var(--text-sub); max-width: 750px; margin: 0 auto; line-height: 1.5;}
+
+        /* --- BANNER INTERACTIVO L.E.M.A. --- */
+        .lema-banner {
+            display: grid; grid-template-columns: repeat(4, 1fr); width: 100%; height: 140px;
+            margin-bottom: 50px; border-radius: 24px; overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.06);
+        }
+        .lema-box {
+            display: flex; align-items: center; justify-content: center; position: relative;
+            cursor: pointer; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .lema-letter { font-size: 4rem; font-weight: 900; color: rgba(255,255,255,0.4); transition: all 0.4s ease; }
+        .lema-text-full {
+            position: absolute; opacity: 0; transform: translateY(20px); font-weight: 800;
+            font-size: 1.2rem; color: white; transition: all 0.4s ease; letter-spacing: 1px;
+        }
+        
+        .lema-box.bg-L { background-color: var(--laboral); }
+        .lema-box.bg-E { background-color: var(--emprendimiento); }
+        .lema-box.bg-M { background-color: var(--letra-m); }
+        .lema-box.bg-M .lema-letter { color: rgba(0,0,0,0.15); }
+        .lema-box.bg-M .lema-text-full { color: var(--text); }
+        .lema-box.bg-A { background-color: var(--academic); }
+
+        .lema-box:hover .lema-letter { transform: scale(0.5); opacity: 0; }
+        .lema-box:hover .lema-text-full { opacity: 1; transform: translateY(0); }
+        .lema-box:hover { box-shadow: inset 0 0 80px rgba(0,0,0,0.15); }
 
         /* --- DISEÑO BENTO GRID --- */
         .bento-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 25px; margin-bottom: 40px; }
@@ -74,9 +105,8 @@
         .card-title { font-size: 1.6rem; font-weight: 700; letter-spacing: -0.02em; }
         
         .chart-wrapper { position: relative; width: 100%; flex-grow: 1; min-height: 280px; }
-        canvas { cursor: pointer; } /* Indica que se puede hacer clic */
+        canvas { cursor: pointer; } 
 
-        /* Caja de Información Dinámica */
         .info-box { transition: opacity 0.3s ease; flex: 1; min-width: 200px; display: flex; flex-direction: column; justify-content: center; }
         .card-desc { font-size: 1.05rem; color: var(--text-sub); margin-bottom: 15px; line-height: 1.5; }
         .big-stat { font-size: 3.5rem; font-weight: 800; line-height: 1; margin-bottom: 5px; letter-spacing: -1px; transition: color 0.3s ease; }
@@ -87,31 +117,55 @@
             background: rgba(0,0,0,0.04); border-radius: 50px; font-size: 0.8rem; font-weight: 600; color: var(--text-sub); width: fit-content;
         }
 
-        /* Colores Específicos */
         .bg-laboral { background: rgba(0, 161, 155, 0.1); color: var(--laboral); } .text-laboral { color: var(--laboral); }
         .bg-emprendimiento { background: rgba(236, 121, 32, 0.1); color: var(--emprendimiento); } .text-emprendimiento { color: var(--emprendimiento); }
         .bg-academic { background: rgba(223, 8, 50, 0.1); color: var(--academic); } .text-academic { color: var(--academic); }
 
-        /* Reflexión y Descarga */
         .reflection { background: #1d1d1f; color: white; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 50px; }
         .reflection p { font-size: 1.6rem; font-style: italic; max-width: 800px; font-weight: 500; }
-        .download-box { display: flex; align-items: center; justify-content: space-between; background: var(--card-bg); padding: 30px 40px; border-radius: 20px; border: 1px solid var(--border); margin-top: 40px; flex-direction: row; }
-        .btn-download { background: var(--text); color: white; padding: 15px 30px; border-radius: 50px; text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 10px; transition: all 0.3s ease; }
-        .btn-download:hover { background: var(--laboral); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,161,155,0.2); }
 
-        /* Footer */
-        footer { width: 100%; padding: 50px 20px; background: white; border-top: 1px solid var(--border); color: var(--text); text-align: center; margin-top: 60px; }
-        .footer-content { max-width: 1000px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
-        .footer-title { font-size: 1.2rem; font-weight: 700; }
-        .footer-credits { display: flex; justify-content: space-between; text-align: left; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 20px 0; }
-        .credit-block h5 { font-size: 0.85rem; text-transform: uppercase; color: var(--text-sub); margin-bottom: 10px; }
-        .team-list { line-height: 1.7; font-size: 0.95rem; }
-        .career-tag { color: var(--text-sub); font-size: 0.85em; }
+        /* --- DESCARGA TIPO REVISTA OFICIAL --- */
+        .download-box {
+            display: flex; align-items: center; justify-content: space-between;
+            background: var(--card-bg); padding: 40px; border-radius: 24px;
+            border: 1px solid var(--border); border-top: 8px solid var(--laboral);
+            margin-top: 50px; flex-direction: row; box-shadow: 0 15px 40px rgba(0,0,0,0.04);
+        }
+        .dl-info { display: flex; flex-direction: column; gap: 8px; }
+        .dl-date { font-size: 0.75rem; font-weight: 800; color: var(--text-sub); letter-spacing: 2px; text-transform: uppercase; }
+        .dl-title { font-size: 1.5rem; font-weight: 800; color: var(--text); }
+        .dl-desc { color: var(--text-sub); font-size: 1rem; }
+        
+        .btn-download {
+            background: var(--bg); color: var(--laboral); padding: 15px 30px; border-radius: 50px;
+            text-decoration: none; font-weight: 700; display: flex; align-items: center; gap: 10px;
+            border: 2px solid var(--laboral); transition: all 0.3s ease; font-size: 0.95rem;
+        }
+        .btn-download:hover { background: var(--laboral); color: white; transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,161,155,0.2); }
+
+        /* --- FOOTER EDITORIAL --- */
+        footer { width: 100%; padding: 60px 20px 40px; background: white; border-top: 1px solid var(--border); color: var(--text); margin-top: 60px; }
+        .footer-content { max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; gap: 30px; }
+        .footer-top { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 30px;}
+        .footer-title { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.5px;}
+        
+        .footer-credits { display: grid; grid-template-columns: 1fr 1.5fr; gap: 40px; text-align: left; }
+        .credit-block h5 { font-size: 0.8rem; text-transform: uppercase; font-weight: 800; color: var(--text-sub); letter-spacing: 1px; margin-bottom: 15px; }
+        .team-list { line-height: 1.8; font-size: 1rem; font-weight: 500;}
+        .career-tag { color: var(--text-sub); font-size: 0.85em; font-weight: 400;}
+        
+        .footer-bottom { text-align: center; font-size: 0.85rem; color: var(--text-sub); margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border); }
 
         @media (max-width: 1024px) {
             .span-8, .span-7, .span-6, .span-5, .span-4 { grid-column: span 12; } 
-            .download-box { flex-direction: column; text-align: center; gap: 20px; }
-            .footer-credits { flex-direction: column; gap: 20px; text-align: center; }
+            .lema-banner { grid-template-columns: repeat(2, 1fr); height: 200px; }
+            .download-box { flex-direction: column; text-align: center; gap: 25px; }
+            .footer-credits { grid-template-columns: 1fr; gap: 30px; }
+            .footer-top { flex-direction: column; gap: 15px; text-align: center; }
+        }
+        @media (max-width: 600px) {
+            .lema-banner { grid-template-columns: 1fr; height: 300px; }
+            .lema-letter { font-size: 2.5rem; }
         }
     </style>
 </head>
@@ -130,8 +184,28 @@
     <div id="edition-1" class="container" style="display: block; opacity: 1;">
         
         <div class="hero">
+            <span class="kicker">Acompañamiento Integral - SAE</span>
             <h1>¿Qué planes tienes a futuro?</h1>
             <p>Análisis del contexto, tendencias y la realidad de la intención profesional de los graduados en comparación con el panorama nacional.</p>
+        </div>
+
+        <div class="lema-banner">
+            <div class="lema-box bg-L">
+                <span class="lema-letter">L</span>
+                <span class="lema-text-full">LABORAL</span>
+            </div>
+            <div class="lema-box bg-E">
+                <span class="lema-letter">E</span>
+                <span class="lema-text-full">EMPRENDIMIENTO</span>
+            </div>
+            <div class="lema-box bg-M">
+                <span class="lema-letter">M</span>
+                <span class="lema-text-full">MOVILIDAD</span>
+            </div>
+            <div class="lema-box bg-A">
+                <span class="lema-letter">A</span>
+                <span class="lema-text-full">ACADÉMICO</span>
+            </div>
         </div>
 
         <div class="bento-grid" id="grid-1">
@@ -186,13 +260,14 @@
             </div>
         </div>
 
-        <div class="download-box card">
-            <div>
-                <h3 style="font-size: 1.5rem; margin-bottom: 5px;">Descarga el Boletín 1 Completo</h3>
-                <p style="color: var(--text-sub);">Obtén el PDF formal con el análisis completo de contextualización.</p>
+        <div class="download-box">
+            <div class="dl-info">
+                <span class="dl-date"><i class="fa-regular fa-calendar" style="margin-right: 5px;"></i> MAYO 2026</span>
+                <h3 class="dl-title">Boletín #01: Contexto y Tendencias</h3>
+                <p class="dl-desc">Descarga el PDF oficial con la tabulación de datos y conclusiones ejecutivas sobre el egreso en la UNAL.</p>
             </div>
             <a href="reporte_unLEMA_boletin01.pdf" download class="btn-download">
-                <i class="fa-solid fa-cloud-arrow-down"></i> Descargar Boletín 1
+                DESCARGAR PDF <i class="fa-solid fa-download"></i>
             </a>
         </div>
     </div>
@@ -200,8 +275,9 @@
     <div id="edition-2" class="container" style="display: none; opacity: 0;">
         
         <div class="hero">
+            <span class="kicker">Acompañamiento Integral - SAE</span>
             <h1>Profundizando las razones</h1>
-            <p>Descubriendo qué significan los motivadores psicológicos detrás de las decisiones de los estudiantes. (Haz clic en los gráficos para conocer cada categoría).</p>
+            <p>Descubriendo qué significan los motivadores psicológicos detrás de las decisiones de los estudiantes. (Haz clic en los gráficos para interactuar).</p>
         </div>
 
         <div class="bento-grid" id="grid-2">
@@ -213,7 +289,7 @@
                 </div>
                 <div class="info-box" id="infoMotEmprendimiento" style="justify-content: flex-start; margin-bottom: 15px;">
                     <p class="card-desc">El espíritu disruptivo crece en busca de libertad e impacto directo.</p>
-                    <div class="click-hint"><i class="fa-solid fa-hand-pointer"></i> Haz clic en los vértices del radar</div>
+                    <div class="click-hint"><i class="fa-solid fa-hand-pointer"></i> Haz clic en los vértices</div>
                 </div>
                 <div class="chart-wrapper"><canvas id="chartEmprendimientoMot"></canvas></div>
             </div>
@@ -227,7 +303,7 @@
                     <div class="info-box" id="infoMotLaboral">
                         <p class="card-desc">El mercado actual exige seguridad, convirtiendo a la economía en prioridad absoluta frente a otras variables.</p>
                         <div class="big-stat text-laboral" data-count="59.0">0%</div>
-                        <div class="stat-label">Seguridad Económica principal</div>
+                        <div class="stat-label">Seguridad Económica</div>
                         <div class="click-hint" style="margin-top:20px;"><i class="fa-solid fa-hand-pointer"></i> Toca las partes de la dona</div>
                     </div>
                     <div style="flex: 1; min-width: 250px; height: 220px;">
@@ -248,44 +324,53 @@
                     <div class="info-box" id="infoMotAcademic">
                         <div class="big-stat text-academic" data-count="36.1">0%</div>
                         <div class="stat-label" style="margin-bottom: 10px;">Vocación y Pasión</div>
-                        <p class="card-desc" style="font-size: 0.95rem;">Las motivaciones personales impulsan a buscar especialización profunda por encima del requerimiento laboral.</p>
-                        <div class="click-hint"><i class="fa-solid fa-hand-pointer"></i> Toca las barras para ver definiciones</div>
+                        <p class="card-desc" style="font-size: 0.95rem;">Las motivaciones personales impulsan a buscar especialización profunda por encima del mercado.</p>
+                        <div class="click-hint"><i class="fa-solid fa-hand-pointer"></i> Toca las barras</div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="download-box card">
-            <div>
-                <h3 style="font-size: 1.5rem; margin-bottom: 5px;">Descarga el Boletín 2 Completo</h3>
-                <p style="color: var(--text-sub);">Obtén el PDF formal enfocado en los motivadores estratégicos.</p>
+        <div class="download-box" style="border-top-color: var(--academic);">
+            <div class="dl-info">
+                <span class="dl-date"><i class="fa-regular fa-calendar" style="margin-right: 5px;"></i> MAYO 2026</span>
+                <h3 class="dl-title">Boletín #02: Psicología de la Decisión</h3>
+                <p class="dl-desc">Descarga el informe completo con el análisis de los factores psicológicos que motivan a los graduados.</p>
             </div>
-            <a href="reporte_unLEMA_boletin02.pdf" download class="btn-download">
-                <i class="fa-solid fa-cloud-arrow-down"></i> Descargar Boletín 2
+            <a href="reporte_unLEMA_boletin02.pdf" download class="btn-download" style="border-color: var(--academic); color: var(--academic);">
+                DESCARGAR PDF <i class="fa-solid fa-download"></i>
             </a>
         </div>
     </div>
 
     <footer>
         <div class="footer-content">
-            <div class="footer-title">unLEMA Boletines 2026</div>
+            <div class="footer-top">
+                <div class="footer-title">
+                    <span class="un-text">un</span><span class="lema-text"><span class="lema-L">L</span><span class="lema-E">E</span><span class="lema-M">M</span><span class="lema-A">A</span></span> Boletines 2026
+                </div>
+                <div style="font-size: 0.9rem; color: var(--text-sub); font-weight: 600;">
+                    Red de Acompañamiento Integral REDai 2026
+                </div>
+            </div>
+            
             <div class="footer-credits">
                 <div class="credit-block">
                     <h5>Desarrollo Web & UI</h5>
-                    <p>Nicolas Rodríguez</p>
+                    <p class="team-list">Nicolas Rodríguez</p>
                 </div>
                 <div class="credit-block">
-                    <h5>Análisis de la Información</h5>
+                    <h5>Equipo de Análisis de la Información</h5>
                     <p class="team-list">
                         Daniel Contreras <span class="career-tag">(Ingeniería Química)</span><br>
                         Nicolas Rodríguez <span class="career-tag">(Ingeniería Electrónica)</span><br>
-                        Maria Fernanda Cardenas <span class="career-tag">(Ingeniería Química)</span><br>
-                        Jeam Ruiz <span class="career-tag">(Cine y Televisión)</span>
+                        Maria Fernanda Cardenas <span class="career-tag">(Ingeniería Química)</span>
                     </p>
                 </div>
             </div>
-            <div style="font-size: 0.9rem; color: var(--text-sub);">
-                Agradecimientos especiales a <strong>Zulma Camargo</strong> (Jefe del área de acompañamiento integral de sede) y a <strong>Fabian Meneses</strong> (Profesional del área de acompañamiento integral de sede) por su invaluable apoyo.
+            
+            <div class="footer-bottom">
+                Agradecimientos especiales a <strong>Zulma Camargo</strong> (Jefe del área de acompañamiento integral de sede) y a <strong>Fabian Meneses</strong> (Profesional del área de acompañamiento integral de sede) por su invaluable apoyo en la materialización de este proyecto.
             </div>
         </div>
     </footer>
@@ -297,7 +382,6 @@
 
         let charts = {};
 
-        // --- BASES DE DATOS DE EXPLICACIONES ---
         const exCtx = {
             laboral: [
                 { title: "Nuestra Muestra", val: 58.4, text: "Porcentaje de estudiantes de unLEMA encuestados que planean buscar un empleo tradicional apenas se gradúen.", color: "#00a19b" },
@@ -306,7 +390,7 @@
             academic: [
                 { title: "Nal. (SNIES)", val: 9.2, text: "Solo 9 de cada 100 egresados en todo el país transita de inmediato a un posgrado.", color: "#eb4160" },
                 { title: "Muestra unLEMA", val: 31.4, text: "El interés investigativo aquí supera ampliamente la media nacional, buscando más especialización.", color: "#df0832" },
-                { title: "Top 100 Global", val: 47.5, text: "En las universidades de mayor élite mundial (MIT, Stanford), el tránsito directo a posgrado roza el 50%.", color: "#f57a8e" }
+                { title: "Top 100 Global", val: 47.5, text: "En las universidades de mayor élite mundial, el tránsito directo a posgrado roza el 50%.", color: "#f57a8e" }
             ],
             emprendimiento: [
                 { title: "unLEMA", val: 4.9, text: "Una minoría absoluta planea fundar su propia empresa de inmediato, reflejando aversión al riesgo.", color: "#ec7920" },
@@ -317,22 +401,21 @@
 
         const exMot = {
             laboral: [
-                { title: "Seguridad Económica", val: 59.0, text: "<b>Definición:</b> Búsqueda de un salario fijo y garantizado que proteja contra las fluctuaciones del mercado. La estabilidad es su mayor anhelo.", color: "#00a19b" },
-                { title: "Exp. Práctica", val: 31.3, text: "<b>Definición:</b> Necesidad de aplicar conocimientos teóricos en escenarios reales para ganar competencias y enriquecer el currículum.", color: "#4dcad4" }
+                { title: "Seguridad Económica", val: 59.0, text: "<b>Definición:</b> Búsqueda de un salario fijo y garantizado que proteja contra las fluctuaciones del mercado.", color: "#00a19b" },
+                { title: "Exp. Práctica", val: 31.3, text: "<b>Definición:</b> Necesidad de aplicar conocimientos teóricos en escenarios reales para ganar competencias.", color: "#4dcad4" }
             ],
             emprendimiento: [
-                { title: "Independencia Laboral", val: 23.1, text: "<b>Definición:</b> Deseo de autogestión, autonomía total y rechazo a cumplir horarios corporativos rígidos o tener un jefe directo.", color: "#ec7920" },
-                { title: "Independencia Financiera", val: 19.2, text: "<b>Definición:</b> Aspiración a obtener ingresos que no estén limitados por un salario fijo; ganar según el éxito de su propio esfuerzo.", color: "#f29a50" },
-                { title: "Generar Empleo", val: 15.4, text: "<b>Definición:</b> Visión de impacto social colectivo orientada a crear empresa como medio para aportar al desarrollo económico del país.", color: "#f7bd84" }
+                { title: "Independencia Laboral", val: 23.1, text: "<b>Definición:</b> Deseo de autogestión, autonomía total y rechazo a cumplir horarios corporativos rígidos.", color: "#ec7920" },
+                { title: "Independencia Financiera", val: 19.2, text: "<b>Definición:</b> Aspiración a obtener ingresos que no estén limitados por un salario fijo; ganar según el esfuerzo.", color: "#f29a50" },
+                { title: "Generar Empleo", val: 15.4, text: "<b>Definición:</b> Visión de impacto social colectivo orientada a aportar al desarrollo económico del país.", color: "#f7bd84" }
             ],
             academic: [
-                { title: "Vocación y Pasión", val: 36.1, text: "<b>Definición:</b> Inclinación intrínseca por la investigación, el estudio y el amor al conocimiento sin buscar necesariamente un fin económico.", color: "#df0832" },
-                { title: "Exp. de Pregrado", val: 21.6, text: "<b>Definición:</b> Haber experimentado un excelente recorrido universitario, lo cual los motiva e inspira a seguir vinculados a la academia.", color: "#eb4160" },
-                { title: "Requisito Laboral", val: 15.0, text: "<b>Definición:</b> Sensación de que el mercado es muy competitivo y que solo con un pregrado no basta para conseguir el trabajo que desean.", color: "#f57a8e" }
+                { title: "Vocación y Pasión", val: 36.1, text: "<b>Definición:</b> Inclinación intrínseca por la investigación y el amor al conocimiento sin un fin económico.", color: "#df0832" },
+                { title: "Exp. de Pregrado", val: 21.6, text: "<b>Definición:</b> Haber experimentado un excelente recorrido universitario, que inspira a seguir en la academia.", color: "#eb4160" },
+                { title: "Requisito Laboral", val: 15.0, text: "<b>Definición:</b> Sensación de que el mercado es muy competitivo y solo con un pregrado no basta para trabajar.", color: "#f57a8e" }
             ]
         };
 
-        // --- MANEJADOR DE CLICS (INTERACTIVIDAD) ---
         function handleChartClick(dataSource, textKey, boxId, itemIndex) {
             const data = dataSource[textKey][itemIndex];
             const box = document.getElementById(boxId);
@@ -349,7 +432,6 @@
             }, 200);
         }
 
-        // --- SISTEMA GSAP ---
         function animateNumbers(containerId) {
             document.querySelectorAll(`${containerId} .big-stat`).forEach(stat => {
                 const targetValue = parseFloat(stat.getAttribute('data-count'));
@@ -373,7 +455,12 @@
                 gsap.to(nextDiv, { opacity: 1, y: 0, duration: 0.4 });
                 window.scrollTo({ top: 0, behavior: 'smooth' });
                 
-                gsap.fromTo(`#edition-${num} .card`, 
+                // Animar el banner si entramos al boletin 1
+                if(num === 1) {
+                    gsap.fromTo(".lema-box", {opacity:0, scale: 0.9}, {opacity: 1, scale:1, stagger: 0.1, duration: 0.5});
+                }
+
+                gsap.fromTo(`#edition-${num} .card, #edition-${num} .download-box`, 
                     { opacity: 0, y: 40 }, 
                     { opacity: 1, y: 0, duration: 0.6, stagger: 0.12, ease: "power2.out", onComplete: () => {
                         initCharts(num);
@@ -392,7 +479,6 @@
             const animCfg = { duration: 1200, easing: 'easeOutQuart' };
 
             if (edition === 1) {
-                // Laboral Context
                 createChart('chartLaboralCtx', {
                     type: 'bar',
                     data: { labels: ['Muestra unLEMA', 'Uniandes'], datasets: [{ data: [58.4, 42.0], backgroundColor: ['#00a19b', '#d1d1d6'], borderRadius: 6 }] },
@@ -405,10 +491,9 @@
                     }
                 });
 
-                // Academic Context
                 createChart('chartAcademicCtx', {
                     type: 'line',
-                    data: { labels: ['Nal. (SNIES)', 'unLEMA', 'Top 100'], datasets: [{ data: [9.2, 31.4, 47.5], borderColor: '#df0832', backgroundColor: 'rgba(223, 8, 50, 0.1)', fill: true, tension: 0.4, pointRadius: 8, pointBackgroundColor: '#df0832', pointHoverRadius: 12 }] },
+                    data: { labels: ['Nal.', 'unLEMA', 'Top100'], datasets: [{ data: [9.2, 31.4, 47.5], borderColor: '#df0832', backgroundColor: 'rgba(223, 8, 50, 0.1)', fill: true, tension: 0.4, pointRadius: 8, pointBackgroundColor: '#df0832', pointHoverRadius: 12 }] },
                     options: {
                         responsive: true, maintainAspectRatio: false, animation: animCfg,
                         plugins: { legend: { display: false }, datalabels: { align: 'bottom', color: '#df0832', font: {weight: 'bold'}, formatter: v=>v+'%' } },
@@ -418,10 +503,9 @@
                     }
                 });
 
-                // Emprendimiento Context
                 createChart('chartEmprendimientoCtx', {
                     type: 'polarArea',
-                    data: { labels: ['Nuestra Muestra', 'Global', 'Colombia'], datasets: [{ data: [4.9, 14.9, 28.8], backgroundColor: ['rgba(236, 121, 32, 0.85)', 'rgba(236, 121, 32, 0.5)', 'rgba(236, 121, 32, 0.25)'], borderWidth: 2, borderColor: '#fff', hoverOffset: 15 }] },
+                    data: { labels: ['unLEMA', 'Global', 'Colombia'], datasets: [{ data: [4.9, 14.9, 28.8], backgroundColor: ['rgba(236, 121, 32, 0.85)', 'rgba(236, 121, 32, 0.5)', 'rgba(236, 121, 32, 0.25)'], borderWidth: 2, borderColor: '#fff', hoverOffset: 15 }] },
                     options: {
                         responsive: true, maintainAspectRatio: false, animation: { duration: 1500, easing: 'easeOutElastic' },
                         plugins: { legend: { position: 'right' }, datalabels: { display: false } }, scales: { r: { ticks: {display: false} } },
@@ -430,7 +514,6 @@
                     }
                 });
             } else {
-                // Laboral Mot
                 createChart('chartLaboralMot', {
                     type: 'doughnut',
                     data: { labels: ['Seguridad Económica', 'Exp. Práctica'], datasets: [{ data: [59.0, 31.3], backgroundColor: ['#00a19b', '#4dcad4'], borderWidth: 3, borderColor: '#fff', hoverOffset: 12 }] },
@@ -442,7 +525,6 @@
                     }
                 });
 
-                // Emprendimiento Mot
                 createChart('chartEmprendimientoMot', {
                     type: 'radar',
                     data: { labels: ['Indep. Laboral', 'Indep. Financiera', 'Generar Empleo'], datasets: [{ data: [23.1, 19.2, 15.4], backgroundColor: 'rgba(236, 121, 32, 0.2)', borderColor: '#ec7920', pointBackgroundColor: '#ec7920', pointRadius: 7, pointHoverRadius: 10 }] },
@@ -455,7 +537,6 @@
                     }
                 });
 
-                // Academic Mot
                 createChart('chartAcademicMot', {
                     type: 'bar',
                     data: { labels: ['Vocación', 'Experiencia', 'Requisito'], datasets: [{ data: [36.1, 21.6, 15.0], backgroundColor: ['#df0832', '#eb4160', '#f57a8e'], borderRadius: 6 }] },
@@ -471,8 +552,9 @@
         }
 
         window.onload = () => {
-            gsap.fromTo("#edition-1 .card", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.8, stagger: 0.12, ease: "power2.out" });
-            setTimeout(() => { initCharts(1); animateNumbers("#edition-1"); }, 400);
+            gsap.fromTo(".lema-box", {opacity:0, scale: 0.9}, {opacity: 1, scale:1, stagger: 0.1, duration: 0.5});
+            gsap.fromTo("#edition-1 .card, #edition-1 .download-box", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.8, stagger: 0.12, ease: "power2.out", delay: 0.3 });
+            setTimeout(() => { initCharts(1); animateNumbers("#edition-1"); }, 500);
         };
     </script>
 </body>
