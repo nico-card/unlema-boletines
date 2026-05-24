@@ -132,9 +132,15 @@
         .bg-emprendimiento { background: rgba(236, 121, 32, 0.1); color: var(--emprendimiento); } .text-emprendimiento { color: var(--emprendimiento); }
         .bg-academic { background: rgba(223, 8, 50, 0.1); color: var(--academic); } .text-academic { color: var(--academic); }
 
-        /* --- TARJETA DE REFLEXIÓN AUTOMÁTICA --- */
+        /* --- TARJETA DE REFLEXIÓN --- */
         .reflection { background: var(--reflection-bg); color: var(--text); text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 50px; border: 1px solid rgba(0,0,0,0.05); }
         .reflection p { font-size: 1.4rem; font-style: italic; max-width: 800px; font-weight: 600; min-height: 90px; color: #2c2c2e; transition: opacity 0.3s ease; line-height: 1.4; }
+        
+        .reflection-indicators { display: flex; gap: 10px; margin-top: 30px; }
+        .dot { width: 12px; height: 12px; border-radius: 50%; background: rgba(0,0,0,0.15); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .dot.active.lab { background: var(--laboral); transform: scale(1.3); box-shadow: 0 0 10px rgba(0,161,155,0.3); }
+        .dot.active.emp { background: var(--emprendimiento); transform: scale(1.3); box-shadow: 0 0 10px rgba(236,121,32,0.3); }
+        .dot.active.aca { background: var(--academic); transform: scale(1.3); box-shadow: 0 0 10px rgba(223,8,50,0.3); }
 
         /* --- CARD DE PRÓXIMAMENTE (MOVILIDAD) --- */
         .card-empty { display: none; text-align: center; justify-content: center; align-items: center; padding: 80px 20px; background: rgba(207, 217, 56, 0.1); border: 2px dashed var(--letra-m); border-radius: 24px; grid-column: span 12; width: 100%; }
@@ -146,6 +152,7 @@
         .dl-info { display: flex; flex-direction: column; gap: 8px; }
         .dl-date { font-size: 0.75rem; font-weight: 800; color: var(--text-sub); letter-spacing: 2px; text-transform: uppercase; }
         .dl-title { font-size: 1.5rem; font-weight: 800; color: var(--text); }
+        .dl-desc { color: var(--text-sub); font-size: 1rem; margin-top: 5px; }
 
         .btn-download { background: var(--bg); color: var(--laboral); padding: 15px 30px; border-radius: 50px; text-decoration: none; font-weight: 700; display: flex; align-items: center; gap: 10px; border: 2px solid var(--laboral); transition: all 0.3s ease; font-size: 0.95rem; }
         .btn-download:hover { background: var(--laboral); color: white; transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,161,155,0.2); }
@@ -156,6 +163,8 @@
         .footer-top { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 30px;}
         .footer-credits { display: grid; grid-template-columns: 1fr 1.5fr; gap: 40px; text-align: left; }
         .credit-block h5 { font-size: 0.8rem; text-transform: uppercase; font-weight: 800; color: var(--text-sub); letter-spacing: 1px; margin-bottom: 15px; }
+        
+        .footer-bottom { text-align: center; font-size: 0.85rem; color: var(--text-sub); margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border); }
 
         @media (max-width: 1024px) {
             .span-8, .span-7, .span-6, .span-5, .span-4 { grid-column: span 12; } 
@@ -184,7 +193,7 @@
         <div class="hero">
             <span class="kicker">Acompañamiento Integral - SAE</span>
             <h1>¿Qué planes tienes a futuro?</h1>
-            <p>Filtra por eje haciendo clic en las letras. Análisis de intención profesional de los graduados.</p>
+            <p>Filtra por eje haciendo clic en las letras. Análisis de intención profesional de los estudiantes próximos a graduarse.</p>
         </div>
 
         <div class="lema-banner" role="tablist">
@@ -244,14 +253,17 @@
             </div>
 
             <div class="card span-7 reflection" data-cat="all">
+                <i id="rotative-icon-1" class="fa-solid fa-quote-left" style="font-size: 2.2rem; opacity: 0.3; margin-bottom: 15px; transition: color 0.6s ease;"></i>
                 <p id="rotative-text-1">Cargando reflexiones...</p>
+                <div class="reflection-indicators" id="rotative-dots-1"></div>
             </div>
         </div>
 
         <div class="download-box" data-cat="all">
             <div class="dl-info">
                 <span class="dl-date"><i class="fa-regular fa-calendar" style="margin-right: 5px;"></i> MAYO 2026</span>
-                <h3 class="dl-title">Boletín #01: Contexto y Tendencias</h3>
+                <h3 class="dl-title">Boletín #01: Contexto</h3>
+                <p class="dl-desc">Descarga el PDF oficial con la tabulación de datos y conclusiones ejecutivas sobre los estudiantes próximos a graduarse.</p>
             </div>
             <a href="reporte_unLEMA_boletin01.pdf" download class="btn-download">DESCARGAR PDF <i class="fa-solid fa-download"></i></a>
         </div>
@@ -261,7 +273,7 @@
         <div class="hero">
             <span class="kicker">Acompañamiento Integral - SAE</span>
             <h1>Profundizando las razones</h1>
-            <p>Filtra por eje haciendo clic en las letras. Factores psicológicos de decisión.</p>
+            <p>Filtra por eje haciendo clic en las letras. Factores psicológicos de decisión de los estudiantes.</p>
         </div>
 
         <div class="lema-banner" role="tablist">
@@ -315,14 +327,17 @@
             </div>
             
             <div class="card span-4 reflection" data-cat="all">
+                <i id="rotative-icon-2" class="fa-solid fa-quote-left" style="font-size: 2.2rem; opacity: 0.3; margin-bottom: 15px; transition: color 0.6s ease;"></i>
                 <p id="rotative-text-2">Cargando reflexiones...</p>
+                <div class="reflection-indicators" id="rotative-dots-2"></div>
             </div>
         </div>
 
         <div class="download-box" style="border-top-color: var(--academic);" data-cat="all">
             <div class="dl-info">
                 <span class="dl-date"><i class="fa-regular fa-calendar" style="margin-right: 5px;"></i> MAYO 2026</span>
-                <h3 class="dl-title">Boletín #02: Psicología de la Decisión</h3>
+                <h3 class="dl-title">Boletín #02: Motivaciones</h3>
+                <p class="dl-desc">Descarga el informe completo con el análisis de los factores psicológicos que motivan a los estudiantes próximos a graduarse.</p>
             </div>
             <a href="reporte_unLEMA_boletin02.pdf" download class="btn-download" style="border-color: var(--academic); color: var(--academic);">DESCARGAR PDF <i class="fa-solid fa-download"></i></a>
         </div>
@@ -340,6 +355,9 @@
                     <h5>Análisis de la Información</h5>
                     <p class="team-list">Daniel Contreras <span class="career-tag">(Ing. Química)</span><br>Nicolas Rodríguez <span class="career-tag">(Ing. Electrónica)</span><br>Maria Fernanda Cardenas <span class="career-tag">(Ing. Química)</span></p>
                 </div>
+            </div>
+            <div class="footer-bottom">
+                Agradecimientos especiales a <strong>Zulma Camargo</strong> (Jefe del área de acompañamiento integral de sede) y a <strong>Fabian Meneses</strong> (Profesional del área de acompañamiento integral de sede) por su invaluable apoyo en la materialización de este proyecto.
             </div>
         </div>
     </footer>
@@ -359,7 +377,7 @@
         // --- BASES DE DATOS DE GRÁFICAS ---
         const exCtx = {
             laboral: [
-                { title: "Muestra unLEMA", val: 58.4, text: "Porcentaje de graduados evaluados que declaran como meta principal la vinculación laboral inmediata.", color: "#00a19b" },
+                { title: "Muestra unLEMA", val: 58.4, text: "Porcentaje de estudiantes próximos a graduarse evaluados que declaran como meta principal la vinculación laboral inmediata.", color: "#00a19b" },
                 { title: "Universidad de los Andes", val: 42.0, text: "A modo de contraste institucional, según reportes del CTP de Los Andes, el 42% apunta a empleo directo.", color: "#4dcad4" }
             ],
             academic: [
@@ -396,42 +414,44 @@
             ]
         };
 
-        // --- FRASES CARRUSEL (Rotan según el filtro) ---
+        // --- BASE DE DATOS DE FRASES ROTATIVAS ---
         const phrasesDatabase = {
             1: {
                 all: [
-                    "La intención de buscar empleo coincide perfectamente con un mercado que contrata a la gran mayoría de egresados.",
-                    "unLEMA demuestra que nuestros estudiantes trazan metas balanceadas entre la academia pura y el entorno productivo."
+                    { text: "La intención de buscar empleo coincide perfectamente con un mercado que contrata a la gran mayoría de nuestros estudiantes próximos a egresar.", color: "var(--laboral)", cls: "lab" },
+                    { text: "La intención emprendedora es casi seis veces menor al promedio nacional, reflejando cautela al crear empresa.", color: "var(--emprendimiento)", cls: "emp" },
+                    { text: "El interés por la formación avanzada es 3,4 veces superior al comportamiento promedio registrado a nivel nacional.", color: "var(--academic)", cls: "aca" }
                 ],
                 L: [
-                    "Enfoque Laboral: El empleo tradicional sigue siendo el gran imán de atracción debido a las garantías de estabilidad inicial.",
-                    "La altísima cifra de intención laboral reafirma la confianza de los graduados en la inserción directa."
+                    { text: "Enfoque Laboral: El empleo tradicional sigue siendo el gran imán de atracción debido a las garantías de estabilidad inicial.", color: "var(--laboral)", cls: "lab" },
+                    { text: "La altísima cifra de intención laboral reafirma la confianza de los estudiantes próximos a graduarse en la inserción directa.", color: "var(--laboral)", cls: "lab" }
                 ],
                 E: [
-                    "Enfoque Emprendimiento: El bajo porcentaje inicial de creación de startups revela un reto de mentalidad y un campo fértil para incubadoras.",
-                    "La baja intención de emprender sugiere que el estudiante prefiere acumular experiencia corporativa previa."
+                    { text: "Enfoque Emprendimiento: El bajo porcentaje inicial de creación de startups revela un reto de mentalidad y un campo fértil para incubadoras.", color: "var(--emprendimiento)", cls: "emp" },
+                    { text: "La baja intención de emprender sugiere que el estudiante prefiere acumular experiencia corporativa previa.", color: "var(--emprendimiento)", cls: "emp" }
                 ],
                 A: [
-                    "Enfoque Académico: Superar por más de 3 veces el promedio nacional en intención de posgrados demuestra el fuerte ADN científico estudiantil.",
-                    "Los semilleros de investigación rinden frutos en un tránsito directo muy fuerte hacia las maestrías."
+                    { text: "Enfoque Académico: Superar por más de 3 veces el promedio nacional en intención de posgrados demuestra el fuerte ADN científico estudiantil.", color: "var(--academic)", cls: "aca" },
+                    { text: "Los semilleros de investigación rinden frutos en un tránsito directo muy fuerte hacia las maestrías.", color: "var(--academic)", cls: "aca" }
                 ]
             },
             2: {
                 all: [
-                    "La psicología del egresado prioriza la estabilidad como el escalón fundamental para construir autonomía a largo plazo.",
-                    "Emprender o investigar ya no son vistos como obligaciones, sino como pasiones genuinas motivadas por el crecimiento propio."
+                    { text: "La seguridad económica (58,7%) se posiciona como el motor fundamental para buscar empleo.", color: "var(--laboral)", cls: "lab" },
+                    { text: "El emprendimiento nace del deseo de libertad y propósito. La independencia laboral y financiera son sus pilares.", color: "var(--emprendimiento)", cls: "emp" },
+                    { text: "Estudiar un posgrado no es solo 'el paso siguiente', es una elección genuina motivada por crecimiento propio.", color: "var(--academic)", cls: "aca" }
                 ],
                 L: [
-                    "Motivaciones Laborales: El peso de la seguridad económica actúa como el motor central en más de la mitad de los perfiles analizados.",
-                    "La experiencia de campo se consolida como el segundo factor más buscado para validar las habilidades técnicas del pregrado."
+                    { text: "Motivaciones Laborales: El peso de la seguridad económica actúa como el motor central en más de la mitad de los perfiles analizados.", color: "var(--laboral)", cls: "lab" },
+                    { text: "La experiencia de campo se consolida como el segundo factor más buscado para validar las habilidades técnicas del pregrado.", color: "var(--laboral)", cls: "lab" }
                 ],
                 E: [
-                    "Motivaciones Emprendimiento: La libertad y el propósito de ser dueños de su tiempo superan a la simple ambición monetaria.",
-                    "Generar empleo e innovar representan factores clave, demostrando un alto sentido de impacto y responsabilidad social."
+                    { text: "Motivaciones Emprendimiento: La libertad y el propósito de ser dueños de su tiempo superan a la simple ambición monetaria.", color: "var(--emprendimiento)", cls: "emp" },
+                    { text: "Generar empleo e innovar representan factores clave, demostrando un alto sentido de impacto y responsabilidad social.", color: "var(--emprendimiento)", cls: "emp" }
                 ],
                 A: [
-                    "Motivaciones Académicas: La vocación intelectual pura domina el tránsito a posgrados, validando el rigor de la formación recibida.",
-                    "La experiencia vivida dentro del aula y los laboratorios es la responsable directa de despertar el amor por la ciencia continua."
+                    { text: "Motivaciones Académicas: La vocación intelectual pura domina el tránsito a posgrados, validando el rigor de la formación recibida.", color: "var(--academic)", cls: "aca" },
+                    { text: "La experiencia vivida dentro del aula y los laboratorios es la responsable directa de despertar el amor por la ciencia continua.", color: "var(--academic)", cls: "aca" }
                 ]
             }
         };
@@ -471,24 +491,58 @@
             }, 200);
         }
 
-        // --- ROTACIÓN DE FRASES ---
+        // --- ROTACIÓN DINÁMICA CON COMILLAS Y PUNTOS ---
         function startPhrasesRotation() {
             if (rotationTimer) clearInterval(rotationTimer);
             
             const textElement = document.getElementById(`rotative-text-${currentEditionGlobal}`);
+            const iconElement = document.getElementById(`rotative-icon-${currentEditionGlobal}`);
+            const dotsContainer = document.getElementById(`rotative-dots-${currentEditionGlobal}`);
+            
             if (!textElement) return;
 
             const filterKey = activeFilter && ['L','E','A'].includes(activeFilter) ? activeFilter : 'all';
             const phrases = phrasesDatabase[currentEditionGlobal][filterKey];
             
+            if (dotsContainer) {
+                dotsContainer.innerHTML = '';
+                phrases.forEach((_, i) => {
+                    dotsContainer.innerHTML += `<span class="dot"></span>`;
+                });
+            }
+            
             currentRotationIndex = 0;
+            const startItem = phrases[0];
+
             textElement.style.opacity = 1;
-            textElement.innerText = `"${phrases[currentRotationIndex]}"`;
+            textElement.innerText = `"${startItem.text}"`;
+            if (iconElement) iconElement.style.color = startItem.color;
+
+            if (dotsContainer) {
+                const dots = dotsContainer.querySelectorAll('.dot');
+                if (dots[0]) {
+                    dots[0].classList.add('active');
+                    dots[0].classList.add(startItem.cls);
+                }
+            }
 
             rotationTimer = setInterval(() => {
                 gsap.to(textElement, { opacity: 0, duration: 0.3, onComplete: () => {
                     currentRotationIndex = (currentRotationIndex + 1) % phrases.length;
-                    textElement.innerText = `"${phrases[currentRotationIndex]}"`;
+                    const item = phrases[currentRotationIndex];
+                    
+                    textElement.innerText = `"${item.text}"`;
+                    if(iconElement) iconElement.style.color = item.color;
+                    
+                    if (dotsContainer) {
+                        const dots = dotsContainer.querySelectorAll('.dot');
+                        dots.forEach(d => d.className = 'dot'); // Limpiar clases
+                        if(dots[currentRotationIndex]) {
+                            dots[currentRotationIndex].classList.add('active');
+                            dots[currentRotationIndex].classList.add(item.cls);
+                        }
+                    }
+                    
                     gsap.to(textElement, { opacity: 1, duration: 0.3 });
                 }});
             }, 6000); 
@@ -496,7 +550,6 @@
 
         // --- FILTRO L.E.M.A ---
         function filterCards(category) {
-            // CORRECCIÓN: Usamos document.getElementById para evitar el error previo
             const currentEdition = document.getElementById(`edition-${currentEditionGlobal}`);
             const cards = currentEdition.querySelectorAll('.card, .download-box');
             const emptyState = document.getElementById(`empty-m-${currentEditionGlobal}`);
@@ -508,7 +561,6 @@
             });
 
             if (activeFilter === category) {
-                // Apagar filtro
                 activeFilter = null;
                 banners.forEach(b => b.style.opacity = '1');
                 if (emptyState) emptyState.style.display = 'none';
@@ -517,7 +569,6 @@
                     gsap.to(c, { opacity: 1, scale: 1, duration: 0.3 });
                 });
             } else {
-                // Encender filtro
                 activeFilter = category;
                 banners.forEach(b => {
                     b.style.opacity = b.classList.contains('bg-' + category) ? '1' : '0.3';
