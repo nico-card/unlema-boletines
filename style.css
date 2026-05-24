@@ -1,0 +1,156 @@
+/* --- VARIABLES DE MARCA --- */
+:root {
+    --bg: #f5f5f7;             
+    --text: #1d1d1f;
+    --text-sub: #86868b;
+    --card-bg: #ffffff;
+    --laboral: #00a19b;        
+    --emprendimiento: #ec7920; 
+    --letra-m: #cfd938;        
+    --academic: #df0832;       
+    --border: rgba(0,0,0,0.08);
+    --reflection-bg: #e2e2e7; 
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* --- NAVEGACIÓN COMPACTA --- */
+nav {
+    position: fixed; top: 0; width: 100%; padding: 15px 40px;
+    display: flex; justify-content: space-between; align-items: center;
+    z-index: 1000; background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(20px); border-bottom: 1px solid var(--border);
+}
+.logo { font-size: 22px; cursor: pointer; }
+.un-text { font-weight: 300; color: var(--text); }
+.lema-text { font-weight: 800; }
+.lema-L { color: var(--laboral); } .lema-E { color: var(--emprendimiento); } 
+.lema-M { color: var(--letra-m); } .lema-A { color: var(--academic); }
+
+.edition-selector { display: flex; background: var(--bg); padding: 5px; border-radius: 50px; gap: 5px; border: 1px solid var(--border);}
+.edition-btn {
+    padding: 8px 20px; border-radius: 50px; border: none; cursor: pointer;
+    font-size: 13px; font-weight: 600; transition: 0.3s ease; color: var(--text-sub); background: transparent;
+}
+.edition-btn.active { background: white; color: var(--text); box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+
+.container { max-width: 1400px; margin: 0 auto; padding: 120px 20px 60px 20px; }
+
+.hero { text-align: center; margin-bottom: 40px; }
+.kicker { font-size: 0.75rem; font-weight: 800; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-sub); margin-bottom: 15px; display: block;}
+.hero h1 { font-size: clamp(2.2rem, 5vw, 3.8rem); letter-spacing: -0.04em; line-height: 1.1; margin-bottom: 20px; color: var(--text); }
+.hero p { font-size: 1.2rem; color: var(--text-sub); max-width: 750px; margin: 0 auto; line-height: 1.5;}
+
+/* --- BANNER INTERACTIVO L.E.M.A. (FILTRO) --- */
+.lema-banner {
+    display: grid; grid-template-columns: repeat(4, 1fr); width: 100%; height: 130px;
+    margin-bottom: 50px; border-radius: 24px; overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+}
+.lema-box {
+    display: flex; align-items: center; justify-content: center; position: relative;
+    cursor: pointer; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.lema-box:focus { outline: 3px solid #1d1d1f; outline-offset: -3px; }
+.lema-letter { font-size: 3.5rem; font-weight: 900; color: rgba(255,255,255,0.4); transition: all 0.4s ease; }
+.lema-text-full {
+    position: absolute; opacity: 0; transform: translateY(20px); font-weight: 800;
+    font-size: 1.1rem; color: white; transition: all 0.4s ease; letter-spacing: 1px;
+}
+
+.lema-box.bg-L { background-color: var(--laboral); }
+.lema-box.bg-E { background-color: var(--emprendimiento); }
+.lema-box.bg-M { background-color: var(--letra-m); }
+.lema-box.bg-M .lema-letter { color: rgba(0,0,0,0.15); }
+.lema-box.bg-M .lema-text-full { color: var(--text); }
+.lema-box.bg-A { background-color: var(--academic); }
+
+.lema-box:hover .lema-letter { transform: scale(0.5); opacity: 0; }
+.lema-box:hover .lema-text-full { opacity: 1; transform: translateY(0); }
+.lema-box:hover { box-shadow: inset 0 0 80px rgba(0,0,0,0.1); }
+
+/* --- DISEÑO BENTO GRID --- */
+.bento-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 25px; margin-bottom: 40px; }
+.card {
+    background: var(--card-bg); border-radius: 24px; padding: 40px; border: 1px solid var(--border);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.02); position: relative; overflow: hidden;
+    display: flex; flex-direction: column; opacity: 0; transform: translateY(30px);
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s ease;
+}
+.card:hover { transform: translateY(-6px) !important; box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
+
+.span-12 { grid-column: span 12; } .span-8 { grid-column: span 8; } .span-7 { grid-column: span 7; } .span-6 { grid-column: span 6; } .span-5 { grid-column: span 5; } .span-4 { grid-column: span 4; }
+
+.card-header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
+.icon-box { width: 50px; height: 50px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+.card-title { font-size: 1.6rem; font-weight: 700; letter-spacing: -0.02em; }
+
+.card-flex-layout { display: flex; gap: 30px; align-items: center; flex-wrap: wrap; width: 100%; }
+.canvas-container-half { flex: 2; min-width: 280px; height: 200px; position: relative; }
+
+.chart-wrapper { position: relative; width: 100%; flex-grow: 1; min-height: 200px; }
+canvas { cursor: pointer; } 
+
+.info-box { transition: opacity 0.25s ease; flex: 1; min-width: 200px; display: flex; flex-direction: column; justify-content: center; }
+.card-desc { font-size: 1.05rem; color: var(--text-sub); margin-bottom: 15px; line-height: 1.5; }
+.big-stat { font-size: 3.5rem; font-weight: 800; line-height: 1; margin-bottom: 5px; letter-spacing: -1px; transition: color 0.3s ease; }
+.stat-label { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-sub); font-weight: 600; }
+
+.click-hint { display: inline-flex; align-items: center; gap: 8px; margin-top: auto; padding: 8px 15px; background: rgba(0,0,0,0.04); border-radius: 50px; font-size: 0.8rem; font-weight: 600; color: var(--text-sub); width: fit-content; }
+
+/* --- BOTÓN RESTAURAR CORREGIDO --- */
+.btn-restore {
+    background: #1d1d1f; border: none; padding: 10px 22px; border-radius: 50px;
+    font-size: 0.85rem; font-weight: 700; color: white; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 8px; margin-top: 15px;
+    transition: all 0.2s ease; width: fit-content; box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.btn-restore:hover { background: #3a3a3c; transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.15); }
+
+.bg-laboral { background: rgba(0, 161, 155, 0.1); color: var(--laboral); } .text-laboral { color: var(--laboral); }
+/* Corrección de color naranja de marca */
+.bg-emprendimiento { background: rgba(236, 121, 32, 0.1); color: var(--emprendimiento); } .text-emprendimiento { color: var(--emprendimiento); }
+.bg-academic { background: rgba(223, 8, 50, 0.1); color: var(--academic); } .text-academic { color: var(--academic); }
+
+/* --- TARJETA DE REFLEXIÓN AUTOMÁTICA --- */
+.reflection { background: var(--reflection-bg); color: var(--text); text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 50px; border: 1px solid rgba(0,0,0,0.05); }
+.reflection p { font-size: 1.4rem; font-style: italic; max-width: 800px; font-weight: 600; min-height: 90px; color: #2c2c2e; transition: opacity 0.3s ease; line-height: 1.4; }
+
+/* --- CARD DE PRÓXIMAMENTE (MOVILIDAD) --- */
+.card-empty { display: none; text-align: center; justify-content: center; align-items: center; padding: 80px 20px; background: rgba(207, 217, 56, 0.1); border: 2px dashed var(--letra-m); border-radius: 24px; grid-column: span 12; width: 100%; }
+.card-empty h3 { color: #8a9125; font-size: 2rem; margin-bottom: 10px; }
+.card-empty p { color: var(--text-sub); }
+
+/* --- DESCARGA TIPO REVISTA --- */
+.download-box { display: flex; align-items: center; justify-content: space-between; background: var(--card-bg); padding: 40px; border-radius: 24px; border: 1px solid var(--border); border-top: 8px solid var(--laboral); margin-top: 50px; flex-direction: row; box-shadow: 0 15px 40px rgba(0,0,0,0.04); width: 100%; transition: transform 0.3s ease; }
+.dl-info { display: flex; flex-direction: column; gap: 8px; }
+.dl-date { font-size: 0.75rem; font-weight: 800; color: var(--text-sub); letter-spacing: 2px; text-transform: uppercase; }
+.dl-title { font-size: 1.5rem; font-weight: 800; color: var(--text); }
+
+.btn-download { background: var(--bg); color: var(--laboral); padding: 15px 30px; border-radius: 50px; text-decoration: none; font-weight: 700; display: flex; align-items: center; gap: 10px; border: 2px solid var(--laboral); transition: all 0.3s ease; font-size: 0.95rem; }
+.btn-download:hover { background: var(--laboral); color: white; transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,161,155,0.2); }
+
+/* --- FOOTER --- */
+footer { width: 100%; padding: 60px 20px 40px; background: white; border-top: 1px solid var(--border); color: var(--text); margin-top: 60px; }
+.footer-content { max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; gap: 30px; }
+.footer-top { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 30px;}
+.footer-credits { display: grid; grid-template-columns: 1fr 1.5fr; gap: 40px; text-align: left; }
+.credit-block h5 { font-size: 0.8rem; text-transform: uppercase; font-weight: 800; color: var(--text-sub); letter-spacing: 1px; margin-bottom: 15px; }
+
+@media (max-width: 1024px) {
+    .span-8, .span-7, .span-6, .span-5, .span-4 { grid-column: span 12; } 
+    .lema-banner { grid-template-columns: repeat(2, 1fr); height: 200px; }
+    .download-box { flex-direction: column; text-align: center; gap: 25px; }
+}
+@media (max-width: 600px) {
+    .lema-banner { grid-template-columns: 1fr; height: auto; }
+    .lema-box { padding: 30px 0; }
+}
