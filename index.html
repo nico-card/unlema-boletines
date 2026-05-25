@@ -55,10 +55,23 @@
         }
         .edition-btn.active { background: white; color: var(--text); box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
 
-        .container { max-width: 1400px; margin: 0 auto; padding: 120px 20px 60px 20px; }
+        /* --- INTRODUCCIÓN GLOBAL --- */
+        .global-intro { text-align: center; padding: 120px 20px 0 20px; opacity: 0; transform: translateY(-10px); }
+        .badge-intro {
+            display: inline-flex; align-items: center; justify-content: center;
+            background: var(--card-bg); border: 1px solid var(--border); padding: 10px 25px; border-radius: 50px;
+            font-size: 0.85rem; font-weight: 600; color: var(--text-sub); letter-spacing: 1px; text-transform: uppercase;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+        }
+        .badge-intro strong { color: var(--text); font-weight: 800; margin-right: 5px; }
+        .badge-intro .divider { color: rgba(0,0,0,0.1); margin: 0 10px; font-weight: 300;}
+
+        /* --- CONTENEDOR PRINCIPAL --- */
+        /* Reduje el padding superior porque ahora está la intro global */
+        .container { max-width: 1400px; margin: 0 auto; padding: 40px 20px 60px 20px; }
         
         .hero { text-align: center; margin-bottom: 40px; }
-        .kicker { font-size: 0.75rem; font-weight: 800; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-sub); margin-bottom: 15px; display: block;}
+        .kicker { font-size: 0.85rem; font-weight: 800; letter-spacing: 0.25em; text-transform: uppercase; color: var(--laboral); margin-bottom: 15px; display: block;}
         .hero h1 { font-size: clamp(2.2rem, 5vw, 3.8rem); letter-spacing: -0.04em; line-height: 1.1; margin-bottom: 20px; color: var(--text); }
         .hero p { font-size: 1.2rem; color: var(--text-sub); max-width: 750px; margin: 0 auto; line-height: 1.5;}
 
@@ -172,6 +185,8 @@
             .download-box { flex-direction: column; text-align: center; gap: 25px; }
         }
         @media (max-width: 600px) {
+            .badge-intro { border-radius: 20px; padding: 15px; flex-direction: column; gap: 5px; }
+            .badge-intro .divider { display: none; }
             .lema-banner { grid-template-columns: 1fr; height: auto; }
             .lema-box { padding: 30px 0; }
         }
@@ -189,9 +204,15 @@
         </div>
     </nav>
 
+    <div class="global-intro">
+        <div class="badge-intro">
+            <strong>unLEMA lab</strong> <span class="divider">|</span> Laboratorio estudiantil de proyección profesional de Acompañamiento Integral
+        </div>
+    </div>
+
     <div id="edition-1" class="container" style="display: block; opacity: 1;">
         <div class="hero">
-            <span class="kicker">Acompañamiento Integral - SAE</span>
+            <span class="kicker">Boletín #01</span>
             <h1>¿Qué planes tienes a futuro?</h1>
             <p>Filtra por eje haciendo clic en las letras. Análisis de intención profesional de los estudiantes próximos a graduarse.</p>
         </div>
@@ -262,7 +283,7 @@
         <div class="download-box" data-cat="all">
             <div class="dl-info">
                 <span class="dl-date"><i class="fa-regular fa-calendar" style="margin-right: 5px;"></i> MAYO 2026</span>
-                <h3 class="dl-title">Boletín #01: Contexto</h3>
+                <h3 class="dl-title">Contexto</h3>
                 <p class="dl-desc">Descarga el PDF oficial con la tabulación de datos y conclusiones ejecutivas sobre los estudiantes próximos a graduarse.</p>
             </div>
             <a href="reporte_unLEMA_boletin01.pdf" download class="btn-download">DESCARGAR PDF <i class="fa-solid fa-download"></i></a>
@@ -271,7 +292,7 @@
 
     <div id="edition-2" class="container" style="display: none; opacity: 0;">
         <div class="hero">
-            <span class="kicker">Acompañamiento Integral - SAE</span>
+            <span class="kicker">Boletín #02</span>
             <h1>Profundizando las razones</h1>
             <p>Filtra por eje haciendo clic en las letras. Factores psicológicos de decisión de los estudiantes.</p>
         </div>
@@ -336,7 +357,7 @@
         <div class="download-box" style="border-top-color: var(--academic);" data-cat="all">
             <div class="dl-info">
                 <span class="dl-date"><i class="fa-regular fa-calendar" style="margin-right: 5px;"></i> MAYO 2026</span>
-                <h3 class="dl-title">Boletín #02: Motivaciones</h3>
+                <h3 class="dl-title">Motivaciones</h3>
                 <p class="dl-desc">Descarga el informe completo con el análisis de los factores psicológicos que motivan a los estudiantes próximos a graduarse.</p>
             </div>
             <a href="reporte_unLEMA_boletin02.pdf" download class="btn-download" style="border-color: var(--academic); color: var(--academic);">DESCARGAR PDF <i class="fa-solid fa-download"></i></a>
@@ -629,6 +650,7 @@
                 gsap.to(nextDiv, { opacity: 1, y: 0, duration: 0.4 });
                 window.scrollTo({ top: 0, behavior: 'smooth' });
                 
+                gsap.fromTo(".global-intro", { opacity: 0, y: -10 }, { opacity: 1, y: 0, duration: 0.5 });
                 gsap.fromTo(`#edition-${num} .lema-box`, { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, stagger: 0.08, duration: 0.4 });
 
                 gsap.fromTo(`#edition-${num} .card, #edition-${num} .download-box`, 
@@ -665,14 +687,15 @@
 
         // --- ARRANQUE ---
         window.onload = () => {
-            gsap.fromTo(".lema-box", { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, stagger: 0.1, duration: 0.5 });
-            gsap.fromTo("#edition-1 .card, #edition-1 .download-box", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.7, stagger: 0.1, ease: "power2.out", delay: 0.2 });
+            gsap.to(".global-intro", { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" });
+            gsap.fromTo(".lema-box", { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, stagger: 0.1, duration: 0.5, delay: 0.2 });
+            gsap.fromTo("#edition-1 .card, #edition-1 .download-box", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.7, stagger: 0.1, ease: "power2.out", delay: 0.4 });
             setTimeout(() => { 
                 initCharts(1); 
                 storeOriginalContents();
                 animateNumbers("#edition-1"); 
                 startPhrasesRotation();
-            }, 450);
+            }, 600);
         };
     </script>
 </body>
