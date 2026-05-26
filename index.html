@@ -56,7 +56,7 @@
         .edition-btn.active { background: white; color: var(--text); box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
 
         /* --- INTRODUCCIÓN GLOBAL --- */
-        .global-intro { text-align: center; padding: 120px 20px 0 20px; opacity: 0; transform: translateY(-10px); }
+        .global-intro { text-align: center; padding: 120px 20px 0 20px; }
         .badge-intro {
             display: inline-flex; align-items: center; justify-content: center;
             background: var(--card-bg); border: 1px solid var(--border); padding: 10px 25px; border-radius: 50px;
@@ -67,17 +67,16 @@
         .badge-intro .divider { color: rgba(0,0,0,0.1); margin: 0 10px; font-weight: 300;}
 
         /* --- CONTENEDOR PRINCIPAL --- */
-        /* Reduje el padding superior porque ahora está la intro global */
         .container { max-width: 1400px; margin: 0 auto; padding: 40px 20px 60px 20px; }
         
         .hero { text-align: center; margin-bottom: 40px; }
         .kicker { font-size: 0.85rem; font-weight: 800; letter-spacing: 0.25em; text-transform: uppercase; color: var(--laboral); margin-bottom: 15px; display: block;}
         .hero h1 { font-size: clamp(2.2rem, 5vw, 3.8rem); letter-spacing: -0.04em; line-height: 1.1; margin-bottom: 20px; color: var(--text); }
-        .hero p { font-size: 1.2rem; color: var(--text-sub); max-width: 750px; margin: 0 auto; line-height: 1.5;}
+        .hero p { font-size: 1.2rem; color: var(--text-sub); max-width: 850px; margin: 0 auto; line-height: 1.5;}
 
         /* --- BANNER INTERACTIVO L.E.M.A. (FILTRO) --- */
         .lema-banner {
-            display: grid; grid-template-columns: repeat(4, 1fr); width: 100%; height: 130px;
+            display: grid; grid-template-columns: repeat(4, 1fr); width: 100%; height: 110px;
             margin-bottom: 50px; border-radius: 24px; overflow: hidden;
             box-shadow: 0 15px 35px rgba(0,0,0,0.05);
         }
@@ -86,7 +85,7 @@
             cursor: pointer; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .lema-box:focus { outline: 3px solid #1d1d1f; outline-offset: -3px; }
-        .lema-letter { font-size: 3.5rem; font-weight: 900; color: rgba(255,255,255,0.4); transition: all 0.4s ease; }
+        .lema-letter { font-size: 3rem; font-weight: 900; color: rgba(255,255,255,0.4); transition: all 0.4s ease; }
         .lema-text-full {
             position: absolute; opacity: 0; transform: translateY(20px); font-weight: 800;
             font-size: 1.1rem; color: white; transition: all 0.4s ease; letter-spacing: 1px;
@@ -102,6 +101,65 @@
         .lema-box:hover .lema-letter { transform: scale(0.5); opacity: 0; }
         .lema-box:hover .lema-text-full { opacity: 1; transform: translateY(0); }
         .lema-box:hover { box-shadow: inset 0 0 80px rgba(0,0,0,0.1); }
+
+        /* --- LÍNEA DE TIEMPO INTERACTIVA REAL (A COLOR) --- */
+        .timeline-section { 
+            margin-bottom: 70px; text-align: center; display: block; width: 100%; 
+            opacity: 0; transform: translateY(30px); 
+        }
+        
+        .timeline-track {
+            display: flex; justify-content: space-between; align-items: flex-end;
+            position: relative; width: 100%; max-width: 800px; margin: 0 auto 40px auto; padding: 0 10px;
+        }
+        
+        .timeline-track::after {
+            content: ''; position: absolute; bottom: 10px; left: 5%; right: 5%;
+            height: 4px; background: var(--border); z-index: 1; border-radius: 2px;
+        }
+
+        .timeline-step {
+            position: relative; z-index: 2; display: flex; flex-direction: column; 
+            align-items: center; gap: 12px; cursor: pointer; flex: 1;
+        }
+
+        .step-label {
+            font-weight: 800; font-size: 1.05rem; color: var(--text-sub); 
+            transition: all 0.3s ease; padding-bottom: 5px;
+        }
+
+        .step-circle {
+            width: 24px; height: 24px; background: white; border: 4px solid var(--border);
+            border-radius: 50%; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Colores vivos por nodo */
+        .timeline-step:nth-child(1).active .step-label { color: var(--laboral); transform: translateY(-5px); }
+        .timeline-step:nth-child(1).active .step-circle { border-color: var(--laboral); background: var(--laboral); box-shadow: 0 0 0 6px rgba(0, 161, 155, 0.2); transform: scale(1.3); }
+
+        .timeline-step:nth-child(2).active .step-label { color: #2d7dd2; transform: translateY(-5px); }
+        .timeline-step:nth-child(2).active .step-circle { border-color: #2d7dd2; background: #2d7dd2; box-shadow: 0 0 0 6px rgba(45, 125, 210, 0.2); transform: scale(1.3); }
+
+        .timeline-step:nth-child(3).active .step-label { color: var(--academic); transform: translateY(-5px); }
+        .timeline-step:nth-child(3).active .step-circle { border-color: var(--academic); background: var(--academic); box-shadow: 0 0 0 6px rgba(223, 8, 50, 0.2); transform: scale(1.3); }
+
+        .timeline-step:nth-child(4).active .step-label { color: #8a9125; transform: translateY(-5px); }
+        .timeline-step:nth-child(4).active .step-circle { border-color: #8a9125; background: #8a9125; box-shadow: 0 0 0 6px rgba(138, 145, 37, 0.2); transform: scale(1.3); }
+
+        .timeline-step:nth-child(5).active .step-label { color: var(--emprendimiento); transform: translateY(-5px); }
+        .timeline-step:nth-child(5).active .step-circle { border-color: var(--emprendimiento); background: var(--emprendimiento); box-shadow: 0 0 0 6px rgba(236, 121, 32, 0.2); transform: scale(1.3); }
+
+        .timeline-step:hover .step-circle { transform: scale(1.1); }
+
+        .timeline-display {
+            background: white; border-radius: 24px; padding: 40px; border: 1px solid var(--border);
+            max-width: 900px; margin: 0 auto; text-align: left; display: flex; gap: 30px; align-items: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+        }
+        .timeline-content h3 { font-size: 1.5rem; margin-bottom: 10px; color: var(--text); }
+        .timeline-content p { color: var(--text-sub); font-size: 1.1rem; margin-bottom: 15px; line-height: 1.5; }
+        .timeline-students { font-size: 0.95rem; color: var(--text-sub); border-top: 1px solid var(--border); padding-top: 15px; }
+        .timeline-students strong { color: var(--text); }
 
         /* --- DISEÑO BENTO GRID --- */
         .bento-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 25px; margin-bottom: 40px; }
@@ -124,6 +182,16 @@
 
         .chart-wrapper { position: relative; width: 100%; flex-grow: 1; min-height: 200px; }
         canvas { cursor: pointer; } 
+
+        /* --- LISTA DE RESUMEN EJECUTIVO --- */
+        .summary-list { display: flex; flex-direction: column; gap: 15px; width: 100%; }
+        .summary-item { background: var(--bg); padding: 22px 25px; border-radius: 16px; border-left: 8px solid; display: flex; flex-direction: column; transition: transform 0.3s ease; }
+        .summary-item:hover { transform: translateX(5px); }
+        .summary-item.lab { border-left-color: var(--laboral); }
+        .summary-item.aca { border-left-color: var(--academic); }
+        .summary-item.emp { border-left-color: var(--emprendimiento); }
+        .summary-item-title { font-size: 1.3rem; font-weight: 800; margin-bottom: 5px; }
+        .summary-item-desc { color: var(--text-sub); font-size: 1rem; line-height: 1.4;}
 
         .info-box { transition: opacity 0.25s ease; flex: 1; min-width: 200px; display: flex; flex-direction: column; justify-content: center; }
         .card-desc { font-size: 1.05rem; color: var(--text-sub); margin-bottom: 15px; line-height: 1.5; }
@@ -185,10 +253,14 @@
             .download-box { flex-direction: column; text-align: center; gap: 25px; }
         }
         @media (max-width: 600px) {
-            .badge-intro { border-radius: 20px; padding: 15px; flex-direction: column; gap: 5px; }
+            .badge-intro { border-radius: 20px; padding: 15px; flex-direction: column; gap: 5px; text-align: center; }
             .badge-intro .divider { display: none; }
             .lema-banner { grid-template-columns: 1fr; height: auto; }
             .lema-box { padding: 30px 0; }
+            .timeline-track::after { display: none; }
+            .timeline-track { flex-direction: column; align-items: flex-start; gap: 20px; }
+            .timeline-step { flex-direction: row; }
+            .timeline-step.active .step-label { transform: translateX(5px); }
         }
     </style>
 </head>
@@ -206,15 +278,15 @@
 
     <div class="global-intro">
         <div class="badge-intro">
-            <strong>unLEMA lab</strong> <span class="divider">|</span> Laboratorio estudiantil de proyección profesional de Acompañamiento Integral
+            <strong>LEPP</strong> <span class="divider">|</span> Laboratorio estudiantil de proyección profesional
         </div>
     </div>
 
     <div id="edition-1" class="container" style="display: block; opacity: 1;">
         <div class="hero">
             <span class="kicker">Boletín #01</span>
-            <h1>¿Qué planes tienes a futuro?</h1>
-            <p>Filtra por eje haciendo clic en las letras. Análisis de intención profesional de los estudiantes próximos a graduarse.</p>
+            <h1>¿Cómo construimos esta encuesta?</h1>
+            <p>Detrás de los resultados: un proceso de liderazgo estudiantil para fortalecer el acompañamiento integral en la UNAL Sede Bogotá.</p>
         </div>
 
         <div class="lema-banner" role="tablist">
@@ -232,8 +304,87 @@
             </div>
         </div>
 
+        <div class="timeline-section span-12" data-cat="all">
+            <h2 style="margin-bottom: 40px; font-size: 2.2rem; color: var(--text);">Nuestra Trayectoria</h2>
+            
+            <div class="timeline-track">
+                <div class="timeline-step active" onclick="updateTimeline(0)">
+                    <span class="step-label">2024-1</span>
+                    <div class="step-circle"></div>
+                </div>
+                <div class="timeline-step" onclick="updateTimeline(1)">
+                    <span class="step-label">2024-2</span>
+                    <div class="step-circle"></div>
+                </div>
+                <div class="timeline-step" onclick="updateTimeline(2)">
+                    <span class="step-label">2025-1</span>
+                    <div class="step-circle"></div>
+                </div>
+                <div class="timeline-step" onclick="updateTimeline(3)">
+                    <span class="step-label">2025-2</span>
+                    <div class="step-circle"></div>
+                </div>
+                <div class="timeline-step" onclick="updateTimeline(4)">
+                    <span class="step-label">2026-1</span>
+                    <div class="step-circle"></div>
+                </div>
+            </div>
+
+            <div class="timeline-display" id="timelineDisplay">
+                <div class="timeline-content">
+                    <h3 id="tl-title">Identificación de necesidades</h3>
+                    <p id="tl-desc">Construcción del problema de investigación y reconocimiento de asimetrías en los miedos ante el egreso.</p>
+                    <div class="timeline-students">
+                        Liderado por: <strong id="tl-students">Valentina Quintero, Diego Navas, Michel Mendivenson</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="bento-grid">
             
+            <div class="card span-6" data-cat="all">
+                <div class="card-header"><div class="icon-box" style="background:rgba(0,0,0,0.05)"><i class="fa-solid fa-users-rays"></i></div><h2 class="card-title" style="font-size:1.4rem">Estudiantes apoyando estudiantes</h2></div>
+                <p class="card-desc">Desde 2017, REDai impulsa iniciativas para fortalecer la permanencia y contribuir en la formación profesional. Unlema es el equipo que conecta con el programa de proyección profesional.</p>
+            </div>
+
+            <div class="card span-6" data-cat="all">
+                <div class="card-header"><div class="icon-box" style="background:rgba(0,161,155,0.1); color:var(--laboral)"><i class="fa-solid fa-microscope"></i></div><h2 class="card-title" style="font-size:1.4rem">Ficha Técnica</h2></div>
+                <div style="display: flex; justify-content: space-between; align-items:flex-end;">
+                    <div><div class="big-stat" data-count="4586">0</div><div class="stat-label">Población</div></div>
+                    <div><div class="big-stat" data-count="522" style="color:var(--laboral)">0</div><div class="stat-label">Respuestas</div></div>
+                    <div><div class="big-stat" data-count="70">0.0%</div><div class="stat-label">Avance Carrera</div></div>
+                </div>
+            </div>
+
+            <div class="card span-12" data-cat="all">
+                <div style="text-align: center; margin-bottom: 40px;">
+                    <h2 style="font-size: 2.2rem; color: var(--text); justify-content: center; border: none; margin-bottom: 5px;">¿Qué planes tienen a corto plazo?</h2>
+                    <span style="color: var(--text-sub); font-style: italic; font-size: 1rem;">Muestra: 522 estudiantes próximos a graduarse</span>
+                </div>
+                
+                <div style="display: flex; gap: 50px; align-items: center; flex-wrap: wrap;">
+                    <div style="flex: 1.5; min-width: 320px; height: 350px;">
+                        <canvas id="chartPlanesCortoPlazo" aria-label="Gráfica General Corto Plazo" role="img"></canvas>
+                    </div>
+                    
+                    <div class="summary-list" style="flex: 1; min-width: 300px;">
+                        <div class="summary-item lab">
+                            <div class="summary-item-title" style="color: var(--laboral);"><span class="summary-stat" data-count="63.3">0.0%</span> Trabajar</div>
+                            <div class="summary-item-desc">Prioridad absoluta por la inserción laboral inmediata.</div>
+                        </div>
+                        <div class="summary-item aca">
+                            <div class="summary-item-title" style="color: var(--academic);"><span class="summary-stat" data-count="31.4">0.0%</span> Estudiar</div>
+                            <div class="summary-item-desc">El segundo camino más elegido, enfocado en posgrados.</div>
+                        </div>
+                        <div class="summary-item emp">
+                            <div class="summary-item-title" style="color: var(--emprendimiento);"><span class="summary-stat" data-count="5.0">0.0%</span> Emprender</div>
+                            <div class="summary-item-desc">Un grupo cauteloso pero decidido a crear empresa.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="card-empty" id="empty-m-1">
                 <div>
                     <i class="fa-solid fa-plane-departure" style="font-size: 3rem; color: #8a9125; margin-bottom:15px;"></i>
@@ -247,7 +398,7 @@
                 <div class="card-flex-layout">
                     <div class="info-box" id="infoCtxLaboral">
                         <p class="card-desc">La intención de buscar empleo de manera inmediata domina el panorama. Esta tendencia coincide con una altísima tasa de vinculación formal real.</p>
-                        <div class="big-stat text-laboral" data-count="58.4">0%</div><div class="stat-label">Busca empleo inmediato</div>
+                        <div class="big-stat text-laboral" data-count="58.4">0.0%</div><div class="stat-label">Busca empleo inmediato</div>
                         <div class="click-hint"><i class="fa-solid fa-hand-pointer"></i> Toca las barras para ver detalles</div>
                     </div>
                     <div class="canvas-container-half"><canvas id="chartLaboralCtx" aria-label="Gráfica Laboral" role="img"></canvas></div>
@@ -257,7 +408,7 @@
             <div class="card span-4" data-cat="A">
                 <div class="card-header"><div class="icon-box bg-academic"><i class="fa-solid fa-graduation-cap"></i></div><h2 class="card-title">Investigación</h2></div>
                 <div class="info-box" id="infoCtxAcademic">
-                    <div class="big-stat text-academic" data-count="31.4">0%</div><div class="stat-label" style="margin-bottom: 10px;">Desea posgrado directo</div>
+                    <div class="big-stat text-academic" data-count="31.4">0.0%</div><div class="stat-label" style="margin-bottom: 10px;">Desea posgrado directo</div>
                     <p class="card-desc" style="font-size: 0.95rem;">Un interés 3.4 veces mayor que el tránsito nacional promedio de Colombia.</p>
                     <div class="click-hint" style="margin-bottom:10px;"><i class="fa-solid fa-hand-pointer"></i> Haz clic en los puntos</div>
                 </div>
@@ -293,7 +444,7 @@
     <div id="edition-2" class="container" style="display: none; opacity: 0;">
         <div class="hero">
             <span class="kicker">Boletín #02</span>
-            <h1>Profundizando las razones</h1>
+            <h1>Psicología de la Decisión</h1>
             <p>Filtra por eje haciendo clic en las letras. Factores psicológicos de decisión de los estudiantes.</p>
         </div>
 
@@ -328,7 +479,7 @@
                 <div class="card-flex-layout">
                     <div class="info-box" id="infoMotLaboral">
                         <p class="card-desc">El mercado actual exige seguridad, convirtiendo a la economía en prioridad absoluta para una transición rápida a la autonomía.</p>
-                        <div class="big-stat text-laboral" data-count="58.7">0%</div><div class="stat-label">Seguridad Económica</div>
+                        <div class="big-stat text-laboral" data-count="58.7">0.0%</div><div class="stat-label">Seguridad Económica</div>
                         <div class="click-hint" style="margin-top:20px;"><i class="fa-solid fa-hand-pointer"></i> Toca las partes de la dona</div>
                     </div>
                     <div class="canvas-container-half" style="height: 260px;"><canvas id="chartLaboralMot"></canvas></div>
@@ -340,7 +491,7 @@
                 <div class="card-flex-layout">
                     <div class="canvas-container-half" style="height: 220px;"><canvas id="chartAcademicMot"></canvas></div>
                     <div class="info-box" id="infoMotAcademic">
-                        <div class="big-stat text-academic" data-count="36.1">0%</div><div class="stat-label" style="margin-bottom: 10px;">Crecimiento propio</div>
+                        <div class="big-stat text-academic" data-count="36.1">0.0%</div><div class="stat-label" style="margin-bottom: 10px;">Crecimiento propio</div>
                         <p class="card-desc" style="font-size: 0.95rem;">Estudiar un posgrado es una elección genuina y no solo "el paso siguiente".</p>
                         <div class="click-hint"><i class="fa-solid fa-hand-pointer"></i> Toca las barras</div>
                     </div>
@@ -434,6 +585,31 @@
                 { title: "Requisito Laboral", val: 15.0, text: "Percepción de que ciertos campos específicos del mercado laboral exigen obligatoriamente títulos especializados para el ingreso.", color: "#f57a8e" }
             ]
         };
+
+        // --- DATA DE LA LÍNEA DE TIEMPO ---
+        const timelineData = [
+            { title: "Identificación de necesidades", desc: "Construcción del problema de investigación y reconocimiento de asimetrías en los miedos ante el egreso.", students: "Valentina Quintero, Diego Navas, Michel Mendivenson" },
+            { title: "Prueba Piloto", desc: "Construcción técnica de la encuesta y aplicación de piloto con 38 miembros de REDai.", students: "Diego Navas" },
+            { title: "Recolección de Datos", desc: "Corrección de instrumentos, diseño de muestreo estratificado simple y recolección final.", students: "Diego Navas, David Marquez, Daniel Bohorquez" },
+            { title: "Resultados Preliminares", desc: "Participación en el Foro Académico 'Retos del Acompañamiento' con datos iniciales.", students: "Diego Navas" },
+            { title: "Divulgación Final", desc: "Análisis estadístico avanzado y creación del Laboratorio Unlema Lab (LEPP).", students: "Nicolas Rodríguez, Daniel Contreras, Maria Fernanda Cárdenas, Narly Cipagauta" }
+        ];
+
+        function updateTimeline(index) {
+            // Actualizar clases activas en los pasos (círculos y textos)
+            const steps = document.querySelectorAll('.timeline-step');
+            steps.forEach(s => s.classList.remove('active'));
+            steps[index].classList.add('active');
+
+            // Animación del contenedor de descripción
+            const data = timelineData[index];
+            gsap.to("#timelineDisplay", { opacity: 0, y: 10, duration: 0.2, onComplete: () => {
+                document.getElementById('tl-title').innerText = data.title;
+                document.getElementById('tl-desc').innerText = data.desc;
+                document.getElementById('tl-students').innerText = data.students;
+                gsap.to("#timelineDisplay", { opacity: 1, y: 0, duration: 0.3 });
+            }});
+        }
 
         // --- BASE DE DATOS DE FRASES ROTATIVAS ---
         const phrasesDatabase = {
@@ -572,9 +748,9 @@
         // --- FILTRO L.E.M.A ---
         function filterCards(category) {
             const currentEdition = document.getElementById(`edition-${currentEditionGlobal}`);
-            const cards = currentEdition.querySelectorAll('.card, .download-box');
-            const emptyState = document.getElementById(`empty-m-${currentEditionGlobal}`);
+            const cards = currentEdition.querySelectorAll('.card, .download-box, .timeline-section');
             const banners = currentEdition.querySelectorAll('.lema-box');
+            const emptyState = document.getElementById(`empty-m-${currentEditionGlobal}`);
 
             // Restaurar textos si hay alguno abierto
             document.querySelectorAll('.info-box').forEach(box => {
@@ -585,8 +761,9 @@
                 activeFilter = null;
                 banners.forEach(b => b.style.opacity = '1');
                 if (emptyState) emptyState.style.display = 'none';
+                
                 cards.forEach(c => {
-                    c.style.display = 'flex';
+                    c.style.display = c.classList.contains('timeline-section') ? 'block' : 'flex';
                     gsap.to(c, { opacity: 1, scale: 1, duration: 0.3 });
                 });
             } else {
@@ -597,7 +774,7 @@
 
                 cards.forEach(c => {
                     if (c.dataset.cat === category || c.dataset.cat === 'all') {
-                        c.style.display = 'flex';
+                        c.style.display = c.classList.contains('timeline-section') ? 'block' : 'flex';
                         gsap.to(c, { opacity: 1, scale: 1, duration: 0.3 });
                     } else {
                         gsap.to(c, { opacity: 0, scale: 0.95, duration: 0.2, onComplete: () => c.style.display = 'none' });
@@ -613,16 +790,36 @@
             }
 
             startPhrasesRotation();
+            // Re-animar números de las cartas visibles
             animateNumbers(`#edition-${currentEditionGlobal}`);
         }
 
-        // --- ANIMACIÓN DE NÚMEROS ---
+        // --- ANIMACIÓN DE NÚMEROS SÍNCRO ---
         function animateNumbers(containerId) {
-            document.querySelectorAll(`${containerId} .big-stat`).forEach(stat => {
+            document.querySelectorAll(`${containerId} .big-stat, ${containerId} .summary-stat`).forEach(stat => {
                 const targetValue = parseFloat(stat.getAttribute('data-count'));
-                if (!targetValue) return;
+                if (isNaN(targetValue)) return;
+                
                 let countObj = { value: 0 };
-                gsap.to(countObj, { value: targetValue, duration: 1.5, ease: "power2.out", onUpdate: function () { stat.innerText = countObj.value.toFixed(1) + '%'; } });
+                
+                // Determinar si es un número entero (como población 4586) o porcentaje
+                const isPercentage = stat.innerText.includes('%') || targetValue <= 100;
+                
+                // Reiniciar el texto visible
+                stat.innerText = isPercentage ? '0.0%' : '0';
+                
+                gsap.to(countObj, { 
+                    value: targetValue, 
+                    duration: 1.5, 
+                    ease: "power2.out", 
+                    onUpdate: function () { 
+                        if (isPercentage) {
+                            stat.innerText = countObj.value.toFixed(1) + '%'; 
+                        } else {
+                            stat.innerText = Math.floor(countObj.value).toLocaleString('es-ES');
+                        }
+                    } 
+                });
             });
         }
 
@@ -641,11 +838,17 @@
             document.querySelectorAll(".edition-btn").forEach(b => b.classList.remove("active"));
             document.getElementById(`btn-edicion-${num}`).classList.add("active");
 
+            // Matar rotación actual
+            if(rotationTimer) clearInterval(rotationTimer);
+
             gsap.to(currentDiv, { opacity: 0, y: 20, duration: 0.3, onComplete: () => {
                 currentDiv.style.display = "none";
                 nextDiv.style.display = "block";
                 
-                nextDiv.querySelectorAll('.card, .download-box').forEach(c => { c.style.display = 'flex'; c.style.opacity = 1; });
+                nextDiv.querySelectorAll('.card, .download-box, .timeline-section').forEach(c => { 
+                    c.style.display = c.classList.contains('timeline-section') ? 'block' : 'flex'; 
+                    c.style.opacity = 1; 
+                });
 
                 gsap.to(nextDiv, { opacity: 1, y: 0, duration: 0.4 });
                 window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -653,12 +856,12 @@
                 gsap.fromTo(".global-intro", { opacity: 0, y: -10 }, { opacity: 1, y: 0, duration: 0.5 });
                 gsap.fromTo(`#edition-${num} .lema-box`, { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, stagger: 0.08, duration: 0.4 });
 
-                gsap.fromTo(`#edition-${num} .card, #edition-${num} .download-box`, 
+                gsap.fromTo(`#edition-${num} .card, #edition-${num} .download-box, #edition-${num} .timeline-section`, 
                     { opacity: 0, y: 35 }, 
                     { opacity: 1, y: 0, duration: 0.5, stagger: 0.1, ease: "power2.out", onComplete: () => {
-                        initCharts(num);
+                        initCharts(num); // Arrancar gráficas y sus animaciones GSAP
                         storeOriginalContents();
-                        animateNumbers(`#edition-${num}`);
+                        animateNumbers(`#edition-${num}`); // Arrancar números síncronos
                         startPhrasesRotation();
                     }}
                 );
@@ -667,21 +870,150 @@
 
         // --- GRÁFICAS CHART.JS ---
         function createChart(id, config) {
+            // Destruir si existe para evitar duplicados
             if (charts[id]) charts[id].destroy(); 
+            
+            // Forzar desactivación de animaciones nativas en todas
+            if(!config.options) config.options = {};
+            config.options.animation = false;
+            
             charts[id] = new Chart(document.getElementById(id), config);
         }
 
         function initCharts(edition) {
-            const animCfg = { duration: 1100, easing: 'easeOutQuart' };
+            const commonDatalabelsCtx = {
+                color: '#fff',
+                font: { weight: 'bold', size: 12 },
+                formatter: v => v.toFixed(1) + '%'
+            };
 
             if (edition === 1) {
-                createChart('chartLaboralCtx', { type: 'bar', data: { labels: ['Muestra unLEMA', 'Uniandes'], datasets: [{ data: [58.4, 42.0], backgroundColor: ['#00a19b', '#d1d1d6'], borderRadius: 6 }] }, options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, animation: animCfg, plugins: { legend: { display: false }, datalabels: { color: '#fff', font: { weight: 'bold' }, formatter: v => v + '%' } }, scales: { x: { display: false, max: 100 }, y: { grid: { display: false }, border: { display: false }, ticks: { font: { weight: 'bold' } } } }, onHover: (e, el) => e.native.target.style.cursor = el[0] ? 'pointer' : 'default', onClick: (e, el) => { if (el.length) handleChartClick(exCtx, 'laboral', 'infoCtxLaboral', el[0].index); } } });
-                createChart('chartAcademicCtx', { type: 'line', data: { labels: ['Nal.', 'unLEMA', 'Top100'], datasets: [{ data: [9.2, 31.4, 47.5], borderColor: '#df0832', backgroundColor: 'rgba(223, 8, 50, 0.1)', fill: true, tension: 0.4, pointRadius: 7, pointBackgroundColor: '#df0832' }] }, options: { responsive: true, maintainAspectRatio: false, animation: animCfg, plugins: { legend: { display: false }, datalabels: { align: 'bottom', color: '#df0832', font: { weight: 'bold' }, formatter: v => v + '%' } }, scales: { y: { display: false, min: 0, max: 60 }, x: { grid: { display: false } } }, onHover: (e, el) => e.native.target.style.cursor = el[0] ? 'pointer' : 'default', onClick: (e, el) => { if (el.length) handleChartClick(exCtx, 'academic', 'infoCtxAcademic', el[0].index); } } });
-                createChart('chartEmprendimientoCtx', { type: 'polarArea', data: { labels: ['unLEMA', 'Global', 'Colombia'], datasets: [{ data: [4.9, 14.9, 28.8], backgroundColor: ['rgba(236, 121, 32, 0.85)', 'rgba(236, 121, 32, 0.5)', 'rgba(236, 121, 32, 0.25)'], borderWidth: 2, borderColor: '#fff', hoverOffset: 15 }] }, options: { responsive: true, maintainAspectRatio: false, animation: { duration: 1300, easing: 'easeOutElastic' }, plugins: { legend: { position: 'right' }, datalabels: { display: false } }, scales: { r: { ticks: { display: false } } }, onHover: (e, el) => e.native.target.style.cursor = el[0] ? 'pointer' : 'default', onClick: (e, el) => { if (el.length) handleChartClick(exCtx, 'emprendimiento', 'infoCtxEmprendimiento', el[0].index); } } });
+                // 1. GRÁFICA PRINCIPAL (CORTOPLAZO)
+                createChart('chartPlanesCortoPlazo', {
+                    type: 'bar',
+                    data: {
+                        labels: ['Trabajar', 'Estudiar', 'Emprender'],
+                        datasets: [{
+                            data: [0, 0, 0], // Start at 0
+                            backgroundColor: ['#00a19b', '#df0832', '#ec7920'],
+                            borderRadius: 8
+                        }]
+                    },
+                    options: {
+                        responsive: true, maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false },
+                            datalabels: { color: '#fff', font: { weight: 'bold', size: 14 }, formatter: v => v.toFixed(1) + '%' }
+                        },
+                        scales: {
+                            x: { grid: { display: false }, border: { display: false }, ticks: { font: { weight: 'bold', size: 13 } } },
+                            y: { max: 80, grid: { color: 'rgba(0,0,0,0.05)' }, border: { display: false } }
+                        }
+                    }
+                });
+                let targetDataMain = [63.3, 31.4, 5.0];
+                let proxyMain = { v0: 0, v1: 0, v2: 0 };
+                gsap.to(proxyMain, {
+                    v0: targetDataMain[0], v1: targetDataMain[1], v2: targetDataMain[2],
+                    duration: 1.5, ease: "power2.out",
+                    onUpdate: () => {
+                        let chart = charts['chartPlanesCortoPlazo'];
+                        if(chart) { chart.data.datasets[0].data = [proxyMain.v0, proxyMain.v1, proxyMain.v2]; chart.update(); }
+                    }
+                });
+
+                // 2. LABORAL CONTEXTO (BAR HORIZONTAL)
+                createChart('chartLaboralCtx', { 
+                    type: 'bar', 
+                    data: { labels: ['Muestra unLEMA', 'Uniandes'], datasets: [{ data: [0, 0], backgroundColor: ['#00a19b', '#d1d1d6'], borderRadius: 6 }] }, 
+                    options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, datalabels: commonDatalabelsCtx }, scales: { x: { display: false, max: 100 }, y: { grid: { display: false }, border: { display: false }, ticks: { font: { weight: 'bold' } } } }, onHover: (e, el) => e.native.target.style.cursor = el[0] ? 'pointer' : 'default', onClick: (e, el) => { if (el.length) handleChartClick(exCtx, 'laboral', 'infoCtxLaboral', el[0].index); } } 
+                });
+                let proxyLabCtx = { v0: 0, v1: 0 };
+                gsap.to(proxyLabCtx, {
+                    v0: 58.4, v1: 42.0, duration: 1.5, ease: "power2.out",
+                    onUpdate: () => {
+                        let chart = charts['chartLaboralCtx'];
+                        if(chart) { chart.data.datasets[0].data = [proxyLabCtx.v0, proxyLabCtx.v1]; chart.update(); }
+                    }
+                });
+
+                // 3. ACADÉMICO CONTEXTO (LÍNEA SUBIENDO)
+                createChart('chartAcademicCtx', { 
+                    type: 'line', 
+                    data: { labels: ['Nal.', 'unLEMA', 'Top100'], datasets: [{ data: [0, 0, 0], borderColor: '#df0832', backgroundColor: 'rgba(223, 8, 50, 0.1)', fill: true, tension: 0.4, pointRadius: 7, pointBackgroundColor: '#df0832' }] }, 
+                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, datalabels: { align: 'bottom', color: '#df0832', font: { weight: 'bold' }, formatter: commonDatalabelsCtx.formatter } }, scales: { y: { display: false, min: 0, max: 60 }, x: { grid: { display: false } } }, onHover: (e, el) => e.native.target.style.cursor = el[0] ? 'pointer' : 'default', onClick: (e, el) => { if (el.length) handleChartClick(exCtx, 'academic', 'infoCtxAcademic', el[0].index); } } 
+                });
+                let proxyAcaCtx = { v0: 0, v1: 0, v2: 0 };
+                gsap.to(proxyAcaCtx, {
+                    v0: 9.2, v1: 31.4, v2: 47.5, duration: 1.5, ease: "power2.out",
+                    onUpdate: () => {
+                        let chart = charts['chartAcademicCtx'];
+                        if(chart) { chart.data.datasets[0].data = [proxyAcaCtx.v0, proxyAcaCtx.v1, proxyAcaCtx.v2]; chart.update(); }
+                    }
+                });
+
+                // 4. EMPRENDIMIENTO CONTEXTO (POLAR AREA)
+                createChart('chartEmprendimientoCtx', { 
+                    type: 'polarArea', 
+                    data: { labels: ['unLEMA', 'Global', 'Colombia'], datasets: [{ data: [0, 0, 0], backgroundColor: ['rgba(236, 121, 32, 0.85)', 'rgba(236, 121, 32, 0.5)', 'rgba(236, 121, 32, 0.25)'], borderWidth: 2, borderColor: '#fff' }] }, 
+                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right' }, datalabels: { display: false } }, scales: { r: { min: 0, max: 30, ticks: { display: false }, grid: {color: 'rgba(0,0,0,0.05)'} } }, onHover: (e, el) => e.native.target.style.cursor = el[0] ? 'pointer' : 'default', onClick: (e, el) => { if (el.length) handleChartClick(exCtx, 'emprendimiento', 'infoCtxEmprendimiento', el[0].index); } } 
+                });
+                let proxyEmpCtx = { v0: 0, v1: 0, v2: 0 };
+                gsap.to(proxyEmpCtx, {
+                    v0: 4.9, v1: 14.9, v2: 28.8, duration: 1.6, ease: "power2.out",
+                    onUpdate: () => {
+                        let chart = charts['chartEmprendimientoCtx'];
+                        if(chart) { chart.data.datasets[0].data = [proxyEmpCtx.v0, proxyEmpCtx.v1, proxyEmpCtx.v2]; chart.update(); }
+                    }
+                });
+
             } else {
-                createChart('chartLaboralMot', { type: 'doughnut', data: { labels: ['Seguridad Econ.', 'Exp. Laboral', 'Emprender', 'Otros'], datasets: [{ data: [58.7, 31.0, 1.5, 8.8], backgroundColor: ['#00a19b', '#4dcad4', '#007a75', '#b3e2df'], borderWidth: 3, borderColor: '#fff', hoverOffset: 12 }] }, options: { responsive: true, maintainAspectRatio: false, cutout: '55%', animation: { duration: 1200, easing: 'easeOutQuart' }, plugins: { legend: { position: 'right', labels: { boxWidth: 15, padding: 15 } }, datalabels: { color: '#fff', font: { weight: 'bold', size: 11 }, formatter: (v) => v > 5 ? v + '%' : '' } }, onHover: (e, el) => e.native.target.style.cursor = el[0] ? 'pointer' : 'default', onClick: (e, el) => { if (el.length) handleChartClick(exMot, 'laboral', 'infoMotLaboral', el[0].index); } } });
-                createChart('chartEmprendimientoMot', { type: 'radar', data: { labels: ['Laboral', 'Financiera', 'Empleo', 'Flexibilidad', 'Oportunidad', 'Innovación'], datasets: [{ data: [23.1, 19.2, 15.4, 11.5, 11.5, 11.5], backgroundColor: 'rgba(236, 121, 32, 0.25)', borderColor: '#ec7920', pointBackgroundColor: '#ec7920', pointRadius: 5, pointHoverRadius: 8, borderWidth: 2 }] }, options: { responsive: true, maintainAspectRatio: false, animation: animCfg, plugins: { legend: { display: false }, datalabels: { display: false } }, scales: { r: { angleLines: { color: 'rgba(0,0,0,0.1)' }, grid: { color: 'rgba(0,0,0,0.1)' }, pointLabels: { font: { size: 11, weight: 'bold' } }, ticks: { display: false, max: 25 } } }, onHover: (e, el) => e.native.target.style.cursor = el[0] ? 'pointer' : 'default', onClick: (e, el) => { if (el.length) handleChartClick(exMot, 'emprendimiento', 'infoMotEmprendimiento', el[0].index); } } });
-                createChart('chartAcademicMot', { type: 'bar', data: { labels: ['Personal', 'Pregrado', 'Requisito'], datasets: [{ data: [36.1, 21.6, 15.0], backgroundColor: ['#df0832', '#eb4160', '#f57a8e'], borderRadius: 6 }] }, options: { responsive: true, maintainAspectRatio: false, animation: animCfg, plugins: { legend: { display: false }, datalabels: { anchor: 'end', align: 'start', color: '#fff', font: { weight: 'bold' }, formatter: v => v + '%' } }, scales: { y: { display: false, max: 40 }, x: { grid: { display: false }, border: { display: false }, ticks: { font: { weight: 'bold' } } } }, onHover: (e, el) => e.native.target.style.cursor = el[0] ? 'pointer' : 'default', onClick: (e, el) => { if (el.length) handleChartClick(exMot, 'academic', 'infoMotAcademic', el[0].index); } } });
+                // BOLETÍN 2 MOTIVACIONES
+
+                // 1. EMPRENDIMIENTO MOTIVACIONES (RADAR)
+                createChart('chartEmprendimientoMot', { 
+                    type: 'radar', 
+                    data: { labels: ['Laboral', 'Financiera', 'Empleo', 'Flexibilidad', 'Oportunidad', 'Innovación'], datasets: [{ data: [0, 0, 0, 0, 0, 0], backgroundColor: 'rgba(236, 121, 32, 0.25)', borderColor: '#ec7920', pointBackgroundColor: '#ec7920', pointRadius: 5, borderWidth: 2 }] }, 
+                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, datalabels: { display: false } }, scales: { r: { min: 0, max: 25, angleLines: { color: 'rgba(0,0,0,0.1)' }, grid: { color: 'rgba(0,0,0,0.1)' }, pointLabels: { font: { size: 11, weight: 'bold' } }, ticks: { display: false } } }, onHover: (e, el) => e.native.target.style.cursor = el[0] ? 'pointer' : 'default', onClick: (e, el) => { if (el.length) handleChartClick(exMot, 'emprendimiento', 'infoMotEmprendimiento', el[0].index); } } 
+                });
+                let proxyEmpMot = { v0: 0, v1: 0, v2: 0, v3: 0, v4: 0, v5: 0 };
+                gsap.to(proxyEmpMot, {
+                    v0: 23.1, v1: 19.2, v2: 15.4, v3: 11.5, v4: 11.5, v5: 11.5, duration: 1.6, ease: "power2.out",
+                    onUpdate: () => {
+                        let chart = charts['chartEmprendimientoMot'];
+                        if(chart) { chart.data.datasets[0].data = [proxyEmpMot.v0, proxyEmpMot.v1, proxyEmpMot.v2, proxyEmpMot.v3, proxyEmpMot.v4, proxyEmpMot.v5]; chart.update(); }
+                    }
+                });
+
+                // 2. LABORAL MOTIVACIONES (DONA)
+                createChart('chartLaboralMot', { 
+                    type: 'doughnut', 
+                    data: { labels: ['Seguridad Econ.', 'Exp. Laboral', 'Emprender', 'Otros'], datasets: [{ data: [58.7, 31.0, 1.5, 8.8], backgroundColor: ['#00a19b', '#4dcad4', '#007a75', '#b3e2df'], borderWidth: 3, borderColor: '#fff' }] }, 
+                    options: { responsive: true, maintainAspectRatio: false, cutout: '55%', circumference: 0, plugins: { legend: { position: 'right', labels: { boxWidth: 15, padding: 15 } }, datalabels: { color: '#fff', font: { weight: 'bold', size: 11 }, formatter: (v) => v > 5 ? v.toFixed(1) + '%' : '' } }, onHover: (e, el) => e.native.target.style.cursor = el[0] ? 'pointer' : 'default', onClick: (e, el) => { if (el.length) handleChartClick(exMot, 'laboral', 'infoMotLaboral', el[0].index); } } 
+                });
+                let proxyLabMot = { angle: 0 };
+                gsap.to(proxyLabMot, {
+                    angle: 360, duration: 1.8, ease: "power3.out",
+                    onUpdate: () => {
+                        let chart = charts['chartLaboralMot'];
+                        if(chart) { chart.options.circumference = proxyLabMot.angle; chart.update(); }
+                    }
+                });
+
+                // 3. ACADÉMICO MOTIVACIONES (BAR VERTICAL SUBIENDO)
+                createChart('chartAcademicMot', { 
+                    type: 'bar', 
+                    data: { labels: ['Personal', 'Pregrado', 'Requisito'], datasets: [{ data: [0, 0, 0], backgroundColor: ['#df0832', '#eb4160', '#f57a8e'], borderRadius: 6 }] }, 
+                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, datalabels: { anchor: 'end', align: 'start', color: '#fff', font: { weight: 'bold' }, formatter: commonDatalabelsCtx.formatter } }, scales: { y: { display: false, max: 40 }, x: { grid: { display: false }, border: { display: false }, ticks: { font: { weight: 'bold' } } } }, onHover: (e, el) => e.native.target.style.cursor = el[0] ? 'pointer' : 'default', onClick: (e, el) => { if (el.length) handleChartClick(exMot, 'academic', 'infoMotAcademic', el[0].index); } } 
+                });
+                let proxyAcaMot = { v0: 0, v1: 0, v2: 0 };
+                gsap.to(proxyAcaMot, {
+                    v0: 36.1, v1: 21.6, v2: 15.0, duration: 1.5, ease: "power2.out",
+                    onUpdate: () => {
+                        let chart = charts['chartAcademicMot'];
+                        if(chart) { chart.data.datasets[0].data = [proxyAcaMot.v0, proxyAcaMot.v1, proxyAcaMot.v2]; chart.update(); }
+                    }
+                });
             }
         }
 
@@ -689,11 +1021,14 @@
         window.onload = () => {
             gsap.to(".global-intro", { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" });
             gsap.fromTo(".lema-box", { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, stagger: 0.1, duration: 0.5, delay: 0.2 });
-            gsap.fromTo("#edition-1 .card, #edition-1 .download-box", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.7, stagger: 0.1, ease: "power2.out", delay: 0.4 });
+            
+            // Animamos la línea de tiempo junto con las cartas iniciales
+            gsap.fromTo("#edition-1 .timeline-section, #edition-1 .card, #edition-1 .download-box", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.7, stagger: 0.1, ease: "power2.out", delay: 0.4 });
+            
             setTimeout(() => { 
-                initCharts(1); 
+                initCharts(1); // Arrancar gráficas y GSAP proxies (Edición 1)
                 storeOriginalContents();
-                animateNumbers("#edition-1"); 
+                animateNumbers("#edition-1"); // Arrancar números síncronos (Edición 1)
                 startPhrasesRotation();
             }, 600);
         };
