@@ -183,7 +183,7 @@
         .chart-wrapper { position: relative; width: 100%; flex-grow: 1; min-height: 200px; }
         canvas { cursor: pointer; } 
 
-        /* --- LISTA DE RESUMEN EJECUTIVO --- */
+        /* --- LISTA DE RESUMEN EJECUTIVO Y ESTADÍSTICAS --- */
         .summary-list { display: flex; flex-direction: column; gap: 15px; width: 100%; }
         .summary-item { background: var(--bg); padding: 22px 25px; border-radius: 16px; border-left: 8px solid; display: flex; flex-direction: column; transition: transform 0.3s ease; }
         .summary-item:hover { transform: translateX(5px); }
@@ -199,6 +199,14 @@
         .stat-label { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-sub); font-weight: 600; }
 
         .click-hint { display: inline-flex; align-items: center; gap: 8px; margin-top: auto; padding: 8px 15px; background: rgba(0,0,0,0.04); border-radius: 50px; font-size: 0.8rem; font-weight: 600; color: var(--text-sub); width: fit-content; }
+
+        /* --- NUEVO: CONTENEDOR PARA FICHA TÉCNICA MOBILE-FRIENDLY --- */
+        .ficha-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            width: 100%;
+        }
 
         /* --- BOTÓN RESTAURAR --- */
         .btn-restore {
@@ -261,6 +269,10 @@
             .timeline-track { flex-direction: column; align-items: flex-start; gap: 20px; }
             .timeline-step { flex-direction: row; }
             .timeline-step.active .step-label { transform: translateX(5px); }
+            
+            /* Ajustes para Ficha Técnica en Móviles */
+            .ficha-stats { flex-direction: column; align-items: center; text-align: center; gap: 25px; }
+            .big-stat { font-size: 2.8rem; }
         }
     </style>
 </head>
@@ -278,7 +290,7 @@
 
     <div class="global-intro">
         <div class="badge-intro">
-            <strong>LEPP</strong> <span class="divider">|</span> Laboratorio estudiantil de proyección profesional
+            <strong>unLEMA lab</strong> <span class="divider">|</span> Laboratorio estudiantil de proyección profesional
         </div>
     </div>
 
@@ -350,7 +362,7 @@
 
             <div class="card span-6" data-cat="all">
                 <div class="card-header"><div class="icon-box" style="background:rgba(0,161,155,0.1); color:var(--laboral)"><i class="fa-solid fa-microscope"></i></div><h2 class="card-title" style="font-size:1.4rem">Ficha Técnica</h2></div>
-                <div style="display: flex; justify-content: space-between; align-items:flex-end;">
+                <div class="ficha-stats">
                     <div><div class="big-stat" data-count="4586">0</div><div class="stat-label">Población</div></div>
                     <div><div class="big-stat" data-count="522" style="color:var(--laboral)">0</div><div class="stat-label">Respuestas</div></div>
                     <div><div class="big-stat" data-count="70">0.0%</div><div class="stat-label">Avance Carrera</div></div>
@@ -596,12 +608,10 @@
         ];
 
         function updateTimeline(index) {
-            // Actualizar clases activas en los pasos (círculos y textos)
             const steps = document.querySelectorAll('.timeline-step');
             steps.forEach(s => s.classList.remove('active'));
             steps[index].classList.add('active');
 
-            // Animación del contenedor de descripción
             const data = timelineData[index];
             gsap.to("#timelineDisplay", { opacity: 0, y: 10, duration: 0.2, onComplete: () => {
                 document.getElementById('tl-title').innerText = data.title;
@@ -733,7 +743,7 @@
                     
                     if (dotsContainer) {
                         const dots = dotsContainer.querySelectorAll('.dot');
-                        dots.forEach(d => d.className = 'dot'); // Limpiar clases
+                        dots.forEach(d => d.className = 'dot');
                         if(dots[currentRotationIndex]) {
                             dots[currentRotationIndex].classList.add('active');
                             dots[currentRotationIndex].classList.add(item.cls);
@@ -752,7 +762,6 @@
             const banners = currentEdition.querySelectorAll('.lema-box');
             const emptyState = document.getElementById(`empty-m-${currentEditionGlobal}`);
 
-            // Restaurar textos si hay alguno abierto
             document.querySelectorAll('.info-box').forEach(box => {
                 if (originalBoxContents[box.id]) box.innerHTML = originalBoxContents[box.id];
             });
@@ -790,7 +799,6 @@
             }
 
             startPhrasesRotation();
-            // Re-animar números de las cartas visibles
             animateNumbers(`#edition-${currentEditionGlobal}`);
         }
 
@@ -801,11 +809,8 @@
                 if (isNaN(targetValue)) return;
                 
                 let countObj = { value: 0 };
-                
-                // Determinar si es un número entero (como población 4586) o porcentaje
                 const isPercentage = stat.innerText.includes('%') || targetValue <= 100;
                 
-                // Reiniciar el texto visible
                 stat.innerText = isPercentage ? '0.0%' : '0';
                 
                 gsap.to(countObj, { 
@@ -838,7 +843,6 @@
             document.querySelectorAll(".edition-btn").forEach(b => b.classList.remove("active"));
             document.getElementById(`btn-edicion-${num}`).classList.add("active");
 
-            // Matar rotación actual
             if(rotationTimer) clearInterval(rotationTimer);
 
             gsap.to(currentDiv, { opacity: 0, y: 20, duration: 0.3, onComplete: () => {
@@ -859,9 +863,9 @@
                 gsap.fromTo(`#edition-${num} .card, #edition-${num} .download-box, #edition-${num} .timeline-section`, 
                     { opacity: 0, y: 35 }, 
                     { opacity: 1, y: 0, duration: 0.5, stagger: 0.1, ease: "power2.out", onComplete: () => {
-                        initCharts(num); // Arrancar gráficas y sus animaciones GSAP
+                        initCharts(num); 
                         storeOriginalContents();
-                        animateNumbers(`#edition-${num}`); // Arrancar números síncronos
+                        animateNumbers(`#edition-${num}`); 
                         startPhrasesRotation();
                     }}
                 );
@@ -870,13 +874,9 @@
 
         // --- GRÁFICAS CHART.JS ---
         function createChart(id, config) {
-            // Destruir si existe para evitar duplicados
             if (charts[id]) charts[id].destroy(); 
-            
-            // Forzar desactivación de animaciones nativas en todas
             if(!config.options) config.options = {};
             config.options.animation = false;
-            
             charts[id] = new Chart(document.getElementById(id), config);
         }
 
@@ -893,36 +893,27 @@
                     type: 'bar',
                     data: {
                         labels: ['Trabajar', 'Estudiar', 'Emprender'],
-                        datasets: [{
-                            data: [0, 0, 0], // Start at 0
-                            backgroundColor: ['#00a19b', '#df0832', '#ec7920'],
-                            borderRadius: 8
-                        }]
+                        datasets: [{ data: [0, 0, 0], backgroundColor: ['#00a19b', '#df0832', '#ec7920'], borderRadius: 8 }]
                     },
                     options: {
                         responsive: true, maintainAspectRatio: false,
-                        plugins: {
-                            legend: { display: false },
-                            datalabels: { color: '#fff', font: { weight: 'bold', size: 14 }, formatter: v => v.toFixed(1) + '%' }
-                        },
+                        plugins: { legend: { display: false }, datalabels: { color: '#fff', font: { weight: 'bold', size: 14 }, formatter: v => v.toFixed(1) + '%' } },
                         scales: {
                             x: { grid: { display: false }, border: { display: false }, ticks: { font: { weight: 'bold', size: 13 } } },
                             y: { max: 80, grid: { color: 'rgba(0,0,0,0.05)' }, border: { display: false } }
                         }
                     }
                 });
-                let targetDataMain = [63.3, 31.4, 5.0];
                 let proxyMain = { v0: 0, v1: 0, v2: 0 };
                 gsap.to(proxyMain, {
-                    v0: targetDataMain[0], v1: targetDataMain[1], v2: targetDataMain[2],
-                    duration: 1.5, ease: "power2.out",
+                    v0: 63.3, v1: 31.4, v2: 5.0, duration: 1.5, ease: "power2.out",
                     onUpdate: () => {
                         let chart = charts['chartPlanesCortoPlazo'];
                         if(chart) { chart.data.datasets[0].data = [proxyMain.v0, proxyMain.v1, proxyMain.v2]; chart.update(); }
                     }
                 });
 
-                // 2. LABORAL CONTEXTO (BAR HORIZONTAL)
+                // 2. LABORAL CONTEXTO
                 createChart('chartLaboralCtx', { 
                     type: 'bar', 
                     data: { labels: ['Muestra unLEMA', 'Uniandes'], datasets: [{ data: [0, 0], backgroundColor: ['#00a19b', '#d1d1d6'], borderRadius: 6 }] }, 
@@ -937,7 +928,7 @@
                     }
                 });
 
-                // 3. ACADÉMICO CONTEXTO (LÍNEA SUBIENDO)
+                // 3. ACADÉMICO CONTEXTO
                 createChart('chartAcademicCtx', { 
                     type: 'line', 
                     data: { labels: ['Nal.', 'unLEMA', 'Top100'], datasets: [{ data: [0, 0, 0], borderColor: '#df0832', backgroundColor: 'rgba(223, 8, 50, 0.1)', fill: true, tension: 0.4, pointRadius: 7, pointBackgroundColor: '#df0832' }] }, 
@@ -952,7 +943,7 @@
                     }
                 });
 
-                // 4. EMPRENDIMIENTO CONTEXTO (POLAR AREA)
+                // 4. EMPRENDIMIENTO CONTEXTO
                 createChart('chartEmprendimientoCtx', { 
                     type: 'polarArea', 
                     data: { labels: ['unLEMA', 'Global', 'Colombia'], datasets: [{ data: [0, 0, 0], backgroundColor: ['rgba(236, 121, 32, 0.85)', 'rgba(236, 121, 32, 0.5)', 'rgba(236, 121, 32, 0.25)'], borderWidth: 2, borderColor: '#fff' }] }, 
@@ -970,7 +961,7 @@
             } else {
                 // BOLETÍN 2 MOTIVACIONES
 
-                // 1. EMPRENDIMIENTO MOTIVACIONES (RADAR)
+                // 1. EMPRENDIMIENTO MOTIVACIONES
                 createChart('chartEmprendimientoMot', { 
                     type: 'radar', 
                     data: { labels: ['Laboral', 'Financiera', 'Empleo', 'Flexibilidad', 'Oportunidad', 'Innovación'], datasets: [{ data: [0, 0, 0, 0, 0, 0], backgroundColor: 'rgba(236, 121, 32, 0.25)', borderColor: '#ec7920', pointBackgroundColor: '#ec7920', pointRadius: 5, borderWidth: 2 }] }, 
@@ -985,7 +976,7 @@
                     }
                 });
 
-                // 2. LABORAL MOTIVACIONES (DONA)
+                // 2. LABORAL MOTIVACIONES
                 createChart('chartLaboralMot', { 
                     type: 'doughnut', 
                     data: { labels: ['Seguridad Econ.', 'Exp. Laboral', 'Emprender', 'Otros'], datasets: [{ data: [58.7, 31.0, 1.5, 8.8], backgroundColor: ['#00a19b', '#4dcad4', '#007a75', '#b3e2df'], borderWidth: 3, borderColor: '#fff' }] }, 
@@ -1000,7 +991,7 @@
                     }
                 });
 
-                // 3. ACADÉMICO MOTIVACIONES (BAR VERTICAL SUBIENDO)
+                // 3. ACADÉMICO MOTIVACIONES
                 createChart('chartAcademicMot', { 
                     type: 'bar', 
                     data: { labels: ['Personal', 'Pregrado', 'Requisito'], datasets: [{ data: [0, 0, 0], backgroundColor: ['#df0832', '#eb4160', '#f57a8e'], borderRadius: 6 }] }, 
@@ -1022,13 +1013,12 @@
             gsap.to(".global-intro", { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" });
             gsap.fromTo(".lema-box", { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, stagger: 0.1, duration: 0.5, delay: 0.2 });
             
-            // Animamos la línea de tiempo junto con las cartas iniciales
             gsap.fromTo("#edition-1 .timeline-section, #edition-1 .card, #edition-1 .download-box", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.7, stagger: 0.1, ease: "power2.out", delay: 0.4 });
             
             setTimeout(() => { 
-                initCharts(1); // Arrancar gráficas y GSAP proxies (Edición 1)
+                initCharts(1); 
                 storeOriginalContents();
-                animateNumbers("#edition-1"); // Arrancar números síncronos (Edición 1)
+                animateNumbers("#edition-1"); 
                 startPhrasesRotation();
             }, 600);
         };
